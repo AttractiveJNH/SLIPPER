@@ -10,4 +10,12 @@ public class TestController {
 
         return "main";
     }
+
+    //테스트
+    @GetMapping("/test11")
+    public String test11(){
+
+        return "test";
+    }
+
 }
