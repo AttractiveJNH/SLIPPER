@@ -7,6 +7,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <link
       rel="stylesheet"
       href="/css/baseStyle.css"
@@ -14,17 +15,17 @@
     />
     <script
       src="https://kit.fontawesome.com/7abcd14278.js"
-      crossorigin="anonymous"
-    ></script>
+      crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <title>SLIPPER</title>
   </head>
 
   <!-- 내용부분 -->
   <body>
-    <div th:replace="fragments/header::header"></div>
+    <div th:replace="~{fragments/header::header}"></div>
 
     <div layout:fragment="content"></div>
 
-    <div th:replace="fragments/footer::footer"></div>
+    <div th:replace="~{fragments/footer::footer}"></div>
   </body>
 </html>

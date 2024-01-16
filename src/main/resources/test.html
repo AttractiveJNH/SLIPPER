@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>분할예제 방법1</title>
+  <style>
+    /* 부모의 길이의 반에서 가운데 여백길이만큼을 빼기*/
+    .box{width: 400px; height: 200px; background-color: thistle; padding: 10px;}
+    .box::after{clear: both; content: ''; display: block;}
+    .inner{width: calc(50% - 5px); background-color: teal; height: 100%; float:left;}
+    .box2{float: right;}    
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="inner box1">
+        <ul style="list-style-type: none; ">
+            <li><a href="#">글</a></li>
+            <li>글</li>
+            <li>글</li>
+            <li>글</li>
+            <li>글</li>
+            <li>글</li>
+
+        </ul>        
+    </div>
+    <div class="inner box2">
+        <ul>
+             <li>글</li>
+            <li>글</li>
+            <li>글</li>
+            <li>글</li>
+            <li>글</li>
+            <li>글</li>
+        </ul>      
+    </div>
+  </div>
+</body>
+</html>

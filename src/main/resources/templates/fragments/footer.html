@@ -1,5 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/layout}"
+        lang="en"
+>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,11 +24,12 @@
       <footer>
         <div>
           <nav>
-            <a href="#" target="_blank">일반</a> |
-            <a href="#" target="_blank">모임</a> |
-            <a href="#" target="_blank">홍보</a> |
-            <a href="#" target="_blank">리뷰</a> |
-            <a href="#" target="_blank">마이페이지</a>
+            <a href="#" >일반</a> |
+            <a href="#" >모임</a> |
+            <a href="#" >홍보</a> |
+            <a href="#" >리뷰</a> |
+            <a href="#" >마이페이지</a>
+<!--            <a href="#" target="_blank">이마이페지</a> target = "_blank" - 새 창 띄우기-->
           </nav>
           <p>
             <span>상호명 : SLIPPER</span><br />

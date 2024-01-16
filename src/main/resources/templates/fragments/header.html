@@ -1,5 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/layout}"
+        lang="en"
+>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,10 +24,10 @@
       <section id="header">
         <div class="wrapper">
           <div class="title">
-            <label for="logos">
-              <a href="#"
+            <label for="logo">
+              <a href="/main"
                 ><img
-                  src="/src/main/resources/static/images/free-icon-flip-flops-5113451.png"
+                  src="/images/free-icon-flip-flops-5113451.png"
                   alt="홈페이지로고"
                   width="30px"
                   height="30px"
@@ -41,7 +46,7 @@
               </div>
             </label>
           </form>
-          <div class="log"><a href="#">Log In</a></div>
+          <div class="log"><a href="/login">Log In</a></div>
         </div>
         <div class="header_under">
           <ul class="lists">
