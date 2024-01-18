@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/layout}"
+        lang="en"
+>
+<head>
+    <style>
+        .dropdown{
+        width: 120px;
+        height: 30px;
+        }
+        .contentInputBox{
+        width: 75%;
+        background-color:beige;
+        }
+        .title_sec{
+        width: 15%;
+        height: 50px;
+        }
+        .row{
+        display: flex;
+        text-align: auto;
+        }
+        .contentInput1{
+        width:80%;
+        height: 50px;
+        }
+        .contentInput2{
+        width:30%;
+        height: 50px;
+        }
+        input{
+        width: 100%;
+        }
+        textarea{
+        width: 95%;
+        }
+    </style>
+</head>
+
+<div layout:fragment="content"><!-- -->
+    <div style="margin-left:15%"><!-- 제목 영역 시작-->
+        <h3>체험, 이벤트 홍보 게시판 글 작성</h3>
+    </div><!-- 제목 영역 끝-->
+    <form action="/promotion/eventCreate" method="post">
+        <div style="margin-left:15%;"><!-- 셀렉트박스영역 시작 -->
+            <div style="display: flex;">
+                <div id="region"><!--지역-->
+                    <div class="dropdown"><!-- 지역 선택 드롭다운 -->
+                        <label for="promoBrdRegion"></label>
+                        <select name="districts" id="promoBrdRegion" onchange="updateData()">
+                            <option value="none">지역 선택</option>
+                            <option value="중구">중구</option>
+                            <option value="서구">서구</option>
+                            <option value="동구">동구</option>
+                            <option value="영도구">영도구</option>
+                            <option value="부산진구">부산진구</option>
+                            <option value="동래구">동래구</option>
+                            <option value="남구">남구</option>
+                            <option value="북구">북구</option>
+                            <option value="강서구">강서구</option>
+                            <option value="해운대구">해운대구</option>
+                            <option value="사하구">사하구</option>
+                            <option value="금정구">금정구</option>
+                            <option value="연제구">연제구</option>
+                            <option value="수영구">수영구</option>
+                            <option value="사상구">사상구</option>
+                            <option value="기장군">기장군</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="cat"><!--카테고리-->
+                    <div class="dropdown"><!-- 지역 선택 드롭다운 -->
+                        <label for="promoBrdCategory"></label>
+                        <select name="categorys" id="promoBrdCategory" onchange="updateData()">
+                            <option value="none">게시글 유형</option>
+                            <option value="0">일반</option>
+                            <option value="1">체험</option>
+                            <option value="2">이벤트</option>
+
+                        </select>
+                        <div id="result2"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!--셀렉트박스영역 끝-->
+
+        <div class="contentInputBox" style="margin-left:15%;"><!--컨텐츠 입력 시작-->
+            <div class="row"><!--제목 줄-->
+                <div class="title_sec">제목</div>
+                <div class="contentInput2"><input type="text" name="" id=""></div>
+                <div class="title_sec" style="margin-left: 50px;">상호명</div>
+                <div class="contentInput2"><input type="text" name="" id=""></div>
+            </div><!--제목 줄-->
+            <div class="row" style="display:flex;"><!--상호/체험단 선정일-->
+                <div class="title_sec">체험일</div>
+                <div class="contentInput2"><input type="date" name="" id=""></div>
+                <div class="title_sec" style="margin-left: 50px;">체험단 선정일</div>
+                <div class="contentInput2"><input type="date" name="" id=""></div>
+            </div><!--상호/체험단 선정일-->
+            <div class="row"><!--신청 시작/종료-->
+                <div class="title_sec">신청 시작일</div>
+                <div class="contentInput2"><input type="date" name="" id=""></div>
+                <div class="title_sec" style="margin-left: 50px;">신청 종료일</div>
+                <div class="contentInput2"><input type="date" name="" id=""></div>
+            </div><!--신청 시작/종료-->
+            <div class="row"><!--리뷰제출 시작일/종료일-->
+                <div class="title_sec">리뷰제출 시작일</div>
+                <div class="contentInput2"><input type="date" name="" id=""></div>
+                <div class="title_sec" style="margin-left: 50px;">리뷰제출 종료일</div>
+                <div class="contentInput2"><input type="date" name="" id=""></div>
+            </div><!--리뷰제출 시작일/종료일-->
+            <div class="row"><!--제공내역-->
+                <div class="title_sec">제공 내역</div>
+                <div class="contentInput1"><input type="text" name="" id=""></div>
+            </div><!--제공내역-->
+            <div class="row"><!--내용-->
+                <div class="title_sec" style="height: 125px; align-items: center; justify-content: center;">
+                    내 용
+                </div>
+                <div class="contentInput1">
+                    <textarea style="width: 100%;" rows="8"></textarea>
+                </div>
+            </div><!--내용-->
+            <div class="row" style="margin-top: 3%;"><!--이미지 보기-->
+                <div class="title_sec">이미지 미리보기</div>
+                <div style="border: 1px solid; width: 80%; min-height: 200px; height: auto;"></div>
+            </div><!--이미지 보기-->
+            <div class="row"><!--인원/첨부파일-->
+                <div class="title_sec"></div>
+                <div>신청 가능 인원 수:
+                    <select>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                    </select>
+                </div><!--인원-->
+                <div style="margin-left:25%; display:flex; width: 30%;"><span style="width: 100px;">첨부파일</span> <input type="file" multiple></div>
+            </div><!--인원/첨부파일-->
+            <div class="row" style="margin-top: 10px;"><!--취소/등록-->
+                <button style="margin-left: 75%; background-color: gray;" type="button" onclick="location.href='/promotion'">
+                    취소
+                </button>
+                <button style="background-color: aqua; margin-left:20px;" type="submit">
+                    등록
+                </button>
+            </div><!--취소/등록-->
+        </div><!--컨텐츠 입력 끝-->
+    </form>
+</div><!---->
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/layout}"
+        lang="en"
+>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/meeting/meetingWrite.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script type="text/javascript" src="/ssw/js/HuskyEZCreator.js" charset="utf-8"></script>
+</head>
+
+
+<div layout:fragment="content">
+    <div class="container">
+        <div class="meeting_text">
+            <p class="text1">모임 게시판 글쓰기</p>
+        </div>
+        <form action="/meeting/write/save" method="post" onsubmit="return savePost()">
+            <div class="input_container">
+                <div class="container_1">
+                    <div class="region_box">
+                        <select id="region" name="meet_field" required>
+                            <option value="" disabled selected>지역 선택</option>
+                            <option value="중구">중구</option>
+                            <option value="서구">서구</option>
+                            <option value="동구">동구</option>
+                            <option value="영도구">영도구</option>
+                            <option value="부산진구">부산진구</option>
+                            <option value="동래구">동래구</option>
+                            <option value="남구">남구</option>
+                            <option value="북구">북구</option>
+                            <option value="해운대구">해운대구</option>
+                            <option value="사하구">사하구</option>
+                            <option value="금정구">금정구</option>
+                            <option value="강서구">강서구</option>
+                            <option value="연제구">연제구</option>
+                            <option value="수영구">수영구</option>
+                            <option value="사상구">사상구</option>
+                            <option value="기장군">기장군</option>
+                        </select>
+                    </div>
+
+                    <div class="category_box">
+                        <select id="category" name="meet_category" required>
+                            <option value="" disabled selected>게시글 유형</option>
+                            <option value="1">온라인</option>
+                            <option value="2">오프라인</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="title_box">
+                    <input type="text" name="meet_title" class="title_css" placeholder="제목을 입력해 주세요." required>
+                </div>
+
+                <div class="input_box">
+                    <label for="schedule">일시</label>
+                    <input type="date" id="schedule" name="meet_date" required><br>
+
+                    <label for="deadline" class="deadline_label">신청 마감일</label>
+                    <input type="date" id="deadline" name="meet_apply_end_date" required><br>
+
+                    <label for="personnel" class="personnel_label">인원</label>
+                    <select id="personnel" name="meet_max_particpants" required>
+                        <option value="" disabled selected>선택</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="19">18</option>
+                        <option value="20">20</option>
+                    </select>
+                </div>
+            </div>
+            <div class="editor_box">
+                <textarea name="meet_content" id="editorTxt" rows="30" cols="20" placeholder="내용을 입력해주세요"></textarea>
+            </div>
+
+            <div class="btn_box">
+                <input type="submit" value="등록" class="registration">
+                <a href="/meeting/main" class="cancel">취소</a>
+            </div>
+
+
+        </form>
+    </div>
+
+    <script src="/js/meeting/meetingWrite.js"></script>
+</div>
+</html>

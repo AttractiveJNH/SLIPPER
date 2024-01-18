@@ -4,6 +4,7 @@ import com.example.Slipper.dto.EntreDto;
 import com.example.Slipper.dto.UserDto;
 import com.example.Slipper.entity.EntreEntity;
 import com.example.Slipper.entity.UserEntity;
+
 import com.example.Slipper.repository.EntreRepository;
 import com.example.Slipper.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ public class JoinService {
 
     @Autowired
     UserRepository userRepository;
+
 
     @Autowired
     EntreRepository entreRepository;

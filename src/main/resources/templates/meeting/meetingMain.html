@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/layout}"
+        lang="en"
+>
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/meeting/meetingMain.css">
+</head>
+
+<div layout:fragment="content">
+    <div class="container">
+        <div class="meeting_text">
+            <p class="text1">모임 게시판</p>
+        </div>
+
+        <div class="middle_container">
+            <div class="region_box">
+                <select id="region">
+                    <option value="region" selected>지역 선택</option>
+                    <option value="중구">중구</option>
+                    <option value="서구">서구</option>
+                    <option value="동구">동구</option>
+                    <option value="영도구">영도구</option>
+                    <option value="부산진구">부산진구</option>
+                    <option value="동래구">동래구</option>
+                    <option value="남구">남구</option>
+                    <option value="북구">북구</option>
+                    <option value="해운대구">해운대구</option>
+                    <option value="사하구">사하구</option>
+                    <option value="금정구">금정구</option>
+                    <option value="강서구">강서구</option>
+                    <option value="연제구">연제구</option>
+                    <option value="수영구">수영구</option>
+                    <option value="사상구">사상구</option>
+                    <option value="기장군">기장군</option>
+                </select>
+            </div>
+
+            <div class="category_box">
+                <select id="category">
+                    <option value="category" selected>게시글 유형</option>
+                    <option value="온라인">온라인</option>
+                    <option value="오프라인">오프라인</option>
+                </select>
+            </div>
+
+            <div class="writing_box">
+                <a href="/meeting/write" class="writing_btn">글쓰기</a>
+            </div>
+        </div>
+
+
+
+        <div class="inner_container">
+            <!-- 상단 -->
+            <div class="title_box">
+                <div class="title_imgCheck">
+
+                </div>
+
+                <div class="title_1">
+                    <p>번호</p>
+                </div>
+
+                <div class="title_2">
+                    <p>지역</p>
+                </div>
+
+                <div class="title_3">
+                    <p>제목</p>
+                </div>
+
+                <div class="title_4">
+                    <p>글쓴이</p>
+                </div>
+
+                <div class="title_5">
+                    <p>작성일</p>
+                </div>
+
+                <div class="title_6">
+                    <p>조회</p>
+                </div>
+
+                <div class="title_7">
+                    <p>인원</p>
+                </div>
+            </div>
+            <div class="horizontal-line1"></div>
+
+            <!-- 내용 -->
+
+            <div class="content_box">
+                <div class="content_imgCheck">
+
+                </div>
+
+                <div class="content_1">
+                    <p>1</p>
+                </div>
+
+                <div class="content_2">
+                    <p>부산진구</p>
+                </div>
+
+                <div class="content_3">
+                    <a href="/bulletin/detail/{{bulletinnumber}}">제목1</a>
+                </div>
+
+                <div class="content_4">
+                    <p>닉네임</p>
+                </div>
+
+                <div class="content_5">
+                    <p>2023-01-10</p>
+
+                </div>
+                <div class="content_6">
+                    <p>555</p>
+                </div>
+
+                <div class="content_7">
+                    <p>4 / 5</p>
+                </div>
+            </div>
+            <div class="horizontal-line2"></div>
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+</html>

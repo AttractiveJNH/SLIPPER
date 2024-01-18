@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/layout}"
+        lang="en"
+>
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<div layout:fragment="content">
+    <!--여기부터 작성하면 됩니다.--><!---->
+    <div>
+        <div><!--제목-->
+            <h2 style="margin-left:5%;">[<span th:text="${promotion.promoBrdCategory}"></span>] 게시판1</h2>
+        </div>
+    </div>
+    <div style="width:100%; height:auto; display:flex; justify-content:center;">
+        <div class="promo" style="width:90%; height:auto;">
+            <!--홍보 컨텐츠-->
+            <div class="row1"
+                 style="font-size:24px; width:100%; height: 5%;display:flex; align-items:center;">
+                <!--첫줄-->
+
+                <div style="display:flex; width:100%;"><!--제목-->
+                    <div style="margin-top: -10px;">
+                        <button style="width: 80px; height:30px;"><span th:text="${promotion.promoBrdCategory}"></span></button>
+                    </div>
+                    <div style="width:200px;"><!--지역-->
+                        [<span th:text="${promotion.promoBrdRegion}"></span>]
+                    </div>
+                    <div th:text="${promotion.promoBrdTitle}" style="width:70%"><!--제목-->
+                        제목
+                    </div>
+                    <div style="width: 10%; margin-left:10px;"><!--조회-->
+                        조회수
+                    </div>
+                    <div style="width: 10%; margin-left:20px;"><!--조회수-->
+                        <span th:text="${promotion.promoBrdViewCount}">700</span>
+                    </div>
+                </div>
+            </div><!--첫줄-->
+            <hr>
+            <div id="1">
+                <div style="width: auto; height: 40px; display:block;"><!--공백줄-->
+
+                </div>
+            </div>
+            <div><!--컨텐츠영역-->
+                <div>
+                    <div class="row2" style="display:flex; width:100%;">
+                        <div class="sec_title_box" style="width: 10%;">상호명 : <span th:text="${promotion.promoBrdBusinessName}"></span></div>
+                        <div style="width:65%;"> </div>
+                        <div class="sec_title_box">지역 : <span th:text="${promotion.promoBrdRegion}"></span></div>
+                    </div>
+                    <hr>
+<!--                    <div class="row3" style="display:flex; width:100%; background-color: yellow;">-->
+<!--                        <div class="sec_title_box">신청 시작일 : <span th:text="${promotions.promoBrdEventStartDate}"></span> || 신청 종료일 : <span th:text="${promotions.promoBrdEventEndDate}"></span>-->
+<!--                        </div>-->
+<!--                        <div class="sec_title_box">체험단 선정일 : <span th:text="${promotions.promoBrdEventEndDate}"></span></div>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <div class="sec_title_box">리뷰 제출 기간 : <span th:text="${promotions.promoBrdExperienceDate}"></span>~<span th:text="${promotions.promoBrdReviewDeadline}"></span></div>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <div class="sec_title_box">제공내역 : <span th:text="${promotions.promoBrdExperienceProvided}"></span> 인원 : <span th:text="${promotions.promoBrdApplyParticipants}"></span>/<span-->
+<!--                                th:text="${promotions.promoBrdMaxParticipants}"></span></div>-->
+<!--                    </div>-->
+                    <div style="width: auto; height: 40px; display:block;"><!--공백줄--></div>
+                </div><!--컨텐츠영역-->
+
+                <div><!--이미지영역-->
+                    <h3><span th:text="${promotion.promoBrdBusinessName}"></span>리뷰 이벤트 합니다.</h3>
+                    <div style="min-width: 150px; max-width: 60%; min-height: 100px; max-height: 40%; border: 1px solid; margin-left:20%;">
+                        <img style="max-width:100%; height: auto;" th:src="${promotion.promoBrdMainImg}">
+                    </div>
+                </div><!--이미지영역-->
+
+                <div style="display:flex;margin-top: 40px; margin-left: 70%;"><!--삭제/수정 버튼 영역-->
+                    <div>
+                        <button type="reset" style="background-color: gray;">삭제</button>
+                    </div>
+                    <div>
+                        <button type="submit" style="background-color: blue;">수정</button>
+                    </div>
+                </div><!--삭제/수정 버튼 영역-->
+            </div><!--홍보 컨텐츠-->
+        </div>
+    </div>
+    <div style="width:100%; height:80px; display:flex; justify-content:center;">
+        <div style="width:90%;"><!--전체 글 보기-->
+            <div style="margin-left: 90%;margin-top: 2%;"><a href="promotionMain.html">
+                <button type="button" style="">전체 글 보기</button>
+            </a></div>
+        </div><!--전체 글 보기-->
+    </div>
+    <div style="width:100%; height:65px; display:flex; justify-content:center;">
+        <!--댓글-->
+        <div style="width:90%;"><!--댓글 제목-->
+            <div>
+                <h3>댓글</h3>
+            </div>
+            <hr>
+        </div><!--댓글 제목-->
+    </div>
+    <div style="width:100%; height:auto; display:flex; justify-content:center;">
+        <div style="width:90%; height:auto;"><!--댓글 리스트-->
+            <table style="width:100%;" >
+                <tr>
+                    <th style="width: 15%; border:1px solid; text-align:center;">닉네임</th>
+                    <th style="width: 55%; border:1px solid;">댓글 내용</th>
+                    <th style="width: 5%; border:1px solid;"></th>
+                    <th style="width: 25%; border:1px solid;">입력 날짜</th>
+                </tr>
+                <tr th:each="proComnts : ${proComnt}">
+                    <td><span th:text="${proComnts.userNickName}" style="text-align:center;"></span></td>
+                    <td><span th:text="${proComnts.promoBrdComntContent}"></span></td>
+                    <td><form><button>X</button></form></td>
+                    <td><span th:text="${proComnts.promoBrdComntDate}"></span></td>
+                </tr>
+            </table>
+        </div><!--댓글 리스트-->
+    </div>
+</div><!--댓글-->
+</html>
