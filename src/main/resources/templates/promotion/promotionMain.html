@@ -12,7 +12,13 @@
             integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
             crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
+    <style>
+        @media (max-width: 767px) {
+            .cardBox {
+                flex: 0 0 calc(50% - 20px);
+            }
+        }
+    </style>
 </head>
 <div layout:fragment="content">
 
@@ -22,8 +28,8 @@
     <div class="dropdownContainer" style="display: flex; margin-bottom: 50px;">
         <div class="dropdown"><!-- 지역 선택 드롭다운 -->
             <label for="promoBrdRegion"></label>
-            <select name="districts" id="promoBrdRegion" onchange="updateData()">
-                <option value="none">지역 선택</option>
+            <select name="promoBrdRegion" id="promoBrdRegion" onchange="updateData()">
+                <option value="">지역 선택</option>
                 <option value="중구">중구</option>
                 <option value="서구">서구</option>
                 <option value="동구">동구</option>
@@ -42,53 +48,56 @@
                 <option value="기장군">기장군</option>
             </select>
 
-            <div id="result"></div>
+            <div id="result1"></div>
 
         </div>
         <!-- 게시글 유형 드롭다운 -->
         <div class="dropdown"><!-- 지역 선택 드롭다운 -->
             <label for="promoBrdCategory"></label>
-            <select name="categorys" id="promoBrdCategory" onchange="updateData()">
-                <option value="none">게시글 유형</option>
-                <option value="중구">체험</option>
-                <option value="서구">이벤트</option>
-                <option value="서구">일반</option>
+            <select name="promoBrdCategory" id="promoBrdCategory" onchange="updateData()">
+                <option value="">게시글 유형</option>
+                <option value="0">일반</option>
+                <option value="1">체험</option>
+                <option value="2">이벤트</option>
+
             </select>
             <div id="result2"></div>
         </div>
 
-        <div class="promoWrite"><!-- 글쓰기 버튼 -->
-
+        <div class="proGenCreate"><!-- 글쓰기 버튼 -->
+            <a th:href="@{/promotion/genCreate}">
+                <button>일반 홍보</button>
+            </a>
+        </div>
+        <div class="proEventCreate"><!-- 글쓰기 버튼 -->
+            <a th:href="@{/promotion/eventCreate}">
+                <button>체험/이벤트</button>
+            </a>
         </div>
     </div>
 
-    <!-- 여기서 부터 홍보 카드가 나타난다. 데이터 받아서 한 페이지당 8개의 카드가 나타나게 페이징처리. -->
-    <div class="cardContainer"  style="display:flex;"><!-- 홍보 이미지 -->
-        <div class="cardBox" th:each="promotions : ${promotions}" style="display:flex;">
-            <div class="row row-cols-1 row-cols-md-4 g-4" style="display:flex;">
-                <div class="col" >
-                    <div class="card" style="width: 300px; height: 300px; ">
-                        <img th:src="${promotions.promoBrdMainImg}" class="card-img-top img-fluid" alt="홍보 이미지" style="object-fit: cover; object-position: top; width: 100%; height: 65%;">
-                        <!-- 대표 이미지 받기 -->
-                        <div class="card-body">
-                            <h5 class="card-title"><span th:text="${promotions.promoBrdTitle}"></span></h5>
-                            <!-- 여기서부터 날자를 받아야 된다. 어떤 날자의 데이터가 들어오는지에 따라서 상태 표시 박스가 변하고 데이터가 없으면 보여주지 않아야 한다. -->
-                            <!--                            <div class="card-EventstartDate"><span th:text="${promotions.promoBrdEventStartDate"></span></div>-->
-                            <div class="card-EventEndDate"><span th:text="${promotions.promoBrdEventEndDate}"></span>
-                            </div><!--일반인 경우 보이지 않음.-->
-                            <div class="card-BusinessName"><span th:text="${promotions.promoBrdBusinessName}"></span>
-                            </div>
-                            <div class="card-Participants"></div>
-                            <!--                            <div class="card-ApplyParticipants" style="">-->
-                            <span th:text="${promotions.promoBrdApplyParticipants}"></span><!--일반인 경우 보이지 않음.-->
-                            <!--                            </div>-->
-                            /<!--일반인 경우 보이지 않음.-->
-                            <!--                            <div class="card-MaxParticipants">-->
-                            <span th:text="${promotions.promoBrdMaxParticipants}"></span><!--일반인 경우 보이지 않음.-->
-                            <!--                            </div>-->
 
+    <div id="result">
+        <div class="cardContainer" style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+            <div th:each="promotion, iterStat : ${promotions}" class="cardBox" style="flex: 0 0 calc(20% - 5%); margin: 10px;"
+                 th:if="${iterStat.index < 8}">
+                <div class="card" style="width: 350px; height: 100%; border: 1px solid;">
+                    <a th:href="@{/promotion/{genEvent}/{promoBrdPostId}(genEvent=${promotion.promoBrdCategory == 0} ? 'gendetail' : 'eventdetail', promoBrdPostId=${promotion.promoBrdPostId})}" style="text-decoration:none; color: #000000;">
+                    <!-- 이미지 표시 -->
+                        <img th:src="${promotion.promoBrdMainImg}" class="card-img-top img-fluid" alt="홍보 이미지"
+                             style="object-fit: cover; object-position: top; width: 100%; height: 200px; min-height: 200px;">
+                        <!-- 카드 내용을 표시하는 부분 -->
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${promotion.promoBrdTitle}"></h5>
+                            <div class="card-text">
+                                <p th:if="${promotion.promoBrdCategory != 0}" class="card-EventEndDate"
+                                   th:text="'이벤트 종료일: ' + ${promotion.promoBrdEventEndDate}"></p>
+                                <p class="card-BusinessName" th:text="'상호명: ' + ${promotion.promoBrdBusinessName}"></p>
+                                <p th:if="${promotion.promoBrdCategory != 0}" class="card-Participants"
+                                   th:text="'참여 인원: ' + ${promotion.promoBrdApplyParticipants} + '/' + ${promotion.promoBrdMaxParticipants}"></p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -112,52 +121,65 @@
 
         </div>
     </div>
+
     <script>
-                function updateData() {
-                    var selectedDistrict = $("#promoBrdRegion").val();
-                    var selectedCategory = $("#promoBrdCategory").val();
+        // 페이지 로드 될 때 실행
+        document.addEventListener("DOMContentLoaded", function() {
+        // updateData 함수 호출
+        updateData();
+        });
 
-                    $.ajax({
-                        type: "GET",
-                        url: "/promotion?promoBrdRegion=" + selectedDistrict + "&promoBrdCategory=" + selectedCategory,
-                        data: {
-                            promoBrdRegion: selectedDistrict,
-                            promoBrdCategory: selectedCategory
-                        },
-                        success: function(data) {
-                            $("#result").html(data);
-                        },
-                        error: function(xhr, status, error) {
-                            console.error("Error while fetching data: ", error);
-                        }
-                    });
+        function updateData() {
+            var selectedDistrict = $("#promoBrdRegion").val();
+            var selectedCategory = $("#promoBrdCategory").val();
+
+            // 게시글 유형이 선택되지 않았을 때
+            var dataToSend = {
+
+            };
+
+            if (selectedDistrict !== "") {
+                dataToSend.promoBrdRegion = selectedDistrict;
+            }
+
+            if (selectedCategory !== "") {
+                dataToSend.promoBrdCategory = parseInt(selectedCategory);
+            }
+
+            // 지역과 카테고리 데이터를 컨트롤러에 전달.
+            $.ajax({
+                type: "GET",
+                url: "/updatePromotion?timestamp=" + new Date().getTime(),
+                async: true,
+                data: dataToSend,
+                contentType: "application/json",
+                success: function (data, status, xhr) {
+                    $("#result").html(data);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error while fetching data: ", error);
                 }
+            });
 
-        <!--        // 현재 날짜를 가져오는 함수-->
-        <!--        function getCurrentDate() {-->
-        <!--            var currentDate = new Date();-->
-        <!--            var year = currentDate.getFullYear();-->
-        <!--            var month = currentDate.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줍니다.-->
-        <!--            var day = currentDate.getDate();-->
+            // 이벤트 종료일과 현재 날짜 비교 해서 남은 날짜 표시하는 메소드.
+            $(".card-EventEndDate").each(function() {
+            var eventEndDate = new Date($(this).text()); // 이벤트 종료일을 Date 객체로 변환
+            var currentDate = new Date(); // 현재 날짜를 Date 객체로 변환
 
-        <!--            // 날짜 형식을 'yyyy-MM-dd'로 조정-->
-        <!--            return year + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day);-->
-        <!--        }-->
+            // 남은 날짜 계산.
+            var timeDifference = eventEndDate.getTime() - currentDate.getTime();
+            var remainingDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
 
-        <!--        // 화면 로딩 시 실행되는 함수-->
-        <!--        $(document).ready(function () {-->
-        <!--            // 모든 홍보 카드에 대해 반복-->
-        <!--            $(".card-EventEndDate").each(function () {-->
-        <!--                // 카드의 날짜를 가져옴-->
-        <!--                var cardDate = $(this).find("span").text();-->
+            // 결과 표시함.
+            if (remainingDays > 0) {
+                $(this).append(" (남은 날짜: " + remainingDays + "일)");
+            } else {
+                $(this).append(" (종료된 이벤트입니다.)");
+            }
 
-        <!--                // 현재 날짜와 카드의 날짜를 비교-->
-        <!--                if (getCurrentDate() > cardDate) {-->
-        <!--                    // 현재 날짜 이후인 경우, 보이지 않게 처리-->
-        <!--                    $(this).closest(".card").hide();-->
-        <!--                }-->
-        <!--            });-->
-        <!--        });-->
+        });
+
+        }
 
     </script>
 </div>
@@ -165,3 +187,6 @@
 
 
 </html>
+
+
+

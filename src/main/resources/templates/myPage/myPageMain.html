@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/myPageLayout}"
+        lang="en"
+>
+<head>
+
+<!--    비밀번호 변경 팝업창 펑션-->
+    <script type="text/javascript">
+        window.onload = function(){
+       document.getElementById("edit").onclick = function(){
+           window.open("/myPage/password_edit","","width=700px,height=500px,top=200px,left=200px;");
+       }
+   };
+    </script>
+</head>
+
+
+<div layout:fragment="content">
+
+
+    <div>
+        <label for="utId">
+            <h4>아이디</h4>
+            <p th:text="${userId}"></p>
+
+        </label>
+        <label for="utId">
+            <h4>닉네임</h4>
+            <p th:text="${nickName}"></p>
+        </label>
+        <label for="utId">
+            <h4>생일</h4>
+            <p th:text="${birthDate}"></p>
+        </label>
+        <label for="utId">
+            <h4>이름</h4>
+            <p th:text="${name}"></p>
+        </label>
+        <label for="utId">
+            <h4>지역</h4>
+            <p th:text="${location}"></p>
+        </label>
+        <label for="utId">
+            <h4>연락처</h4>
+            <p th:text="${phone}"></p>
+        </label>
+
+        <button type="submit" value="변경하기">변경하기</button>
+        <button type="button" value="비밀번호 변경하기" id="edit">비밀번호 변경하기</button>
+    </div>
+    </div>
+</html>

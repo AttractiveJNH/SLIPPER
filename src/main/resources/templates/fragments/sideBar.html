@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/layout}"
+        lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link
+            rel="stylesheet"
+            href="/css/baseStyle.css"
+            th:href="@{/css/baseStyle.css}"
+    />
+    <title>Title</title>
+</head>
+<body>
+
+<div th:fragment="sidebar">
+
+    <div class="side_wrap">
+        <div class="side_header" style="color: #ffffff;"><a>마이페이지</a></div>
+        <div class="side_middle">
+
+
+            <a href="#">내 정보</a>
+
+            <ul><span>내가 쓴 글</span>
+                <li>
+                    <a href="#">일반</a>
+                </li>
+
+                <li>
+                    <a href="#">모임</a>
+                </li>
+                <li>
+                    <a href="#">홍보</a>
+                </li>
+                <li>
+                    <a href="#">리뷰</a>
+                </li>
+            </ul>
+            <a href="#">내 쪽지함</a>
+        </div>
+
+        <div class="side_footer_f">
+            <a href="#">회원 탈퇴</a>
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>

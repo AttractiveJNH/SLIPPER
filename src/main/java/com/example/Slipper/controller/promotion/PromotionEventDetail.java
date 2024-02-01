@@ -1,5 +1,7 @@
 package com.example.Slipper.controller.promotion;
 
+import com.example.Slipper.dto.promotionDto.PromoComntDto;
+import com.example.Slipper.entity.UserEntity;
 import com.example.Slipper.entity.promotionEntity.Promotion;
 import com.example.Slipper.entity.promotionEntity.PromotionBoardComment;
 import com.example.Slipper.repository.promotionRepository.PromotionBoardCommentRepository;
@@ -25,11 +27,14 @@ public class PromotionEventDetail {
 
     @GetMapping("/promotion/eventdetail/{promoBrdPostId}")
     public String proEventDetail(@PathVariable(name = "promoBrdPostId") int promoBrdPostId, Model model){ // 나중에 requestvalue로 바꿔야 될지도..
-//        int postId = Integer.parseInt(promoBrdPostId);
 
         // 홍보 데이터 불러오기.
         Promotion promotions = promotionRepository.findByPromoBrdPostId(promoBrdPostId);
         model.addAttribute("promotions", promotions);
+
+        // 조회수
+        promotions.setPromoBrdViewCount(promotions.getPromoBrdViewCount() + 1);
+        promotionRepository.save(promotions);
 
         // 댓글 데이터 불러오기.
         ArrayList<PromotionBoardComment> promoComnts = promoBrdComntRepository.findByPromoBrdPostId(promoBrdPostId);
@@ -37,4 +42,6 @@ public class PromotionEventDetail {
 
         return "/promotion/proEventDetail";
     }
+
+
 }

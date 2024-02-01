@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/myPageLayout}"
+        lang="en"
+>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link
+            rel="stylesheet"
+            href="/css/baseStyle.css"
+            th:href="@{/css/baseStyle.css}"
+    />
+
+    <link
+            rel="stylesheet"
+            href="/css/myPage.css"
+            th:href="@{/css/myPage.css}"
+    />
+
+    <title>SLIPPER</title>
+
+
+</head>
+
+<div th:fragment="header">
+
+    <div th:if="${id}">
+
+
+        <div class="wrapper">
+            <div class="title">
+                <label for="logo">
+                    <a href="/main"
+                       style="color: white"
+                    ><img
+                            src="/images/slipperIcon.png"
+                            alt="홈페이지로고"
+                            width="30px"
+                            height="30px"
+                    />
+                        SLIPPER
+                    </a>
+                </label>
+            </div>
+
+            <form method="get">
+                <label for="search">
+                    <div class="search">
+                        <input type="text"/>
+                        <button type="submit" value="Search"/>
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                </label>
+            </form>
+            <div class="log"><a href="/logOut" style="color: white">LogOut</a></div>
+        </div>
+        <div class="header_under">
+            <ul class="lists">
+                <li>
+                    <a href="#">일반</a>
+                </li>
+                <li>
+                    <a href="#">모임</a>
+                </li>
+                <li>
+                    <a href="#">홍보</a>
+                </li>
+                <li>
+                    <a href="#">리뷰</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="side_wrap">
+            <div class="side_header" style="color: #ffffff;">
+                <a>마이페이지</a>
+            </div>
+            <div class="side_middle">
+                <br>
+                <a href="#">내 정보</a>
+
+                <ul><span><a href="#">내가 쓴 글</a></span>
+                    <li>
+                        <a href="#">일반</a>
+                    </li>
+
+                    <li>
+                        <a href="#">모임</a>
+                    </li>
+                    <li>
+                        <a href="#">홍보</a>
+                    </li>
+                    <li>
+                        <a href="#">리뷰</a>
+                    </li>
+                </ul>
+                <div>
+                    <a href="#">내 쪽지함</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="side_footer_f">
+            <label for="exit">
+                <a href="#">회원 탈퇴</a>
+            </label>
+        </div>
+
+    </div>
+
+</div>
+
+
+</html>

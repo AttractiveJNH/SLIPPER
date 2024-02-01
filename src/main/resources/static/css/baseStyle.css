@@ -1,14 +1,19 @@
 /* 전체 패딩 마진 계산 없이 width, height 원하는대로 적용하기 위해 추가 */
 * {
   box-sizing: border-box;
+   padding: 0;
+   margin: 0;
+}
+html{
+	margin:0;
+    padding:0;
+	width:100%;
+    height:100%;
 }
 
 /* 헤더부분 */
-#header {
-  font-weight: bold;
-  background-color: rgb(80, 80, 80);
-  font-size: 30px;
-  color: white;
+.header {
+
 }
 /* 헤더 아래 회색부분 */
 .header_under {
@@ -16,6 +21,14 @@
   display: flex;
   justify-content: center;
   background-color: rgb(249, 248, 252);
+  height: 70px;
+  font-size: 36 px;
+  text-align : center;
+
+}
+
+.header_under ul{
+    margin-bottom : 20px;
 }
 .wrapper {
   width: 100%;
@@ -23,6 +36,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-weight: bold;
+    background-color: rgb(80, 80, 80);
+    font-size: 30px;
+    color: white;
+    font-family: 'Noto Sans', sans-serif;
 }
 /* a 링크 밑줄 삭제 */
 a {
@@ -40,8 +58,10 @@ a:hover {
   width: 30px;
   height: 30px;
   background-color: aliceblue;
-  background: url(/src/main/resources/static/images/free-icon-flip-flops-5113451.png);
+  background: url(/images/slipperIcon.png);
 }
+
+
 
 /* 여기서부터 헤더 메뉴부분 */
 .lists {
@@ -105,37 +125,137 @@ a:hover {
 
 /* 푸터 */
 
-footer {
+.footer {
   width: 100%;
   height: 90px;
-  bottom: 0px;
-  /*position: absolute;*/
+  bottom: 0;
+   position: flex;
+
   border-top: 1px solid #c4c4c4;
   padding-top: 15px;
   color: #808080;
   font-size: 11px;
   background-color: #353535;
   text-align: center;
-  margin-top: 150px;
+
 }
 
-footer a {
+.footer a {
   display: inline-block;
   margin: 0 20px 10px 20px;
   color: #808080;
   font-size: 11px;
 }
 
-footer a:visited {
+.footer a:visited {
   color: #808080;
 }
 
-footer p {
+.footer p {
   margin-top: 0;
   margin-bottom: 0;
 }
 
-footer p span {
+.footer p span {
   display: inline-block;
   margin-left: 20px;
 }
+/* 네비게이션 전체 감싸는 랩 */
+.side_wrap {
+    list-style : none;
+    width: 200px;
+    height: 645px;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    /* 헤더에 따라 위치 조정하면 됨 */
+    position: static;
+    text-align:center;
+    top: 150px;
+}
+/* 강의실 */
+.side_header {
+
+    position: absolute;
+    width: 200px;
+    height: 80px;
+    background-color: rgb(80, 80, 80);
+    color: #fff;
+    font-weight: 600;
+    text-align: center;
+    font-size: 25px;
+}
+.side_header a {
+    line-height: 80px;
+}
+/* Home 글자 */
+.side_middle{
+    position:relative;
+    top: 50px;
+    height: 350px;
+}
+.side_middle>a{
+    top: 150px;
+    width: 200px;
+    height: 150px;
+    font-size: 22px;
+    font-weight: 600;
+    color: #3d3d3d;
+    line-height: 70px;
+    text-align: center;
+}
+.side_middle ul {
+    margin-top: 0px;
+    margin-bottom: 25px;
+}
+/* 강의 정보, 수업활동, 커뮤니티 글자 */
+.side_middle span {
+    font-size: 17px;
+    margin-left:-15px;
+    font-weight: 600;
+    color: #474747;
+}
+
+.side_middle ul li {
+    margin-top: 10px;
+}
+/* 수업계획서, 강의등록, 강의, 과제, 공지사항, Q&A 글자 */
+.side_middle ul li a {
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #787878;
+    margin-left:-5px;
+}
+/* 목록 태그 */
+li::marker {
+    color: #787878;
+  }
+/* 마우스 오버 시에 파란 글자 & 언더라인 효과 */
+.side_middle ul li a:hover {
+    text-decoration: underline;
+    color: #436ae8;
+  }
+li:hover::marker {
+    color: #436ae8;
+}
+/* 수강신청 */
+.side_footer_f {
+    width: 200px;
+    height: 80px;
+    border: 1px solid #ccc;
+    border-left: none;
+    border-right: none;
+}
+.side_footer_f a{
+    font-size: 18px;
+    text-align: center;
+    font-weight: 600;
+    line-height: 70px;
+    /*text-decoration: none;*/
+    color:#303030;
+}
+.side_footer_f a:hover{
+    text-decoration: underline;
+    color: #436ae8;
+  }
+
