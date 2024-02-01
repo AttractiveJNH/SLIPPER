@@ -47,8 +47,8 @@ dependencies {
 	//validation 어노테이션 dependency 추가
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-	// HTML 파싱 및 조작을 쉽게 할 수 있도록 도와주는 자바 라이브러리 의존성 (이미지 유무 체크에 사용)
-	implementation 'org.jsoup:jsoup:1.14.3'
+
+
 }
 
 tasks.named('bootBuildImage') {

@@ -334,8 +334,9 @@
     	var tempFile,
     		sUploadURL;
     	
-    	sUploadURL= 'file_uploader_html5.php'; 	//upload URL
-    	
+//    	sUploadURL= 'file_uploader_html5.php'; 	//upload URL
+    	sUploadURL = "/smarteditorMultiImageUpload";
+
     	//파일을 하나씩 보내고, 결과를 받음.
     	for(var j=0, k=0; j < nImageInfoCnt; j++) {
     		tempFile = htImageInfo['img'+j];
@@ -468,11 +469,15 @@
      function uploadImage (e){
     	 if(!bSupportDragAndDropAPI){
     		 generalUpload();
+
     	 }else{
     		 html5Upload();
+
     	 }
      }
-     
+
+
+
  	/**
  	 * jindo에 파일 업로드 사용.(iframe에 Form을 Submit하여 리프레시없이 파일을 업로드하는 컴포넌트)
  	 */

@@ -91,59 +91,62 @@
             <div class="horizontal-line1"></div>
 
             <!-- 내용 -->
+            <div class="meetList" th:each="info : ${meetingBdInfo}">
+                <div class="content_box">
+                    <!-- 이미지 유무 아이콘 -->
+                    <div class="content_imgCheck" th:with="imgIndex=${imageInfo[__${infoStat.index}__]}">
+                        <img th:src="@{${(imgIndex == 1) ? '/images/imageCheckIcon1.png' : '/images/imageCheckIcon2.png'}}"
+                             th:alt="${(imgIndex == 1) ? 'Image Icon 1' : 'Image Icon 2'}"
+                             style="width: 30px; height: 30px;">
+                    </div>
 
-            <div class="content_box">
-                <div class="content_imgCheck">
+                    <!-- 게시글 번호 -->
+                    <div class="content_1">
+                        <p th:text="${info.meet_num}"></p>
+                    </div>
 
+                    <!-- 지역 -->
+                    <div class="content_2">
+                        <p th:text="${info.meet_field}"></p>
+                    </div>
+
+                    <!-- 제목 -->
+                    <div class="content_3">
+                        <a th:href="@{/meeting/detail/{meetNum}(meetNum=${info.meet_num})}" th:text="${info.meet_title}"></a>
+                    </div>
+
+                    <!-- 글쓴이 -->
+                    <div class="content_4">
+                        <p th:text="${info.meet_nick_name}"></p>
+                    </div>
+
+                    <!-- 작성일 -->
+                    <div class="content_5">
+                        <p th:text="${#temporals.format(info.meet_write_date, 'yyyy-MM-dd HH:mm:ss')}"></p>
+                    </div>
+
+                    <!-- 조회 -->
+                    <div class="content_6">
+                        <p th:text="${info.meet_views}"></p>
+                    </div>
+
+                    <!-- 인원 -->
+                    <div class="content_7">
+                        <p th:text="${info.meet_now_participants}"></p> <p>&nbsp;/&nbsp;</p> <p th:text="${info.meet_max_participants}"></p>
+                    </div>
                 </div>
-
-                <div class="content_1">
-                    <p>1</p>
-                </div>
-
-                <div class="content_2">
-                    <p>부산진구</p>
-                </div>
-
-                <div class="content_3">
-                    <a href="/bulletin/detail/{{bulletinnumber}}">제목1</a>
-                </div>
-
-                <div class="content_4">
-                    <p>닉네임</p>
-                </div>
-
-                <div class="content_5">
-                    <p>2023-01-10</p>
-
-                </div>
-                <div class="content_6">
-                    <p>555</p>
-                </div>
-
-                <div class="content_7">
-                    <p>4 / 5</p>
-                </div>
+                <div class="horizontal-line2"></div>
             </div>
-            <div class="horizontal-line2"></div>
+
 
         </div>
+
 
 
     </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
+    <script src="/js/meeting/meetingMain.js"></script>
 </div>
 
 </html>

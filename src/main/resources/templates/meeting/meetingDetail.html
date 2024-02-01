@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/layout}"
+        lang="en"
+>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/meeting/meetingDetail.css">
+
+</head>
+
+
+<div layout:fragment="content">
+    <div class="container">
+        <div class="meeting_text">
+            <!-- 모임 게시판 텍스트 -->
+            <div class="meet_text_box">
+                <p class="text1">모임 게시판</p>
+            </div>
+            <!-- 목록 돌아가기 버튼 -->
+            <div class="meet_main_btn_box_1">
+                <button class="meet_main_btn" onclick="window.location.href='/meeting/main'">전체 글 목록</button>
+            </div>
+        </div>
+        <div class="line">
+            <div class="horizontal-line3"></div>
+        </div>
+        <!-- 카테고리 , 제목 -->
+        <div class="container_2">
+            <div class="category_text">
+                <p th:text="'[' + ${meetInfo.meet_category == 1 ? '온라인' : (meetInfo.meet_category == 2 ? '오프라인' : '')} + ']'"></p>
+            </div>
+            <div class="title_text">
+                <p th:text="${meetInfo.meet_title}"></p>
+            </div>
+        </div>
+
+        <!-- 닉네임 , 작성일 , 조회수-->
+        <div class="container_3">
+            <div class="container_3_1">
+                <p th:text="${meetInfo.meet_nick_name}" class="nick_name"></p>
+                <p>|</p>
+                <p th:text="${#temporals.format(meetInfo.meet_write_date, 'yyyy-MM-dd HH:mm:ss')}"></p>
+            </div>
+
+            <div class="container_3_2">
+                <p>조회</p>
+                <p th:text="${meetInfo.meet_views}"></p>
+            </div>
+        </div>
+
+        <div class="line">
+            <div class="horizontal-line1"></div>
+        </div>
+
+        <!-- 일시, 신청 종료일, 지역, 신청 인원수 및 최대 인원수 -->
+        <div class="table_container">
+            <table class="table_content">
+                <tr>
+                    <th class="table_box_1">일시</th>
+                    <td th:text="${meetInfo.meet_date}" class="table_box_2"></td>
+                    <th class="table_box_3">신청 종료일</th>
+                    <td th:text="${meetInfo.meet_apply_end_date}" class="table_box_2"></td>
+                    <th class="table_box_1">지역</th>
+                    <td th:text="${meetInfo.meet_field}" class="table_box_2"></td>
+                    <th class="table_box_1">인원</th>
+                    <td th:text="${meetInfo.meet_now_participants} + '/' + ${meetInfo.meet_max_participants}" class="table_box_1"></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- 스마트 에디터 내용 -->
+        <div th:utext="${meetInfo.meet_content}" class="editor_content">
+        </div>
+
+
+        <div class="apply_content">
+            <div class="comment_text_box">
+                <p>댓글</p>
+            </div>
+
+
+            <!-- 참가자 보기 -->
+            <div class="apply_box" th:if="${Writer == 1}">
+                <img src="/images/ApplyListImg.png" alt="참가자 보기"
+                     class="apply_img" th:onclick="'openWindow(\'/meeting/apply/popup/' + ${meetNum} + '\')'">
+            </div>
+
+            <!-- 신청하기 -->
+            <div class="apply_box" th:if="${Writer == 2}">
+                <form id="meet_apply" th:action="@{/meeting/application/{meetNum}(meetNum=${meetInfo.meet_num})}" method="post">
+                    <input type="hidden" name="meet_apply_status" value="0">
+                    <input type="hidden" name="nick_name" th:value="${userInfo.user_nick_name}">
+                    <input type="hidden" name="birthdate" th:value="${userInfo.user_birthdate}">
+                    <img src="/images/ApplyImg.png" alt="신청하기"
+                         class="apply_img" onclick="applySubmitForm()">
+                </form>
+            </div>
+        </div>
+        <div class="line">
+            <div class="horizontal-line3"></div>
+        </div>
+
+        <!-- 댓글 목록 -->
+        <div class="comment_container">
+            <div class="comment_box">
+                <!-- 닉네임 -->
+                <div class="comment_nickName">
+                    <p>까암프</p>
+                </div>
+
+                <!-- 내용 -->
+                <div class="comment_content">
+                    <p>댓글내용이다아아</p>
+                </div>
+
+                <!-- 작성일 -->
+                <div class="comment_writeDate">
+                    <p>2024-01-29 10:01:53</p>
+                </div>
+            </div>
+
+            <div class="line">
+                <div class="horizontal-line1"></div>
+            </div>
+        </div>
+
+        <div class="comment_and_btn_box">
+            <!-- 댓글 작성 -->
+            <div class="CommentWriter">
+                <form action="" method="post">
+                    <div class="comment_inbox">
+                        <strong class="blind">댓글을 입력하세요</strong>
+                        <div class="comment_inbox_box">
+                            <p class="comment_inbox_name">깜프</p>
+                            <div class="comment_inbox_count">
+                                <p class="current_char_count">0</p>
+                                <p>/</p>
+                                <p>100</p>
+                            </div>
+
+                        </div>
+                        <textarea spellcheck="false" placeholder="댓글을 남겨보세요" rows="1" class="comment_inbox_text"></textarea>
+                    </div>
+
+                    <div class="comment_attach">
+                        <div class="register_box">
+                            <button type="submit" class="btn_register">등록</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- 목록 돌아가기 버튼 -->
+            <div class="meet_main_btn_box_2">
+                <button class="meet_main_btn" onclick="window.location.href='/meeting/main'">전체 글 목록</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        var msg = "[[${msg}]]";
+        if (msg) {
+            alert(msg);
+        }
+    </script>
+
+
+
+    <script src="/js/meeting/meetingDetail.js"></script>
+</div>
+</html>

@@ -143,6 +143,15 @@
     text-align: center;
     /* background-color: yellow; */
 }
+
+.meetList{
+    width: 1200px;
+    height: 100%;
+    font-size: 14px;
+    text-align: center;
+
+}
+
 .content_box{
     display: flex;
     text-align: center;
@@ -172,7 +181,7 @@
 
 .content_3{
     width: 420px;
-    text-align: center;
+    text-align: left;
     /* background-color: yellow; */
 }
 
@@ -197,6 +206,9 @@
 .content_7{
     width: 100px;
     text-align: center;
+    display: flex;
+    align-items: center;    /* 수직 방향 중앙 정렬 */
+    justify-content: center;/* 수평 방향 중앙 정렬 */
     /* background-color: yellow; */
 }
 

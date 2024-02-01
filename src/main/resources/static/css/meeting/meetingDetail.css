@@ -1,0 +1,359 @@
+.container{
+    margin-bottom: 100px;
+    margin-top: 10px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;    /* 수직 방향 중앙 정렬 */
+    justify-content: center;/* 수평 방향 중앙 정렬 */
+    /* background-color: blue; */
+}
+
+.meet_text_box{
+    width: 600px;
+    /* background-color: blue; */
+}
+
+.text1{
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.meeting_text{
+    width: 1000px;
+    text-align: left;
+    display:flex;
+     /* background-color: red; */
+}
+
+/* 가로선 */
+.horizontal-line1 {
+    border: 1px solid #CFCFCF;
+    width: 100%;
+    margin: 0px ;
+}
+
+.horizontal-line2 {
+    border: 1px solid #EAEAEA;
+    width: 100%;
+    margin: 0px ;
+}
+
+.horizontal-line3 {
+    border: 1px solid #5D5D5D;
+    width: 100%;
+    margin: 0px ;
+}
+
+
+.line{
+    width: 1000px;
+
+}
+
+
+.container_2{
+     width: 1000px;
+     height: 30px;
+     text-align: left;
+     display: flex;
+      /* justify-content: space-between;  양끝배치*/
+      /* background-color: blue; */
+}
+
+.category_text{
+    width: 90px;
+    height: 60px;
+    text-align: left;
+    /* background-color: red; */
+}
+
+.title_text{
+    width: 800px;
+    height: 60px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: left;
+    line-height: 1;
+    /* background-color: blue; */
+}
+
+.container_3{
+     width: 1000px;
+     height: 50px;
+     text-align: left;
+     display: flex;
+     justify-content: space-between;
+      /* background-color: red; */
+}
+
+.container_3_1{
+    display: flex;
+    gap: 10px;
+}
+
+.nick_name{
+    font-weight: bold;
+}
+
+.container_3_2{
+    display: flex;
+    gap: 10px;
+}
+
+.horizontal-line2_1{
+    border: 1px solid #EAEAEA;
+    width: 1000px;
+    margin: 0px ;
+}
+
+.table_container{
+    width: 1000px;
+    margin-top: 10px;
+    text-align: left;
+}
+
+.table_content{
+    border-collapse: collapse;
+    text-align: center;
+
+}
+
+.table_content th, .table_content td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+}
+
+.table_content th {
+    background-color: #f2f2f2;
+}
+
+.table_box_1{
+    width: 100px;
+}
+
+.table_box_2{
+    width: 160px;
+}
+
+.table_box_3{
+    width: 120px;
+}
+
+.editor_content{
+    width: 1000px;
+    min-height: 300px;
+    text-align: left;
+}
+
+.apply_content{
+    width: 1000px;
+    height: 80px;
+    margin-top: 50px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: flex-end;
+     /* background-color: red; */
+}
+
+.comment_text_box{
+    width: 200px;
+    height: 80px;
+    text-align: left;
+    margin-right: 600px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.comment_text_box p{
+    margin-top: 50px;
+}
+
+.apply_box{
+    width: 200px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* background-color: red; */
+}
+
+.apply_text{
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.apply_img:hover {
+    cursor: pointer;
+}
+
+.comment_container{
+    width: 1000px;
+    text-align: left;
+}
+
+.comment_box{
+    width: 1000px;
+    height: 50px;
+    display: flex;
+    /* background-color: red; */
+
+}
+
+.comment_nickName{
+    width: 200px;
+    height: 50px;
+    color: #777777;
+    font-weight: bold;
+    /* background-color: blue; */
+}
+
+.comment_content{
+    width: 600px;
+    height: 50px;
+    /* background-color: yellow; */
+}
+
+.comment_writeDate{
+    width: 200px;
+    height: 50px;
+    text-align: right;
+    /* background-color: blue; */
+}
+
+/* 테스트 */
+.comment_and_btn_box{
+    width: 1000px;
+    display:flex;
+    text-align: left;
+    justify-content: flex-start;
+}
+
+.CommentWriter{
+    width: 700px;
+    margin: 12px 0 29px;
+    padding: 2px 10px 10px 18px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+
+}
+
+.comment_inbox{
+    position: relative;
+    margin-bottom: 10px
+}
+
+.blind{
+    position: absolute;
+    clip: rect(0 0 0 0);
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+
+}
+
+.comment_inbox_box{
+    display: flex;
+
+}
+
+.comment_inbox_count{
+    display: flex;
+    justify-content: flex-end;
+    width:400px;
+    font-size: 13px;
+    /* background-color:red; */
+
+
+}
+
+
+.comment_inbox_name{
+    width: 500px;
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 13px;
+    text-align:left;
+    /* background-color:blue; */
+}
+
+.comment_inbox_text{
+    min-height: 17px;
+    max-height: 500px
+
+    overflow: hidden;
+    overflow-wrap: break-word;
+    display: block;
+
+    width: 100%;
+    padding-right: 1px;
+    border: 0;
+    font-size: 13px;
+    resize: none;
+    box-sizing: border-box;
+    background: transparent;
+    outline: 0;
+}
+
+.comment_attach{
+    position: relative;
+
+}
+
+.comment_attach:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.register_box{
+    float: right;
+}
+
+.btn_register{
+    border: none; /* 테두리 제거 */
+    background-color: transparent; /* 배경색 제거 */
+
+    text-decoration: none; /* 텍스트에 밑줄 제거 */
+    cursor: pointer; /* 커서 모양 변경 */
+}
+
+.meet_main_btn_box_1{
+    margin-top: 50px;
+    display: flex;
+    justify-content: flex-end;
+    width: 400px;
+    height: 50px;
+    /* background-color: red; */
+}
+
+.meet_main_btn_box_2{
+    display: flex;
+    justify-content: flex-end;
+    width: 400px;
+    height: 50px;
+    margin-top: 10px;
+}
+
+.meet_main_btn{
+    width: 100px;
+    height: 40px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    color: #ffffff; /* 텍스트 색상 */
+    background-color: #5D5D5D; /* 배경색 */
+    border: none;
+    border-radius: 5px; /* 테두리 모서리 둥글게 만들기 */
+    font-weight: bold; /* 텍스트 굵게 설정 */
+
+}
+
+
+

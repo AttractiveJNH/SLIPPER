@@ -1,0 +1,314 @@
+.container{
+    width: 800px;
+    height: 600px;
+    /* background-color: black; */
+}
+
+.participant_text{
+    width: 700px;
+    height: 80px;
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.write_title{
+    margin-left: 10px;
+    width: 800px;
+    height: 50px;
+    font-size: 16px;
+    display: flex;
+}
+
+.route_text_box{
+    width:500px;
+    display:flex;
+    /* background-color: red; */
+}
+
+
+.bold{
+    font-weight: bold;
+}
+
+.table_container{
+    margin-left: 60px;
+    width: 190px;
+    margin-bottom: 5px;
+    text-align: center;
+    /* background-color:blue; */
+}
+
+
+.table_content{
+    margin: 0;
+    width: auto; /* 테이블의 너비를 내용에 맞게 조정 */
+    text-align: center;
+    border-collapse: collapse;
+
+
+}
+
+.table_content th, .table_content td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+}
+
+
+.table_content th {
+    background-color: #f2f2f2;
+}
+
+.table_box_1{
+    width: 70px;
+}
+
+
+.route_text_box p{
+    margin-left: 5px;
+}
+
+.route_text_box a{
+    color: black;
+    text-decoration: none;
+}
+
+.route_text_box a:visited {
+    color: black;
+}
+
+.participant_list_content{
+    width: 750px;
+    height: 300px;
+    overflow-y: auto; /* 세로 스크롤이 필요한 경우 자동으로 스크롤 생성 */
+    font-size: 18px;
+    border: 2px solid #5D5D5D;
+    border-radius: 5px;
+    /* background-color: red; */
+
+}
+
+.margin_bottom{
+    margin-bottom: 20px;
+}
+
+/* 가로선 */
+.horizontal-line1 {
+    border: 1px solid #CFCFCF;
+    width: 100%;
+    margin: 0px ;
+}
+
+.horizontal-line2_1{
+    border: 1px solid #EAEAEA;
+    width: 100%;
+    margin: 0px ;
+}
+
+.line{
+   width: 750px;
+   height: 5px;
+}
+
+.container_1{
+    width: 750px;
+    height: 50px;
+    display: flex;
+}
+
+.container_2{
+    width: 750px;
+    height: 50px;
+    display: flex;
+
+}
+
+.container_3{
+    width: 750px;
+    height: 50px;
+    /* display: flex; */
+
+}
+
+.display_flex{
+    display: flex;
+}
+
+.title_1{
+    width: 100px;
+    height: 50px;
+    text-align: center;
+    /* background-color: blue; */
+}
+
+.title_2{
+    width: 250px;
+    height: 50px;
+    text-align: center;
+    /* background-color: red; */
+}
+
+.title_3{
+    width: 80px;
+    height: 50px;
+    text-align: center;
+    /* background-color: yellow; */
+}
+
+.title_4{
+    width: 120px;
+    height: 50px;
+    text-align: center;
+    /* background-color: blue; */
+}
+
+
+.content_1{
+    width: 100px;
+    height: 50px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: blue; */
+}
+
+.content_2{
+    width: 250px;
+    height: 50px;
+    text-align: left;
+    display: flex;
+
+    align-items: center;
+    /* background-color: red; */
+}
+
+.content_3{
+    width: 80px;
+    height: 50px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: yellow; */
+}
+
+.content_4{
+    width: 120px;
+    height: 50px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: blue; */
+}
+
+.content_5{
+    width: 200px;
+    height: 50px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: red; */
+}
+
+
+
+#accept_btn{
+    background-color: #3498DB; /* 버튼 배경색 */
+    color: white; /* 텍스트 색상 */
+    border: 1px solid #3498DB; /* 테두리 스타일 및 색상 */
+    padding: 10px 20px; /* 내부 여백 */
+    cursor: pointer; /* 커서 모양 변경 */
+    border-radius: 5px; /* 테두리 둥글게 만들기 */
+    margin-right: 20px; /* 오른쪽 여백 */
+    width: 70px;
+    height: 30px;
+        /* 텍스트 가운데 정렬 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#refuse_btn{
+    background-color: #5E5E5E; /* 버튼 배경색 */
+    color: white; /* 텍스트 색상 */
+    border: 1px solid #5E5E5E; /* 테두리 스타일 및 색상 */
+    padding: 10px 20px; /* 내부 여백 */
+    cursor: pointer; /* 커서 모양 변경 */
+    border-radius: 5px; /* 테두리 둥글게 만들기 */
+
+    width: 70px;
+    height: 30px;
+        /* 텍스트 가운데 정렬 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cancel_btn{
+    background-color: #DC3545; /* 버튼 배경색 */
+    color: white; /* 텍스트 색상 */
+    border: 1px solid #DC3545; /* 테두리 스타일 및 색상 */
+    padding: 10px 20px; /* 내부 여백 */
+    cursor: pointer; /* 커서 모양 변경 */
+    border-radius: 5px; /* 테두리 둥글게 만들기 */
+
+    width: 70px;
+    height: 30px;
+        /* 텍스트 가운데 정렬 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.refuse_cancel_btn{
+    background-color: #F76703; /* 버튼 배경색 */
+    color: white; /* 텍스트 색상 */
+    border: 1px solid #F76703; /* 테두리 스타일 및 색상 */
+    padding: 10px 20px; /* 내부 여백 */
+    cursor: pointer; /* 커서 모양 변경 */
+    border-radius: 5px; /* 테두리 둥글게 만들기 */
+
+    width: 70px;
+    height: 30px;
+        /* 텍스트 가운데 정렬 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.refuse_list_content{
+    width: 750px;
+    height: 300px;
+    overflow-y: auto; /* 세로 스크롤이 필요한 경우 자동으로 스크롤 생성 */
+    font-size: 18px;
+    display: none;
+    border: 2px solid #5D5D5D;
+    border-radius: 5px;
+     /* background-color: blue; */
+}
+
+.toggle-refuse-list{
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-bottom: 20px;
+    background-color: #ccc; /* 버튼 배경색 */
+    color: black; /* 텍스트 색상 */
+    font-weight: bold;
+    border: 1px solid #ccc; /* 테두리 스타일 및 색상 */
+    cursor: pointer; /* 커서 모양 변경 */
+    border-radius: 5px; /* 테두리 둥글게 만들기 */
+
+    width: 110px;
+    height: 30px;
+        /* 텍스트 가운데 정렬 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gap{
+    height: 100px;
+}
