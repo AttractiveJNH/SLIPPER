@@ -80,9 +80,33 @@ public class MyPageController {
     }
 
     @GetMapping("/myArticleList")
-    public String myArticleListP() {
+    public String myArticleListP(Model model, @SessionAttribute(name = "id", required = false) String id) {
+
+        EntreEntity loginEntre = entreService.getLoginEntreByLoginId(id);
+        UserEntity loginUser = userService.getLoginUserById(id);
+
+
+        // 세션값 유무에 따라 헤더변동(true = LogOut / false = 헤더 없음)
+        if (loginEntre != null || loginUser != null) {
+
+            model.addAttribute("id", true);
+
+
+        }
 
         return "myPage/myArticleList";
+
+//    } else
+//
+//    {
+//
+//
+//        return "redirect:/login";
+//
+//
+//    }
+
+
     }
 }
 
