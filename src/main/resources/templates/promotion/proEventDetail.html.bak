@@ -18,11 +18,11 @@
     <!--여기부터 작성하면 됩니다.--><!---->
     <div>
         <div><!--제목-->
-            <h2 style="margin-left:5%;"><span id="categorySpan" th:text="${promotion.promoBrdCategory}" hidden></span>
+            <h2 style="margin-left:5%;"><span id="categorySpan" th:text="${promotions.promoBrdCategory}" hidden></span>
                 <script th:inline="javascript">
                     // 카테고리에 해당하는 숫자를 받으면 화면에 일반, 체험, 이벤트의 문자를 보여주는 스크립트.
                     var categoryText = "";
-                    var promoBrdCategory = /*[[${promotion.promoBrdCategory}]]*/ 0; // 프로모션의 카테고리 값
+                    var promoBrdCategory = /*[[${promotions.promoBrdCategory}]]*/ 0; // 프로모션의 카테고리 값
 
                     switch (promoBrdCategory) {
                         case 0:
@@ -57,12 +57,12 @@
 
                 <div style="display:flex; width:100%;"><!--제목-->
                     <div style="margin-top: -10px;">
-                        <button style="width: 80px; height:30px; margin-top:13px;">
-                            <span id="categorySpan1" th:text="${promotion.promoBrdCategory}" hidden></span>
+                        <button style="width: 80px; height:30px; margin-top:13px;" type="button">
+                            <span id="categorySpan1" th:text="${promotions.promoBrdCategory}" hidden></span>
                             <script th:inline="javascript">
                                 // 카테고리에 해당하는 숫자를 받으면 화면에 일반, 체험, 이벤트의 문자를 보여주는 스크립트.
                                 var categoryText = "";
-                                var promoBrdCategory = /*[[${promotion.promoBrdCategory}]]*/ 0;
+                                var promoBrdCategory = /*[[${promotions.promoBrdCategory}]]*/ 0;
 
                                 switch (promoBrdCategory) {
                                     case 0:
@@ -83,23 +83,26 @@
 
                                 categorySpan.removeAttribute("hidden");
                             </script>
+
                         </button>
                     </div>
-                    <div style="width:200px;"><!--지역-->
-                        <span th:text="${promotion.promoBrdRegion}"></span>
+                    <div style="width: 200px;"><!--지역-->
+                        [<span th:text="${promotions.promoBrdRegion}" style="width:100%;"></span>]
                     </div>
-                    <div th:text="${promotion.promoBrdTitle}" style="width:70%"><!--제목-->
+                    <div th:text="${promotions.promoBrdTitle}" style="width:70%"><!--제목-->
                         제목
                     </div>
                     <div style="width: 10%; margin-left:10px;"><!--조회-->
                         조회수
                     </div>
                     <div style="width: 10%; margin-left:20px;"><!--조회수-->
-                        <span th:text="${promotion.promoBrdViewCount}">700</span>
+                        <span th:text="${promotions.promoBrdViewCount}">700</span>
                     </div>
                 </div>
+
+
             </div><!--첫줄-->
-            <hr>
+            <hr style="width:100%;">
             <div id="1">
                 <div style="width: auto; height: 40px; display:block;"><!--공백줄-->
 
@@ -109,33 +112,74 @@
                 <div>
                     <div class="row2" style="display:flex; width:100%;">
                         <div class="sec_title_box" style="width: 70%;">상호명 : <span
-                                th:text="${promotion.promoBrdBusinessName}"></span></div>
+                                th:text="${promotions.promoBrdBusinessName}"></span></div>
 
-                        <div class="sec_title_box">지역 : <span th:text="${promotion.promoBrdRegion}"></span></div>
+                        <div class="sec_title_box">지역 : <span th:text="${promotions.promoBrdRegion}"></span></div>
                     </div>
                     <hr>
+                    <div class="row3" style="display:flex; width:100%;">
+                        <div class="sec_title_box" style="width:70%">신청 시작일 : <span
+                                th:text="${promotions.promoBrdApplyStartDate}"></span>
+                            || 신청 종료일 : <span th:text="${promotions.promoBrdApplyEndDate}"></span>
+                        </div>
+                        <div></div>
+                        <div class="sec_title_box">체험단 선정일 : <span th:text="${promotions.promoBrdExpSelect}"></span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div>
+                        <div class="sec_title_box">리뷰 제출 기간 : <span
+                                th:text="${promotions.promoBrdExperienceDate}"></span> ~ <span
+                                th:text="${promotions.promoBrdReviewDeadline}"></span></div>
+                    </div>
+                    <hr>
+                    <div style="display:flex;">
+                        <div class="sec_title_box" style="width:70%">제공내역 : <span
+                                th:text="${promotions.promoBrdExperienceProvided}"></span></div>
 
+                        <div>인원 : <span th:text="${promotions.promoBrdApplyParticipants}"></span> / <span
+                                th:text="${promotions.promoBrdMaxParticipants}"></span></div>
+                    </div>
+                    <hr>
                     <div style="width: auto; height: 40px; display:block;"><!--공백줄--></div>
                 </div><!--컨텐츠영역-->
-
+                <hr>
                 <div><!--이미지영역-->
-                    <h3><span th:text="${promotion.promoBrdBusinessName}"></span>리뷰 이벤트 합니다.</h3>
+                    <h3><span th:text="${promotions.promoBrdBusinessName}"></span>리뷰 이벤트 합니다.</h3>
                     <div>
-                        <span th:text="${promotion.promoBrdContent}"></span>
+                        <span th:text="${promotions.promoBrdContent}"></span>
                     </div>
                     <div style="min-width: 150px; max-width: 60%; min-height: 100px; max-height: 40%; border: 1px solid; margin-left:20%;">
-                        <img style="max-width:100%; height: auto;" th:src="${promotion.promoBrdMainImg}">
+                        <img style="max-width:100%; height: auto;" th:src="${promotions.promoBrdMainImg}">
                     </div>
-                </div><!--이미지영역-->
 
+                </div><!--이미지영역-->
+                <form method="post" action="">
+                    <div id="expApp" style="text-align:center; margin-left:50%; margin-top: 30px;"><!--참가신청-->
+                        <div>참가신청</div><!--참가신청 하면 -->
+                        <img src="/images/KakaoTalk_20240112_125342265.png" style="width: 80px;">
+                        <script th:inline="javascript">
+                            var expApp = document.getElementById('expApp');
+
+                            // div를 클릭했을 때 실행되는 함수를 정의합니다.
+                            function showNotification() {
+                                alert('신청 완료 하였습니다!');
+                            }
+
+                            // div에 클릭 이벤트 리스너를 추가합니다.
+                            expApp.addEventListener('click', showNotification);
+                        </script>
+
+                    </div><!--참가신청-->
+                </form>
                 <div style="display:flex;margin-top: 40px; margin-left: 70%;"><!--삭제/수정 버튼 영역-->
                     <div>
-                        <a th:href="@{/promotion/genDelete/{Id}(Id=${promotion.promoBrdPostId})}">
+                        <a th:href="@{/promotion/eventDelete/{Id}(Id=${promotions.promoBrdPostId})}">
                             <button type="reset" style="background-color: gray;">삭제</button>
                         </a>
                     </div>
                     <div>
-                        <a th:href="@{/promotion/genEdit/{Id}(Id=${promotion.promoBrdPostId})}">
+                        <a th:href="@{/promotion/eventEdit/{Id}(Id=${promotions.promoBrdPostId})}">
                             <button type="submit" style="background-color: blue;">수정</button>
                         </a>
                     </div>
@@ -168,18 +212,17 @@
                     <th style="width: 6%; max-width: 6%; border:1px solid;">등록/삭제</th>
                     <th style="width: 24%; max-width: 24%; border:1px solid;">입력 날짜</th>
                 </tr>
-                <tr th:each="proComnt : ${proComnt}"> <!-- 댓글 리스트 보여주는 row -->
-                    <td ><span th:text="${proComnt.userNickName}"></span></td>
-                    <td style="width:55%; max-width: 55%;"><textarea style="width:100%; max-width: 100%;" rows="4" cols="100" th:text="${proComnt.promoBrdComntContent}" readonly></textarea></td>
-                    <td><a th:href="@{/promotion/genComntDelete/{Id}(Id=${proComnt.promoBrdComntId},promoBrdPostId=${proComnt.promoBrdPostId})}"><button>X</button></a></td>
-                    <td><span th:text="${proComnt.promoBrdComntDate}"></span></td>
+                <tr th:each="proComnts : ${promoComnts}"> <!-- 댓글 리스트 보여주는 row -->
+                    <td ><span th:text="${proComnts.userNickName}"></span></td>
+                    <td style="width:55%; max-width: 55%;"><textarea style="width:100%; max-width: 100%;" rows="4" cols="90" th:text="${proComnts.promoBrdComntContent}" readonly></textarea></td>
+                    <td><a th:href="@{/promotion/eventComntDelete/{Id}(Id=${proComnts.promoBrdComntId},promoBrdPostId=${proComnts.promoBrdPostId})}"><button>X</button></a></td>
+                    <td><span th:text="${proComnts.promoBrdComntDate}"></span></td>
                 </tr>
-
                 <tr><!--댓글 작성 부분-->
-                    <form th:action="@{/promotion/genComntSave}" method="post"> <!-- 댓글 작성하는 row -->
-                        <td><input style="width:100%; max-width: 100%;" placeholder="아이디를 입력하세요" name="userId"></td><!--닉네임은 자동으로 들어가야 될 거 같은데. 로그인 했다면 그 로그인 데이터를 가자고 유저정보(유저닉)가져옴.-->
+                    <form th:action="@{/promotion/eventComntSave}" method="post"> <!-- 댓글 작성하는 row -->
+                        <td><input style="width:100%; max-width: 100%;" placeholder="유저넘버를 입력하세요" name="userNum"></td><!--닉네임은 자동으로 들어가야 될 거 같은데. 로그인 했다면 그 로그인 데이터를 가자고 유저정보(유저닉)가져옴.-->
 
-                        <input type="hidden" name="promoBrdPostId" th:value="${promotion.promoBrdPostId}">
+                        <input type="hidden" name="promoBrdPostId" th:value="${promotions.promoBrdPostId}">
 
                         <td><textarea class="form-control" rows="4" cols="100" style="width:100%; max-width: 100%;" name="promoBrdComntContent" placeholder="내용을 입력하세요."></textarea></td><!--입력하는 공간은 딱 여기까지-->
                         <td><button type="submit">등록</button></td>
@@ -195,4 +238,35 @@
         </div><!--댓글 리스트-->
     </div>
 </div><!--댓글-->
+<script>
+
+</script>
+
+
 </html>
+
+<!--                    참가신청js  <script th:inline="javascript"> 이 코드는 나중에 다시-->
+<!--                            var expApp = document.getElementById('expApp');-->
+<!--                -->
+<!--                            // div를 클릭했을 때 실행되는 함수를 정의합니다.-->
+<!--                            function showNotification() {-->
+<!--                                // AJAX를 사용하여 데이터를 백엔드로 전송-->
+<!--                                var xhr = new XMLHttpRequest();-->
+<!--                                xhr.open("POST", "/applyExperience"); // 백엔드의 컨트롤러 매핑 주소-->
+<!--                                xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");-->
+<!--                -->
+<!--                                // 전송할 데이터-->
+<!--                                var data = {-->
+<!--                                    userNum: 1, // 예시로 유저 번호를 1로 설정, 실제로는 세션 등을 통해 유저 정보를 가져와야 합니다.-->
+<!--                                    promoBrdPostId: 123 // 예시로 홍보 게시판 번호를 123으로 설정-->
+<!--                                };-->
+<!--                -->
+<!--                                xhr.send(JSON.stringify(data));-->
+<!--                -->
+<!--                                // 알림 메시지-->
+<!--                                alert('신청 완료 하였습니다!');-->
+<!--                            }-->
+<!--                -->
+<!--                            // div에 클릭 이벤트 리스너를 추가합니다.-->
+<!--                            expApp.addEventListener('click', showNotification);-->
+<!--                        </script>-->

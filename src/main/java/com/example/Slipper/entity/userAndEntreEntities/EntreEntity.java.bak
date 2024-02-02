@@ -57,6 +57,6 @@ public class EntreEntity {
     private String role;
 
     @Column(name = "entrepre_birth_date", columnDefinition = "DATE")
-    private LocalDate entrepreBirthDate; //대표자 생일
+    private String entrepreBirthDate; //대표자 생일
 
 }

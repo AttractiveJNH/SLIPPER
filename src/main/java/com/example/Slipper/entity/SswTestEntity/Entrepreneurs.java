@@ -1,17 +1,19 @@
 package com.example.Slipper.entity.SswTestEntity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.util.Date;
 
-@Entity
-@Table(name="entrepreneurs")
-@Getter
-@Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
+@Entity
+@Table(name = "entrepreneurs")
 public class Entrepreneurs {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +27,7 @@ public class Entrepreneurs {
     private String entrepre_password;
 
     @Column(name ="entrepre_reg_day")
-    private LocalDate entrepre_reg_day;
+    private Date entrepre_reg_day;
 
     @Column(name ="entrepre_business_name")
     private String entrepre_business_name;

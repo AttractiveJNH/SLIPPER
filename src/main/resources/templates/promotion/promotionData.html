@@ -1,9 +1,8 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>-->
 <html
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-
-
+<!--        layout:decorate="~{layouts/layout}">-->
 
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -12,43 +11,52 @@
             integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
             crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
+    <style>
+        @media (max-width: 767px) {
+            .cardBox {
+                flex: 0 0 calc(50% - 20px);
+            }
+        }
+    </style>
 </head>
 
-        <div class="promoWrite"><!-- 글쓰기 버튼 -->
-
-        </div>
-
-
-    <!-- 여기서 부터 홍보 카드가 나타난다. 데이터 받아서 한 페이지당 8개의 카드가 나타나게 페이징처리. -->
-
-    <div id="result">
-        <div class="cardContainer" style="display: flex; flex-wrap: wrap;">
-            <div th:each="promotion : ${promotions}" class="cardBox" style="flex: 0 0 300px; margin: 10px; text-decoration:none; color: #000000;">
-                <div class="card" style="width: 100%; height: 100%; border: 1px solid;">
-                    <!-- 이미지 표시 -->
-                    <img th:src="${promotion.promoBrdMainImg}" class="card-img-top img-fluid" alt="홍보 이미지" style="object-fit: cover; object-position: top; width: 100%; height: 200px;">
-                    <!-- 카드 내용을 표시하는 부분 -->
-                    <div class="card-body">
-                        <h5 class="card-title" th:text="${promotion.promoBrdTitle}"></h5>
-                        <div class="card-text">
-                            <p th:if="${promotion.promoBrdCategory != 0}" class="card-EventEndDate" th:text="'이벤트 종료일: ' + ${promotion.promoBrdEventEndDate}"></p>
-                            <p class="card-BusinessName" th:text="'상호명: ' + ${promotion.promoBrdBusinessName}"></p>
-                            <p th:if="${promotion.promoBrdCategory != 0}" class="card-Participants" th:text="'참여 인원: ' + ${promotion.promoBrdApplyParticipants} + '/' + ${promotion.promoBrdMaxParticipants}"></p>
+    <div id="result" >
+        <div class="cardContainer" style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+            <div th:each="promotion : ${promotions}" class="cardBox" style="flex: 0 0 calc(20% - 5%); margin: 10px;">
+                <!--                <div th:each="promotion, iterStat : ${promotions}" class="cardBox" style="flex: 0 0 calc(20% - 5%); margin: 10px;"-->
+                <!--                 th:if="${iterStat.index < 20}">-->
+                <div class="card" style="width: 350px; height: 100%; border: 1px solid;">
+                    <a th:href="@{/promotion/{genEvent}/{promoBrdPostId}(genEvent=${promotion.promoBrdCategory == 0} ? 'gendetail' : 'eventdetail', promoBrdPostId=${promotion.promoBrdPostId})}" style="text-decoration:none; color: #000000;">
+                        <!-- 이미지 표시 -->
+                        <img th:src="${promotion.promoBrdMainImg}" class="card-img-top img-fluid" alt="홍보 이미지"
+                             style="object-fit: cover; object-position: top; width: 100%; height: 200px; min-height: 200px;">
+                        <!-- 카드 내용을 표시하는 부분 -->
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${promotion.promoBrdTitle}"></h5>
+                            <div class="card-text">
+                                <p th:if="${promotion.promoBrdCategory != 0}" class="card-EventEndDate"
+                                   th:text="'이벤트 종료일: ' + ${promotion.promoBrdEventEndDate}"></p>
+                                <p class="card-BusinessName" th:text="'상호명: ' + ${promotion.promoBrdBusinessName}"></p>
+                                <p th:if="${promotion.promoBrdCategory != 0}" class="card-Participants"
+                                   th:text="'참여 인원: ' + ${promotion.promoBrdApplyParticipants} + '/' + ${promotion.promoBrdMaxParticipants}"></p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
+<!--        <div class="promoPaging"> &lt;!&ndash; 페이징 처리 &ndash;&gt;-->
+<!--            <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">-->
+<!--                <a th:if="${page != nowPage}" th:href="@{/updatePromotion(page = ${page -1})}" th:text="${page}"></a>-->
+<!--                <strong th:if="${page == nowPage}" th:text="${page}"></strong>-->
+<!--            </th:block>-->
+<!--        </div>-->
     </div>
-    <div>
-        <div class="promoPaging"> <!-- 페이징 처리 -->
 
-        </div>
         <div class="promoWrite"> <!-- 글쓰기 버튼 -->
 
         </div>
-    </div>
+
     <div>
         <div> <!-- 검색 제목 + 내용 -->
 
@@ -60,29 +68,73 @@
 
         </div>
     </div>
+
     <script>
-        function updateData() {
+        // 페이지 로드 될 때 실행
+document.addEventListener("DOMContentLoaded", function() {
+// updateData 함수 호출
+updateData();
+});
+
+function updateData() {
 var selectedDistrict = $("#promoBrdRegion").val();
 var selectedCategory = $("#promoBrdCategory").val();
 
+// 게시글 유형이 선택되지 않았을 때
+var dataToSend = {};
+
+if (selectedDistrict !== "") {
+dataToSend.promoBrdRegion = selectedDistrict;
+}
+
+if (selectedCategory !== "") {
+dataToSend.promoBrdCategory = parseInt(selectedCategory);
+}
+
+// 지역과 카테고리 데이터를 컨트롤러에 전달.
 $.ajax({
 type: "GET",
-url: "/updatePromotion",
+url: "/updatePromotion?timestamp=" + new Date().getTime(),
 async: true,
-data: {
-    promoBrdRegion: selectedDistrict,
-    promoBrdCategory: selectedCategory
-},
-contentType : "application/json",
+data: dataToSend,
+contentType: "application/json",
 success: function (data, status, xhr) {
     $("#result").html(data);
+    displayRemainingDays(); // 남은 날짜 표시 함수 호출
 },
 error: function (xhr, status, error) {
     console.error("Error while fetching data: ", error);
 }
 });
+displayRemainingDays();
 }
+
+    // 이벤트 종료일과 현재 날짜 비교하여 남은 날짜를 표시하는 함수
+function displayRemainingDays() {
+$(".card-EventEndDate").each(function() {
+var eventEndDate = new Date($(this).text()); // 이벤트 종료일을 Date 객체로 변환
+var currentDate = new Date(); // 현재 날짜를 Date 객체로 변환
+
+// 남은 날짜 계산.
+var timeDifference = eventEndDate.getTime() - currentDate.getTime();
+var remainingDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
+
+// 결과 표시함.
+if (remainingDays > 0) {
+    $(this).append(" (남은 날짜: " + remainingDays + "일)");
+} else {
+    $(this).append(" (종료된 이벤트입니다.)");
+}
+});
+}
+
 
     </script>
 
-</html>
+<!-- re push -->
+
+
+<!--</html>-->
+
+
+
