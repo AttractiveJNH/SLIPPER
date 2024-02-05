@@ -54,12 +54,10 @@ public class EntreDto {
     @Size(min=3 , max = 10 , message = "닉네임은 3글자 이상 10글자 이하로 입력해주세요.")
     private String entrepreNickName; //대표자 닉네임
 
-    @NotNull(message = "생일을 입력해주세요.")
-    private String entrepreBirthDate; //대표자 생일
-
     private String role;
 
-
+    @NotNull(message = "생일을 입력해주세요.")
+    private LocalDate entrepreBirthDate; //대표자 생일
     
     
 

@@ -20,6 +20,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@900&display=swap" rel="stylesheet">
+    <!--부트스트랩 스크립트-->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
+            integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
+            crossorigin="anonymous"></script>
 
     <title>SLIPPER</title>
 
@@ -27,6 +34,8 @@
 
 
 <div th:fragment="header">
+
+    <!--로그인 안됐을때 헤더 상황-->
     <div th:unless="${id}">
 
         <div class="wrapper">
@@ -56,10 +65,29 @@
             </form>
             <div class="log"><a href="/login" style="color: white">Log In</a></div>
         </div>
+
+        <div class="header_under">
+            <ul class="lists">
+                <li>
+                    <a href="#">일반</a>
+                </li>
+                <li>
+                    <a href="/meeting/main">모임</a>
+                </li>
+                <li>
+                    <a href="/promotion">홍보</a>
+                </li>
+                <li>
+                    <a href="#">리뷰</a>
+                </li>
+            </ul>
+        </div>
     </div>
 
+    <!--로그인 했을때 헤더 상황-->
+
     <div th:if="${id}">
-        <!--    <div  >-->
+
 
         <div class="wrapper">
             <div class="title">
@@ -88,24 +116,26 @@
             </form>
             <div class="log"><a href="/logOut" style="color: white">LogOut</a></div>
         </div>
+
+        <div class="header_under">
+            <ul class="lists">
+                <li>
+                    <a href="#">일반</a>
+                </li>
+                <li>
+                    <a href="/meeting/main">모임</a>
+                </li>
+                <li>
+                    <a href="/promotion">홍보</a>
+                </li>
+                <li>
+                    <a href="#">리뷰</a>
+                </li>
+            </ul>
+        </div>
     </div>
 
-    <div class="header_under">
-        <ul class="lists">
-            <li>
-                <a href="#">일반</a>
-            </li>
-            <li>
-                <a href="#">모임</a>
-            </li>
-            <li>
-                <a th:href="@{/promotion}">홍보</a>
-            </li>
-            <li>
-                <a href="#">리뷰</a>
-            </li>
-        </ul>
-    </div>
+
 </div>
 
 

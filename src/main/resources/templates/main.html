@@ -7,12 +7,18 @@
 >
 
 <head>
+    <meta charset="utf-8">
 
+<!--    <link-->
+<!--            rel="stylesheet"-->
+<!--            href="/css/baseStyle.css"-->
+<!--            th:href="@{/css/baseStyle.css}"-->
+<!--    />-->
     <link rel="stylesheet" href="/css/mainBase.css" th:href="@{/css/mainBase.css}">
 
 </head>
 
-<body>
+
 <div layout:fragment="content">
     <div class="mainContainer">
         <!--일반 게시판 -->
@@ -20,14 +26,14 @@
         <div class="box">
 
             <div class="inner box1">
-                <ul>
+                <ul class="liBox">
                     <li><a href="#">제목 제목 제목 제목 제목 제목 제목 제목 제목 제목</a></li>
                     <li><a href="#">제목 제목 제목 제목 제목 제목 제목 제목 제목 제목</a></li>
                     <li><a href="#">제목 제목 제목 제목 제목 제목 제목 제목 제목 제목</a></li>
                 </ul>
             </div>
             <div class="inner box2">
-                <ul>
+                <ul  class="liBox">
                     <li>
                         <a href="#">제목인데요제목이에요제목이라고요</a>
                     </li>
@@ -46,14 +52,14 @@
         <h1>모임</h1>
         <div class="box">
             <div class="inner box1">
-                <ul>
+                <ul  class="liBox">
                     <li><a href="#">제목 제목 제목 제목 제목</a></li>
                     <li><a href="#">제목 제목 제목 제목 제목</a></li>
                     <li><a href="#">제목 제목 제목 제목 제목</a></li>
                 </ul>
             </div>
             <div class="inner box2">
-                <ul>
+                <ul  class="liBox">
                     <li><a href="#">제목 제목 제목 제목 제목</a></li>
                     <li><a href="#">제목 제목 제목 제목 제목</a></li>
                     <li><a href="#">제목 제목 제목 제목 제목</a></li>
@@ -149,5 +155,5 @@
         </div>
     </div>
 </div>
-</body>
+
 </html>

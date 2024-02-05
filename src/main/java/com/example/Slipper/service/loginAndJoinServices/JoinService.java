@@ -42,7 +42,7 @@ public class JoinService {
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setUserBirthDate(userDto.getUserBirthDate());
         user.setUserName(userDto.getUserName());
-         user.setUserLocation(userDto.getUserLocation() != null ? userDto.getUserLocation().replace(",","") : null);
+        user.setUserLocation(userDto.getUserLocation() != null ? userDto.getUserLocation().replace(",","") : null);
         user.setUserPhone(userDto.getUserPhone());
         user.setUserNickName(userDto.getUserNickName());
         user.setRole("USER");
@@ -67,12 +67,11 @@ public class JoinService {
         entre.setEntrepreRegDay(entreDto.getEntrepreRegDay());
         entre.setEntrepreBusinessName(entreDto.getEntrepreBusinessName());
         entre.setEntrepreAddress(entreDto.getEntrepreAddress());
+        entre.setEntrepreBirthDate(entreDto.getEntrepreBirthDate());
         entre.setRole("ENTREPRENEUR");
 
         entreRepository.save(entre);
     }
 
-    
-    // 비밀번호 암호화 빈
 
 }

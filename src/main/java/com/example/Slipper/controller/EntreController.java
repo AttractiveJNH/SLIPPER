@@ -4,6 +4,7 @@ package com.example.Slipper.controller;
 import com.example.Slipper.dto.EntreDto;
 import com.example.Slipper.service.loginAndJoinServices.EntreService;
 import com.example.Slipper.service.loginAndJoinServices.JoinService;
+import com.example.Slipper.service.loginAndJoinServices.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -23,28 +24,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Slf4j
 public class EntreController {
 
-    @Autowired
-    private JoinService joinService;
 
-    @Autowired
-    private EntreService entreService;
-//    // 사업자 회원 가입 맵핑
-//    @GetMapping("/entrepre_join")
-//    public String entreJoinP(){
-//        return "signup/entre_signup";
-//    }
-//
-//    //회원가입 성공 시 맵핑
-//    @PostMapping("/entrepre_join")
-//    public String entreJoinProc(EntreDto entreDto){
-//
-//
-//
-//        log.info(entreDto.getId());
-//
-//        joinService.entreJoinProcess(entreDto);
-//        return "redirect:/login";
-//    }
+    private final JoinService joinService;
+
+
+    private final EntreService entreService;
+
+
+    private final UserService userService;
+
+    public EntreController(JoinService joinService, EntreService entreService, UserService userService) {
+
+        this.joinService = joinService;
+        this.entreService = entreService;
+        this.userService = userService;
+
+    }
+
 
 
     // 로그인 페이지 맵핑
@@ -52,7 +48,7 @@ public class EntreController {
 
     // 유저 회원 가입
     @GetMapping("/entre_join")
-    public String entreJoinP(Model model){
+    public String entreJoinP(Model model) {
 
         model.addAttribute("entreDto", new EntreDto());
         return "signup/entre_signup";
@@ -60,27 +56,24 @@ public class EntreController {
 
 
     @PostMapping("/entre_join")
-    public String entreJoinProc(@Valid @ModelAttribute EntreDto entreDto, BindingResult bindingResult, Model model){
+    public String entreJoinProc(@Valid @ModelAttribute EntreDto entreDto, BindingResult bindingResult, Model model) {
 
         // loginId 중복 체크
-        if(entreService.checkLoginIdDuplicate(entreDto.getId())) {
-            bindingResult.addError(new FieldError("entreDto", "id", "로그인 아이디가 중복됩니다."));
+        if (entreService.checkLoginIdDuplicate(entreDto.getId()) || userService.checkLoginIdDuplicate(entreDto.getId())) {
+            bindingResult.addError(new FieldError("entreDto", "id", "이미 가입된 아이디입니다. "));
         }
         // 닉네임 중복 체크
-        if(entreService.checkNicknameDuplicate(entreDto.getEntrepreNickName())) {
+        if (entreService.checkNicknameDuplicate(entreDto.getEntrepreNickName())) {
             bindingResult.addError(new FieldError("entreDto", "entrepreNickName", "닉네임이 중복됩니다."));
         }
         // password와 passwordCheck가 같은지 체크
-        if(!entreDto.getPassword().equals(entreDto.getPasswordCheck())) {
+        if (!entreDto.getPassword().equals(entreDto.getPasswordCheck())) {
             bindingResult.addError(new FieldError("entreDto", "passwordCheck", "바밀번호가 일치하지 않습니다."));
         }
 
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return "signup/entre_signup";
         }
-
-
-
 
 
         log.info(entreDto.getId());
@@ -94,7 +87,7 @@ public class EntreController {
         model.addAttribute("loginType", "Slipper");
 
         HttpSession session = request.getSession(false);  // Session이 없으면 null return
-        if(session != null) {
+        if (session != null) {
             session.invalidate();
         }
         return "redirect:/main";

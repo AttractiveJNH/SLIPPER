@@ -1,6 +1,8 @@
 package com.example.Slipper.controller;
 
+import com.example.Slipper.dto.EntreDto;
 import com.example.Slipper.dto.LoginRequest;
+import com.example.Slipper.dto.UserDto;
 import com.example.Slipper.entity.userAndEntreEntities.EntreEntity;
 import com.example.Slipper.entity.userAndEntreEntities.UserEntity;
 import com.example.Slipper.repository.userAndEntreRepositories.EntreRepository;
@@ -16,6 +18,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.Optional;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -25,6 +30,10 @@ public class MainController {
     private final UserService userService;
 
     private final EntreService entreService;
+
+    private final UserRepository userRepository;
+
+    private final EntreRepository entreRepository;
 
 
 
@@ -49,6 +58,8 @@ public class MainController {
         return "main";
     }
 
+
+    //로그인 Url
     @GetMapping("/login")
     public String loginP(Model model) {
 
@@ -81,6 +92,7 @@ public class MainController {
         // 세션을 생성하기 전에 기존의 세션 파기
         httpServletRequest.getSession().invalidate();
         HttpSession session = httpServletRequest.getSession(true);  // Session이 없으면 생성
+
         // 세션에 userId를 넣어줌
 
         if (user != null) {
@@ -107,6 +119,7 @@ public class MainController {
         return "redirect:/main";
     }
 
+    //로그아웃 Url
     @GetMapping("/logOut")
     public String logout(HttpServletRequest request, Model model) {
         model.addAttribute("loginType", "slipper");
@@ -117,5 +130,19 @@ public class MainController {
         }
         return "redirect:/main";
     }
+//
+//    //아이디 찾기 Url
+//    @GetMapping("/findId")
+//    public String findId(HttpServletRequest request, Model model, EntreDto entreDto,
+//                         UserDto userDto, @RequestParam LocalDate birthDate, @RequestParam String name){
+//
+//        try {
+//            entreDto.setEntrepreBirthDate(birthDate);
+//            entreDto.setEntrepreName(name);
+//            EntreDto
+//        }
+//
+//        return "";
+//    }
 
 }

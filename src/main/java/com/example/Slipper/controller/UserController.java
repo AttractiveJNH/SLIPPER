@@ -2,6 +2,7 @@ package com.example.Slipper.controller;
 
 import com.example.Slipper.dto.UserDto;
 import com.example.Slipper.repository.userAndEntreRepositories.UserRepository;
+import com.example.Slipper.service.loginAndJoinServices.EntreService;
 import com.example.Slipper.service.loginAndJoinServices.JoinService;
 import com.example.Slipper.service.loginAndJoinServices.UserService;
 import jakarta.validation.Valid;
@@ -31,6 +32,8 @@ public class UserController {
 
     private final UserService userService;
 
+    private final EntreService entreService;
+
     // 로그인 페이지 맵핑
 
 
@@ -45,8 +48,8 @@ public class UserController {
     public String userJoinProc(@Valid @ModelAttribute UserDto userDto, BindingResult bindingResult, Model model){
 
         // loginId 중복 체크
-        if(userService.checkLoginIdDuplicate(userDto.getId())) {
-            bindingResult.addError(new FieldError("userDto", "userId", "로그인 아이디가 중복됩니다."));
+        if(userService.checkLoginIdDuplicate(userDto.getId()) || entreService.checkLoginIdDuplicate(userDto.getId())) {
+            bindingResult.addError(new FieldError("userDto", "id", "이미 가입된 아이디입니다."));
         }
         // 닉네임 중복 체크
         if(userService.checkNicknameDuplicate(userDto.getUserNickName())) {
