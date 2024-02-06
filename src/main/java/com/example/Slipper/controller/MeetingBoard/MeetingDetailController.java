@@ -140,17 +140,30 @@ public class MeetingDetailController {
 
     // (팝업창에서) 모임 게시판 참가 수락
     @PostMapping("/meetApplyAccept/{meetNum}/{userNum}")
-    public String acceptAction(@PathVariable Integer meetNum, @PathVariable Integer userNum) {
-        // 참가 상태 업데이트
-        MeetingBoardApplication applyAcceptUser = meetingApplicationRepository.findApplyUser(meetNum, userNum);
-        applyAcceptUser.setMeet_apply_status(1);
-        meetingApplicationRepository.save(applyAcceptUser);
-
-        // 현재 참가 인원 +1
+    public String acceptAction(@PathVariable Integer meetNum, @PathVariable Integer userNum, RedirectAttributes redirectAttributes) {
+        // 모임 게시판 정보
         MeetingBoard meetInfo = meetingBoardRepository.findById(meetNum).orElse(null);
+
+        // 현재 참가 신청 인원 및 최대 참가 신청 인원
         int currentParticipants = meetInfo.getMeet_now_participants();
-        meetInfo.setMeet_now_participants(currentParticipants + 1);
-        meetingBoardRepository.save(meetInfo);
+        int maxParticipants = meetInfo.getMeet_max_participants();
+
+        // 참가 신청 인원과 최대 참가 신청 인원에 따른 결과
+        if(currentParticipants < maxParticipants){
+            // 참가 상태 업데이트
+            MeetingBoardApplication applyAcceptUser = meetingApplicationRepository.findApplyUser(meetNum, userNum);
+            applyAcceptUser.setMeet_apply_status(1);
+            meetingApplicationRepository.save(applyAcceptUser);
+            // 현재 참가 신청인원 +1
+            meetInfo.setMeet_now_participants(currentParticipants + 1);
+            meetingBoardRepository.save(meetInfo);
+        } else if(currentParticipants == maxParticipants) {
+            redirectAttributes.addFlashAttribute("msg","현재 참가 인원이 최대 참가 인원과 같습니다.");
+        } else {
+            // 이부분은 사실상 에러. 실행되어선 안되는 경우의 수.
+            redirectAttributes.addFlashAttribute("msg","현재 참가 인원이 최대 참가 인원을 초과했습니다.");
+        }
+
 
         return "redirect:/meeting/apply/popup/{meetNum}";
     }

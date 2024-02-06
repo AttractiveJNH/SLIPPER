@@ -19,32 +19,32 @@
             <div class="middle_container">
                 <div class="region_box">
                     <select id="region" name="region" onchange="submitForm()">
-                        <option value="0" selected>지역 선택</option>
-                        <option value="1">중구</option>
-                        <option value="2">서구</option>
-                        <option value="3">동구</option>
-                        <option value="4">영도구</option>
-                        <option value="5">부산진구</option>
-                        <option value="6">동래구</option>
-                        <option value="7">남구</option>
-                        <option value="8">북구</option>
-                        <option value="9">해운대구</option>
-                        <option value="10">사하구</option>
-                        <option value="11">금정구</option>
-                        <option value="12">강서구</option>
-                        <option value="13">연제구</option>
-                        <option value="14">수영구</option>
-                        <option value="15">사상구</option>
-                        <option value="16">기장군</option>
+                        <option value="0" th:selected="${region == 0}">지역 선택</option>
+                        <option value="1" th:selected="${region == 1}">중구</option>
+                        <option value="2" th:selected="${region == 2}">서구</option>
+                        <option value="3" th:selected="${region == 3}">동구</option>
+                        <option value="4" th:selected="${region == 4}">영도구</option>
+                        <option value="5" th:selected="${region == 5}">부산진구</option>
+                        <option value="6" th:selected="${region == 6}">동래구</option>
+                        <option value="7" th:selected="${region == 7}">남구</option>
+                        <option value="8" th:selected="${region == 8}">북구</option>
+                        <option value="9" th:selected="${region == 9}">해운대구</option>
+                        <option value="10" th:selected="${region == 10}">사하구</option>
+                        <option value="11" th:selected="${region == 11}">금정구</option>
+                        <option value="12" th:selected="${region == 12}">강서구</option>
+                        <option value="13" th:selected="${region == 13}">연제구</option>
+                        <option value="14" th:selected="${region == 14}">수영구</option>
+                        <option value="15" th:selected="${region == 15}">사상구</option>
+                        <option value="16" th:selected="${region == 16}">기장군</option>
                     </select>
                 </div>
 
 
                 <div class="category_box">
                     <select id="category" name="category" onchange="submitForm()">
-                        <option value="0" selected>게시글 유형</option>
-                        <option value="1">온라인</option>
-                        <option value="2">오프라인</option>
+                        <option value="0" th:selected="${category == 0}">게시글 유형</option>
+                        <option value="1" th:selected="${category == 1}">온라인</option>
+                        <option value="2" th:selected="${category == 2}">오프라인</option>
                     </select>
                 </div>
 
@@ -155,23 +155,28 @@
 
         <div class="paging_box">
             <ul class="pagination" th:with="start=${T(java.lang.Math).floor(boardList.number/10)*10 + 1},
-                        last=(${start + 9 < boardList.totalPages ? start + 9 : boardList.totalPages})">
-                <li><a th:href="@{/meeting/main(page=1)}"><<</a></li>
+                    last=(${start + 9 < boardList.totalPages ? start + 9 : boardList.totalPages})">
+                <li>
+                    <a th:href="@{/meeting/sorting(region=${region}, category=${category}, page=1)}"><<</a>
+                </li>
+
                 <li th:class="${boardList.first} ? 'disabled'">
-                    <a th:href="${boardList.first} ? '#' :@{/meeting/main(page=${boardList.number})}"><</a>
+                    <a th:href="${boardList.first} ? '#' : @{/meeting/sorting(region=${region}, category=${category}, page=${boardList.number})}"><</a>
                 </li>
 
                 <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == boardList.number + 1} ? 'active'">
-                    <a th:text="${page}" th:href="@{/meeting/main(page=${page})}"></a>
+                    <a th:text="${page}" th:href="@{/meeting/sorting(region=${region}, category=${category}, page=${page})}"></a>
                 </li>
 
                 <li th:class="${boardList.last} ? 'disabled'">
-                    <a th:href="${boardList.last} ? '#' : @{/meeting/main(page=${boardList.number + 2})}">></a>
+                    <a th:href="${boardList.last} ? '#' : @{/meeting/sorting(region=${region}, category=${category}, page=${boardList.number + 2})}">></a>
                 </li>
-                <li><a th:href="@{/meeting/main(page=${boardList.totalPages})}">>></a></li>
+
+                <li>
+                    <a th:href="@{/meeting/sorting(region=${region}, category=${category}, page=${boardList.totalPages})}">>></a>
+                </li>
             </ul>
         </div>
-
 
         <div class="search_container">
             <form action="/meeting/main/search" method="GET">
@@ -186,7 +191,6 @@
         </div>
 
         <div class="margin_bottom"></div>
-
 
     </div>
 

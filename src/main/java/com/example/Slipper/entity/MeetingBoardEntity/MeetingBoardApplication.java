@@ -32,8 +32,8 @@ public class MeetingBoardApplication {
     private Entrepreneurs entrepre_num;
 
     @ManyToOne(targetEntity = MeetingBoard.class)
-    @JoinColumn(name = "meet_num", referencedColumnName = "meet_num")
-    private MeetingBoard meet_num;
+    @JoinColumn(name = "meetnum", referencedColumnName = "meetnum")
+    private MeetingBoard meetNum;
 
     // 신청 상태 =  0:신청  1:수락  2:거절
     @Column(name = "meet_apply_status")

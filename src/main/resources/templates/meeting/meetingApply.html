@@ -22,7 +22,7 @@
         <div class="route_text_box">
             <p>모임 게시판 -></p>
             <p th:text="'[' + ${meetInfo.meet_category == 1 ? '온라인' : (meetInfo.meet_category == 2 ? '오프라인' : '')} + ']'"></p>
-            <a th:href="@{'/meeting/detail/' + ${meetInfo.meet_num}}" target="_blank">
+            <a th:href="@{'/meeting/detail/' + ${meetInfo.meetNum}}" target="_blank">
                 <p th:text="${meetInfo.meet_title}" class="bold"></p>
             </a>
         </div>
@@ -116,7 +116,7 @@
 
                     <!--취소 버튼-->
                     <div class="content_5">
-                        <form th:action="@{/meetApplyCancel/{meetNum}/{userNum}(meetNum=${meetInfo.meet_num}, userNum=${user.user_num.user_num})}" method="post">
+                        <form th:action="@{/meetApplyCancel/{meetNum}/{userNum}(meetNum=${meetInfo.meetNum}, userNum=${user.user_num.user_num})}" method="post">
                             <button class="cancel_btn">취소</button>
                         </form>
                     </div>
@@ -159,12 +159,12 @@
 
                         <div class="content_5">
                             <!--수락 버튼-->
-                            <form id="accept_form" th:action="@{/meetApplyAccept/{meetNum}/{userNum}(meetNum=${meetInfo.meet_num}, userNum=${user.user_num.user_num})}" method="post">
+                            <form id="accept_form" th:action="@{/meetApplyAccept/{meetNum}/{userNum}(meetNum=${meetInfo.meetNum}, userNum=${user.user_num.user_num})}" method="post">
                                 <button id="accept_btn">수락</button>
                             </form>
 
                             <!--거절 버튼-->
-                            <form th:action="@{/meetApplyRefuse/{meetNum}/{userNum}(meetNum=${meetInfo.meet_num}, userNum=${user.user_num.user_num})}" method="post">
+                            <form th:action="@{/meetApplyRefuse/{meetNum}/{userNum}(meetNum=${meetInfo.meetNum}, userNum=${user.user_num.user_num})}" method="post">
                                 <button id="refuse_btn">거절</button>
                             </form>
                         </div>
@@ -233,7 +233,7 @@
 
                     <div class="content_5">
                         <!--취소 버튼-->
-                        <form th:action="@{/meetApplyRefuseCancel/{meetNum}/{userNum}(meetNum=${meetInfo.meet_num}, userNum=${user.user_num.user_num})}" method="post">
+                        <form th:action="@{/meetApplyRefuseCancel/{meetNum}/{userNum}(meetNum=${meetInfo.meetNum}, userNum=${user.user_num.user_num})}" method="post">
                             <button class="refuse_cancel_btn">취소</button>
                         </form>
                     </div>
@@ -250,6 +250,13 @@
 
 </div>
 
+
+<script>
+    var msg = "[[${msg}]]";
+    if (msg) {
+        alert(msg);
+    }
+</script>
 <script src="/js/meeting/meetingApply.js"></script>
 
 </body>

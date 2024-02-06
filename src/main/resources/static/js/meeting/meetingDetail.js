@@ -1,3 +1,4 @@
+// 신청하기 or 신청자 보기
 // 링크 클릭 시 실행되는 함수
 function openWindow(url) {
   // 화면 중앙을 기준으로 창의 위치 계산
@@ -28,54 +29,10 @@ function applySubmitForm(meetNum) {
     document.getElementById('meet_apply').submit();
 }
 
-// 댓글 입력란 동적으로 크기 조절 및 글자수 제한
-//var textarea = document.querySelector('.comment_inbox_text');
-//var maxLength = 100;
-//
-//function limitLength() {
-//    if (textarea.value.length > maxLength) {
-//        textarea.value = textarea.value.substring(0, maxLength);
-//    }
-//}
-//
-//textarea.addEventListener('input', limitLength);
-//
-//function adjustHeight() {
-//    textarea.style.height = 'auto';
-//    textarea.style.height = Math.min(textarea.scrollHeight, 300) + 'px';
-//}
-//
-//textarea.addEventListener('input', adjustHeight);
-//adjustHeight();
-//
 
 
-//---------------
-//var textarea = document.querySelector('.comment_inbox_text');
-//var currentCharCountElement = document.querySelector('.current_char_count');
-//var maxLength = 100;
-//
-//function updateCharCount() {
-//    var currentCharCount = textarea.value.length;
-//    currentCharCountElement.textContent = currentCharCount;
-//}
-//
-//textarea.addEventListener('input', function() {
-//    limitLength();
-//    updateCharCount();
-//});
-//
-//function limitLength() {
-//    if (textarea.value.length > maxLength) {
-//        textarea.value = textarea.value.substring(0, maxLength);
-//    }
-//}
-//
-//// 페이지 로드 시 초기 글자 수 업데이트
-//updateCharCount();
 
-
-//-------------------------------------!!
+//댓글 관련
 
 var textarea = document.querySelector('.comment_inbox_text');
 var currentCharCountElement = document.querySelector('.current_char_count');

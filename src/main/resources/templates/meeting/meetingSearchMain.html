@@ -155,20 +155,26 @@
 
         <div class="paging_box">
             <ul class="pagination" th:with="start=${T(java.lang.Math).floor(boardList.number/10)*10 + 1},
-                        last=(${start + 9 < boardList.totalPages ? start + 9 : boardList.totalPages})">
-                <li><a th:href="@{/meeting/main(page=1)}"><<</a></li>
+                    last=(${start + 9 < boardList.totalPages ? start + 9 : boardList.totalPages})">
+                <li>
+                    <a th:href="@{/meeting/main/search(search_option=${searchOption}, search=${search}, page=1)}"><<</a>
+                </li>
+
                 <li th:class="${boardList.first} ? 'disabled'">
-                    <a th:href="${boardList.first} ? '#' :@{/meeting/main(page=${boardList.number})}"><</a>
+                    <a th:href="${boardList.first} ? '#' : @{/meeting/main/search(search_option=${searchOption}, search=${search}, page=${boardList.number})}"><</a>
                 </li>
 
                 <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == boardList.number + 1} ? 'active'">
-                    <a th:text="${page}" th:href="@{/meeting/main(page=${page})}"></a>
+                    <a th:text="${page}" th:href="@{/meeting/main/search(search_option=${searchOption}, search=${search}, page=${page})}"></a>
                 </li>
 
                 <li th:class="${boardList.last} ? 'disabled'">
-                    <a th:href="${boardList.last} ? '#' : @{/meeting/main(page=${boardList.number + 2})}">></a>
+                    <a th:href="${boardList.last} ? '#' : @{/meeting/main/search(search_option=${searchOption}, search=${search}, page=${boardList.number + 2})}">></a>
                 </li>
-                <li><a th:href="@{/meeting/main(page=${boardList.totalPages})}">>></a></li>
+
+                <li>
+                    <a th:href="@{/meeting/main/search(search_option=${searchOption}, search=${search}, page=${boardList.totalPages})}">>></a>
+                </li>
             </ul>
         </div>
 
@@ -180,7 +186,7 @@
                     <option value="2">제목+내용</option>
                     <option value="3">글쓴이</option>
                 </select>
-                <input type="text" placeholder="검색어를 입력하세요" name="search">
+                <input type="text" placeholder="검색어를 입력하세요" name="search" th:value="${search}">
                 <button type="submit">검색</button>
             </form>
         </div>

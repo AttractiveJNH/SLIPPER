@@ -90,7 +90,7 @@
 
             <!-- 신청하기 -->
             <div class="apply_box" th:if="${Writer == 2}">
-                <form id="meet_apply" th:action="@{/meeting/application/{meetNum}(meetNum=${meetInfo.meet_num})}" method="post">
+                <form id="meet_apply" th:action="@{/meeting/application/{meetNum}(meetNum=${meetInfo.meetNum})}" method="post">
                     <input type="hidden" name="meet_apply_status" value="0">
                     <input type="hidden" name="nick_name" th:value="${userInfo.user_nick_name}">
                     <input type="hidden" name="birthdate" th:value="${userInfo.user_birthdate}">

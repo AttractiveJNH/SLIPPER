@@ -24,8 +24,8 @@ import java.time.LocalDateTime;
 public class MeetingBoard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="meet_num")
-    private Integer meet_num;
+    @Column(name ="meetnum")
+    private Integer meetNum;
 
     @ManyToOne(targetEntity = Users.class)
     @JoinColumn(name = "user_num", referencedColumnName = "user_num")
