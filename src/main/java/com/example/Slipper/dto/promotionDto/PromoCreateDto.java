@@ -30,7 +30,7 @@ public class PromoCreateDto { // 체험, 이벤트 홍보 게시판 글 작성 D
     private LocalDate promoBrdExperienceDate; // 체험일
     private String promoBrdTitle; // 제목
     private String promoBrdContent; // 내용
-    private String promoBrdMainImg; // 대표이미지
+    private String promoBrdMainImg; // 홍보 메인에 나올 메인 이미지
     private String promoBrdExperienceProvided; // 체험 제공
     private LocalDate promoBrdReviewStart; // 리뷰 작성 시작일
     private LocalDate promoBrdReviewDeadline; // 리뷰 작성 마감일
@@ -38,6 +38,8 @@ public class PromoCreateDto { // 체험, 이벤트 홍보 게시판 글 작성 D
     private String promoBrdArea; // 장소
     private int promoBrdViewCount; // 조회수
 
+
+    // 홍보 게시글의 경우 사업자 유저만 사용할 수 있기 때문에 id값은 사업자 아이디만 의미함.
     public Promotion toEntity(String id){
         return new Promotion(null, id, promoBrdCategory, promoBrdApplyStartDate,
                 promoBrdApplyEndDate, promoBrdEventStartDate, promoBrdEventEndDate, promoBrdExpSelect,

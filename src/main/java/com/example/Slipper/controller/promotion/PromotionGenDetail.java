@@ -1,16 +1,21 @@
 package com.example.Slipper.controller.promotion;
 
+import com.example.Slipper.entity.userAndEntreEntities.EntreEntity;
 import com.example.Slipper.entity.userAndEntreEntities.UserEntity;
 import com.example.Slipper.entity.promotionEntity.Promotion;
 import com.example.Slipper.entity.promotionEntity.PromotionBoardComment;
 import com.example.Slipper.repository.promotionRepository.PromotionBoardCommentRepository;
 import com.example.Slipper.repository.promotionRepository.PromotionRepository;
+import com.example.Slipper.repository.userAndEntreRepositories.EntreRepository;
+import com.example.Slipper.service.loginAndJoinServices.EntreService;
+import com.example.Slipper.service.loginAndJoinServices.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import java.util.ArrayList;
 
@@ -24,23 +29,43 @@ public class PromotionGenDetail {
     @Autowired
     PromotionBoardCommentRepository promotionBoardCommentRepository;
 
+    @Autowired
+    EntreService entreService;
+
+    @Autowired
+    UserService userService;
+
     @GetMapping("/promotion/gendetail/{promoBrdPostId}")
-    public String proGenDetail(@PathVariable (name = "promoBrdPostId") int promoBrdPostId, Model model){
+    public String proGenDetail(@PathVariable(name = "promoBrdPostId") int promoBrdPostId, Model model,
+                               @SessionAttribute(name = "id", required = false) String id) {
 
+        EntreEntity loginEntre = entreService.getLoginEntreByLoginId(id);
+        UserEntity loginUser = userService.getLoginUserById(id);
 
-        // 홍보 데이터 불러오기.
-        Promotion promotion = promotionRepository.findByPromoBrdPostId(promoBrdPostId);
-        model.addAttribute("promotion", promotion);
+        if (loginEntre != null || loginUser != null) {
 
-        // 조회수
-        promotion.setPromoBrdViewCount(promotion.getPromoBrdViewCount() + 1);
-        promotionRepository.save(promotion);
+            model.addAttribute("id", true);
 
-        // 댓글 데이터 불러오기.
-        ArrayList<PromotionBoardComment> proComnt = promotionBoardCommentRepository.findByPromoBrdPostId(promoBrdPostId);
-        model.addAttribute("proComnt", proComnt);
+            // 홍보 데이터 불러오기.
+            Promotion promotion = promotionRepository.findByPromoBrdPostId(promoBrdPostId);
+            model.addAttribute("promotion", promotion);
 
-        return "/promotion/proGenDetail";
+            // 조회수
+            promotion.setPromoBrdViewCount(promotion.getPromoBrdViewCount() + 1);
+            promotionRepository.save(promotion);
+
+            // 댓글 데이터 불러오기.
+            ArrayList<PromotionBoardComment> proComnt = promotionBoardCommentRepository.findByPromoBrdPostId(promoBrdPostId);
+            model.addAttribute("proComnt", proComnt);
+
+            //세션 아이디와 댓글 작성자의 아이디 비교하여 삭제버튼 표시 여부 설정
+            model.addAttribute("sessionId", id);
+
+            return "promotion/proGenDetail";
+
+        }
+
+        return "/promotion/error";
+
     }
-
 }

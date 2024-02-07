@@ -19,14 +19,67 @@
                 flex: 0 0 calc(50% - 20px);
             }
         }
+
+        #promoBrdRegion{
+        width: 150px;
+        height: 50px;
+        padding: 5px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        }
+
+        #promoBrdCategory{
+        width: 150px;
+        height: 50px;
+        padding: 5px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        }
+
+        #writeGen{
+        margin-left: 50%;
+        }
+
+        #writeEvent{
+        margin-left: 3%;
+        }
+
+        .proGenCreate{
+        display: inline-block;
+        padding: 10px 20px; /* 내부 여백 조정 */
+        text-decoration: none; /* 기본 밑줄 제거 */
+        color: #ffffff; /* 텍스트 색상 */
+        background-color: #2ECC71; /* 배경색 */
+        border: 1px solid #2ECC71; /* 테두리 스타일과 색상 */
+        border-radius: 5px; /* 테두리 모서리 둥글게 만들기 */
+        font-weight: bold; /* 텍스트 굵게 설정 */
+        width:150px;
+        height:50px;
+        }
+
+        .proEventCreate{
+        display: inline-block;
+        padding: 10px 20px; /* 내부 여백 조정 */
+        text-decoration: none; /* 기본 밑줄 제거 */
+        color: #ffffff; /* 텍스트 색상 */
+        background-color: #2ECC71; /* 배경색 */
+        border: 1px solid #2ECC71; /* 테두리 스타일과 색상 */
+        border-radius: 5px; /* 테두리 모서리 둥글게 만들기 */
+        font-weight: bold; /* 텍스트 굵게 설정 */
+        width: 150px;
+        height:50px;
+        }
+
     </style>
 </head>
 <div layout:fragment="content">
 
     <div>
-        <h3>홍보 게시판</h3>
+        <h3 style="margin-left:5%;">홍보 게시판</h3>
     </div>
-    <div class="dropdownContainer" style="display: flex; margin-bottom: 50px;">
+    <div class="dropdownContainer" style="display: flex; margin-bottom: 50px; margin-left: 5%;">
         <div class="dropdown"><!-- 지역 선택 드롭다운 -->
             <label for="promoBrdRegion"></label>
             <select name="promoBrdRegion" id="promoBrdRegion" onchange="updateData()">
@@ -65,14 +118,14 @@
             <div id="result2"></div>
         </div>
 
-        <div class="proGenCreate"><!-- 글쓰기 버튼 -->
+        <div id="writeGen"><!-- 글쓰기 버튼 -->
             <a th:href="@{/promotion/genCreate}">
-                <button>일반 홍보</button>
+                <button class="proGenCreate">일반 홍보</button>
             </a>
         </div>
-        <div class="proEventCreate"><!-- 글쓰기 버튼 -->
+        <div id="writeEvent"><!-- 글쓰기 버튼 -->
             <a th:href="@{/promotion/eventCreate}">
-                <button>체험/이벤트</button>
+                <button class="proEventCreate">체험/이벤트</button>
             </a>
         </div>
     </div>
@@ -93,10 +146,13 @@
                         <div class="card-body">
                             <h5 class="card-title" th:text="${promotion.promoBrdTitle}"></h5>
                             <div class="card-text">
-                                <p th:if="${promotion.promoBrdCategory != 0}" class="card-EventEndDate"
-                                   th:text="'이벤트 종료일: ' + ${promotion.promoBrdEventEndDate}"></p>
+                                <p th:if="${promotion.promoBrdCategory == 1}" class="card-EventEndDate experience-card"
+                                   th:text="'체험일: ' + promotion.promoBrdExperienceDate"></p>
+
+                                <p th:if="${promotion.promoBrdCategory == 2}" class="card-EventEndDate event-card"
+                                   th:text="'이벤트 종료일: ' + promotion.promoBrdEventEndDate"></p>
                                 <p class="card-BusinessName" th:text="'상호명: ' + ${promotion.promoBrdBusinessName}"></p>
-                                <p th:if="${promotion.promoBrdCategory != 0}" class="card-Participants"
+                                <p th:if="${promotion.promoBrdCategory == 1}" class="card-Participants"
                                    th:text="'참여 인원: ' + ${promotion.promoBrdApplyParticipants} + '/' + ${promotion.promoBrdMaxParticipants}"></p>
                             </div>
                         </div>
@@ -163,10 +219,39 @@ function updateData() {
             console.error("Error while fetching data: ", error);
         }
     });
+    displayRemainingExpDay()
     displayRemainingDays();
+
 }
 
-            // 이벤트 종료일과 현재 날짜 비교하여 남은 날짜를 표시하는 함수
+$(document).ready(function() {
+    if ($(".card-EventEndDate").hasClass("experience-card")) {
+        displayRemainingExpDay();
+    } else if ($(".card-EventEndDate").hasClass("event-card")) {
+        displayRemainingDays();
+    }
+});
+
+// promoBrdCategory가 체험(1)인 경우 체험일과 현재 날짜 비교.
+function displayRemainingExpDay() {
+    $(".card-EventEndDate").each(function() {
+        var promoBrdExperienceDate = new Date($(this).text()); // 체험일을 Date 객체로 변환
+        var currentDate = new Date(); // 현재 날짜를 Date 객체로 변환
+
+        // 남은 날짜 계산.
+        var timeDifference = promoBrdExperienceDate.getTime() - currentDate.getTime();
+        var remainingDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
+
+        // 결과 표시함.
+        if (remainingDays > 0) {
+            $(this).append(" (남은 날짜: " + remainingDays + "일)");
+        } else {
+            $(this).append(" (종료된 이벤트입니다.)");
+        }
+    });
+}
+
+// promoBrdCategory가 이벤트(2)인 경우 이벤트 종료일과 현재 날짜 비교하여 남은 날짜를 표시하는 함수.
 function displayRemainingDays() {
     $(".card-EventEndDate").each(function() {
         var eventEndDate = new Date($(this).text()); // 이벤트 종료일을 Date 객체로 변환

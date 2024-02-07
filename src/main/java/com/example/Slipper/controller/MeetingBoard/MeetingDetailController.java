@@ -164,8 +164,8 @@ public class MeetingDetailController {
             redirectAttributes.addFlashAttribute("msg","현재 참가 인원이 최대 참가 인원을 초과했습니다.");
         }
 
-
         return "redirect:/meeting/apply/popup/{meetNum}";
+
     }
 
 

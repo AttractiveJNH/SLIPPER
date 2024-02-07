@@ -44,6 +44,8 @@ public class Promotion {
     private String promoBrdBusinessName; // 상호명
     private LocalDate promoBrdExperienceDate; // 체험일
     private String promoBrdTitle; // 제목
+
+    @Column(name = "promo_brd_content", columnDefinition = "TEXT")
     private String promoBrdContent; // 내용
     private String promoBrdMainImg; // 대표이미지
     private String promoBrdExperienceProvided; // 체험 제공

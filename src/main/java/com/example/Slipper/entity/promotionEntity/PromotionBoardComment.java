@@ -28,11 +28,7 @@ public class PromotionBoardComment {
     @Column(name = "promo_brd_post_id")
     private int promoBrdPostId; // 홍보 게시판 번호
 
-    @Column(name = "user_id")
-    private String userId;
 
-    @Column(name = "entrepre_id")
-    private String entrepreId;
 
     @Column(name = "promo_brd_comnt_content")
     private String promoBrdComntContent; // 내용
@@ -41,6 +37,8 @@ public class PromotionBoardComment {
     private LocalDateTime  promoBrdComntDate; // 작성일
     private String userNickName; // 유저닉네임
     private String entrepreNickName;
+    private String userId;
+    private String entrepreId;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "user_num", insertable = false, updatable = false)
@@ -48,13 +46,13 @@ public class PromotionBoardComment {
 
 
 
-    public PromotionBoardComment(int promoBrdPostId, String userId, String entrepreId, String promoBrdComntContent, LocalDateTime promoBrdComntDate, String userNickName, String entrepreNickName) {
+    public PromotionBoardComment(int promoBrdPostId, String promoBrdComntContent, LocalDateTime promoBrdComntDate, String userNickName, String entrepreNickName, String userId, String entrepreId) {
         this.promoBrdPostId = promoBrdPostId;
-        this.userId = userId;
-        this.entrepreId = entrepreId;
         this.promoBrdComntContent = promoBrdComntContent;
         this.promoBrdComntDate = promoBrdComntDate;
         this.userNickName = userNickName;
         this.entrepreNickName = entrepreNickName;
+        this.userId = userId;
+        this.entrepreId = entrepreId;
     }
 }

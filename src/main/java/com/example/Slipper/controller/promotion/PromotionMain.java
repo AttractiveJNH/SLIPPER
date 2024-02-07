@@ -8,6 +8,7 @@ import com.example.Slipper.repository.promotionRepository.PromotionRepository;
 import com.example.Slipper.service.loginAndJoinServices.EntreService;
 import com.example.Slipper.service.loginAndJoinServices.UserService;
 import com.example.Slipper.service.promotionService.PromotionService;
+import com.example.Slipper.util.ImageUrlParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Locale;
 
 import java.util.ArrayList;
@@ -42,6 +44,7 @@ public class PromotionMain { // 홍보 게시판 메인 화면의 컨트롤러
 
 
 
+
     // 홍보게시판 메인으로 들어오면 카드에 데이터 넣어주는 컨트롤러. 셀렉트박스 지역과 카테고리를 선택하면 조건에 맞는 내용만 보여준다.
 
 
@@ -59,7 +62,14 @@ public class PromotionMain { // 홍보 게시판 메인 화면의 컨트롤러
 
             ArrayList<Promotion> promotions = promotionRepository.findAll();
 
+            // imageurl부분만 추출해서 리스트 형태로 가져옴
+//            List<String> imageUrls = imageUrlParser.extractImageUrlsFromContents();
+
             model.addAttribute("promotions", promotions);
+
+            // 추출해온 imageUrl주소를 뷰페이지로 전달함.
+//            model.addAttribute("imageUrls", imageUrls);
+
 
 
 
