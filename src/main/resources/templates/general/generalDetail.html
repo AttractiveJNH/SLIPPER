@@ -7,7 +7,7 @@
 >
 
 <head>
-    <link rel="stylesheet" type="text/css" href="/css/meeting/meetingDetail.css">
+    <link rel="stylesheet" type="text/css" href="/css/general/generalDetail.css">
 
 </head>
 
@@ -15,13 +15,13 @@
 <div layout:fragment="content">
     <div class="container">
         <div class="meeting_text">
-            <!-- 모임 게시판 텍스트 -->
+            <!-- 일반 게시판 텍스트 -->
             <div class="meet_text_box">
-                <p class="text1">모임 게시판</p>
+                <p class="text1">일반 게시판</p>
             </div>
             <!-- 목록 돌아가기 버튼 -->
             <div class="meet_main_btn_box_1">
-                <button class="meet_main_btn" onclick="window.location.href='/meeting/main'">전체 글 목록</button>
+                <button class="meet_main_btn" onclick="window.location.href='/general/main'">전체 글 목록</button>
             </div>
         </div>
         <div class="line">
@@ -30,24 +30,24 @@
         <!-- 카테고리 , 제목 -->
         <div class="container_2">
             <div class="category_text">
-                <p th:text="'[' + ${meetInfo.meet_category == 1 ? '온라인' : (meetInfo.meet_category == 2 ? '오프라인' : '')} + ']'"></p>
+                <p th:text="'[' + ${generalInfo.general_category == 1 ? '일반' : (generalInfo.general_category == 2 ? '유머' : (generalInfo.general_category == 3 ? '정보' : ''))} + ']'"></p>
             </div>
             <div class="title_text">
-                <p th:text="${meetInfo.meet_title}"></p>
+                <p th:text="${generalInfo.general_title}"></p>
             </div>
         </div>
 
         <!-- 닉네임 , 작성일 , 조회수-->
         <div class="container_3">
             <div class="container_3_1">
-                <p th:text="${meetInfo.meet_nick_name}" class="nick_name"></p>
+                <p th:text="${generalInfo.general_nick_name}" class="nick_name"></p>
                 <p>|</p>
-                <p th:text="${#temporals.format(meetInfo.meet_write_date, 'yyyy-MM-dd HH:mm:ss')}"></p>
+                <p th:text="${#temporals.format(generalInfo.general_write_date, 'yyyy-MM-dd HH:mm:ss')}"></p>
             </div>
 
             <div class="container_3_2">
                 <p>조회</p>
-                <p th:text="${meetInfo.meet_views}"></p>
+                <p th:text="${generalInfo.general_views}"></p>
             </div>
         </div>
 
@@ -55,44 +55,11 @@
             <div class="horizontal-line1"></div>
         </div>
 
-        <!-- 일시, 신청 종료일, 지역, 신청 인원수 및 최대 인원수 -->
-        <div class="table_container">
-            <table class="table_content">
-                <tr>
-                    <th class="table_box_1">일시</th>
-                    <td th:text="${meetInfo.meet_date}" class="table_box_2"></td>
-                    <th class="table_box_3">신청 종료일</th>
-                    <td th:text="${meetInfo.meet_apply_end_date}" class="table_box_2"></td>
-                    <th class="table_box_1">지역</th>
-                    <td th:text="${meetInfo.meet_field}" class="table_box_2"></td>
-                    <th class="table_box_1">인원</th>
-                    <td th:text="${meetInfo.meet_now_participants} + '/' + ${meetInfo.meet_max_participants}" class="table_box_1"></td>
-                </tr>
-            </table>
-        </div>
 
         <!-- 스마트 에디터 내용 -->
-        <div th:utext="${meetInfo.meet_content}" class="editor_content">
+        <div th:utext="${generalInfo.general_content}" class="editor_content">
         </div>
 
-        <div class="apply_container">
-            <!-- 참가자 보기 -->
-            <div class="apply_box" th:if="${Writer == 1}">
-                <img src="/images/ApplyListImg.png" alt="참가자 보기"
-                     class="apply_img" th:onclick="'openWindow(\'/meeting/apply/popup/' + ${meetNum} + '\')'">
-            </div>
-
-            <!-- 신청하기 -->
-            <div class="apply_box" th:if="${Writer == 2}">
-                <form id="meet_apply" th:action="@{/meeting/application/{meetNum}(meetNum=${meetInfo.meetNum})}" method="post">
-                    <input type="hidden" name="meet_apply_status" value="0">
-                    <input type="hidden" name="nick_name" th:value="${nickName}">
-                    <input type="hidden" name="birthdate" th:value="${birthdate}">
-                    <img src="/images/ApplyImg.png" alt="신청하기"
-                         class="apply_img" onclick="applySubmitForm()">
-                </form>
-            </div>
-        </div>
 
         <div class="apply_content">
             <div class="comment_text_box">
@@ -102,11 +69,11 @@
             <!-- 로그인 중인 유저가 작성자일 경우 수정/삭제 버튼 -->
             <div class="Writer_btn_box" th:if="${Writer == 1}">
 
-                <form id="modifyForm" th:action="@{/meeting/modify/{meetNum}(meetNum=${meetInfo.meetNum})}" method="get">
+                <form id="modifyForm" th:action="@{/general/modify/{generalNum}(generalNum=${generalInfo.generalNum})}" method="get">
                     <button class="edit_btn" onclick="confirmModify()">수정</button>
                 </form>
 
-                <form id="deleteForm" th:action="@{/meeting/delete/{meetNum}(meetNum=${meetInfo.meetNum})}" method="post">
+                <form id="deleteForm" th:action="@{/general/delete/{generalNum}(generalNum=${generalInfo.generalNum})}" method="post">
                     <button class="delete_btn" onclick="confirmDelete()">삭제</button>
                 </form>
             </div>
@@ -129,12 +96,12 @@
 
                     <!-- 내용 -->
                     <div class="comment_content">
-                        <p th:text="${info.meet_comment_content}"></p>
+                        <p th:text="${info.general_comment_content}"></p>
                     </div>
 
                     <!-- 작성일 -->
                     <div class="comment_writeDate">
-                        <p th:text="${#temporals.format(info.meet_comment_date, 'yyyy-MM-dd HH:mm:ss')}"></p>
+                        <p th:text="${#temporals.format(info.general_comment_date, 'yyyy-MM-dd HH:mm:ss')}"></p>
                     </div>
                 </div>
 
@@ -149,19 +116,19 @@
             <ul class="pagination" th:with="start=${T(java.lang.Math).floor(commentList.number/10)*10 + 1},
         last=(${start + 9 < commentList.totalPages ? start + 9 : commentList.totalPages}),
         totalPages=${commentList.totalPages}">
-                <li><a th:href="@{'/meeting/detail/' + ${meetInfo.meetNum} + '?page=1'}"><<</a></li>
+                <li><a th:href="@{'/general/detail/' + ${generalInfo.generalNum} + '?page=1'}"><<</a></li>
                 <li th:class="${commentList.first} ? 'disabled'">
-                    <a th:href="${commentList.first} ? '#' : '/meeting/detail/' + ${meetInfo.meetNum} + '?page=' + ${commentList.number}"><</a>
+                    <a th:href="${commentList.first} ? '#' : '/general/detail/' + ${generalInfo.generalNum} + '?page=' + ${commentList.number}"><</a>
                 </li>
 
                 <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == commentList.number + 1} ? 'active'">
-                    <a th:text="${page}" th:href="@{'/meeting/detail/' + ${meetInfo.meetNum} + '?page=' + ${page}}"></a>
+                    <a th:text="${page}" th:href="@{'/general/detail/' + ${generalInfo.generalNum} + '?page=' + ${page}}"></a>
                 </li>
 
                 <li th:class="${commentList.last} ? 'disabled'">
-                    <a th:href="${commentList.last} ? '#' : '/meeting/detail/' + ${meetInfo.meetNum} + '?page=' + (${commentList.number + 2 > totalPages ? totalPages : commentList.number + 2})">></a>
+                    <a th:href="${commentList.last} ? '#' : '/general/detail/' + ${generalInfo.generalNum} + '?page=' + (${commentList.number + 2 > totalPages ? totalPages : commentList.number + 2})">></a>
                 </li>
-                <li><a th:href="@{'/meeting/detail/' + ${meetInfo.meetNum} + '?page=' + ${commentList.totalPages}}">>></a></li>
+                <li><a th:href="@{'/general/detail/' + ${generalInfo.generalNum} + '?page=' + ${commentList.totalPages}}">>></a></li>
             </ul>
         </div>
 
@@ -174,8 +141,8 @@
         <div class="comment_and_btn_box">
             <!-- 댓글 작성 -->
             <div class="CommentWriter">
-                <form th:action="@{/meeting/comment/save/{meetNum}(meetNum=${meetInfo.meetNum})}" method="post">
-                <div class="comment_inbox">
+                <form th:action="@{/general/comment/save/{generalNum}(generalNum=${generalInfo.generalNum})}" method="post">
+                    <div class="comment_inbox">
                         <strong class="blind">댓글을 입력하세요</strong>
                         <div class="comment_inbox_box">
                             <!-- 작성자 닉네임 -->
@@ -188,7 +155,7 @@
 
                         </div>
                         <textarea spellcheck="false" placeholder="댓글을 남겨보세요" rows="1"
-                                  class="comment_inbox_text" name="meet_comment_content"></textarea>
+                                  class="comment_inbox_text" name="general_comment_content"></textarea>
                     </div>
 
                     <div class="comment_attach">
@@ -201,7 +168,7 @@
 
             <!-- 목록 돌아가기 버튼 -->
             <div class="meet_main_btn_box_2">
-                <button class="meet_main_btn" onclick="window.location.href='/meeting/main'">전체 글 목록</button>
+                <button class="meet_main_btn" onclick="window.location.href='/general/main'">전체 글 목록</button>
             </div>
         </div>
     </div>
@@ -215,6 +182,6 @@
         }
     </script>
 
-    <script src="/js/meeting/meetingDetail.js"></script>
+    <script src="/js/general/generalDetail.js"></script>
 </div>
 </html>

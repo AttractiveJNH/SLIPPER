@@ -1,8 +1,8 @@
 package com.example.Slipper.entity.MeetingBoardEntity;
 
 
-import com.example.Slipper.entity.SswTestEntity.Entrepreneurs;
-import com.example.Slipper.entity.SswTestEntity.Users;
+import com.example.Slipper.entity.userAndEntreEntities.EntreEntity;
+import com.example.Slipper.entity.userAndEntreEntities.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,13 +23,13 @@ public class MeetingBoardApplication {
     @Column(name = "meet_apply_id")
     private Integer meet_apply_id;
 
-    @ManyToOne(targetEntity = Users.class)
+    @ManyToOne(targetEntity = UserEntity.class)
     @JoinColumn(name = "user_num", referencedColumnName = "user_num")
-    private Users user_num;
+    private UserEntity user_num;
 
-    @ManyToOne(targetEntity = Entrepreneurs.class)
+    @ManyToOne(targetEntity = EntreEntity.class)
     @JoinColumn(name = "entrepre_num", referencedColumnName = "entrepre_num")
-    private Entrepreneurs entrepre_num;
+    private EntreEntity entrepre_num;
 
     @ManyToOne(targetEntity = MeetingBoard.class)
     @JoinColumn(name = "meetnum", referencedColumnName = "meetnum")

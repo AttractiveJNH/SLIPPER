@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/layout}"
+        lang="en"
+>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/meeting/meetingModify.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script type="text/javascript" src="/ssw/js/HuskyEZCreator.js" charset="utf-8"></script>
+</head>
+
+
+<div layout:fragment="content">
+    <div class="container">
+        <div class="meeting_text">
+            <p class="text1">모임 게시판 글쓰기</p>
+        </div>
+        <form th:action="@{/meeting/modify/save/{meetNum}(meetNum=${meetInfo.meetNum})}" method="post" onsubmit="return savePost()">
+            <div class="input_container">
+                <div class="container_1">
+                    <div class="region_box">
+                        <select id="region" name="meet_field" required>
+                            <option value="" disabled>지역 선택</option>
+                            <option th:value="중구" th:selected="${meetInfo.meet_field == '중구'}">중구</option>
+                            <option th:value="서구" th:selected="${meetInfo.meet_field == '서구'}">서구</option>
+                            <option th:value="동구" th:selected="${meetInfo.meet_field == '동구'}">동구</option>
+                            <option th:value="영도구" th:selected="${meetInfo.meet_field == '영도구'}">영도구</option>
+                            <option th:value="부산진구" th:selected="${meetInfo.meet_field == '부산진구'}">부산진구</option>
+                            <option th:value="동래구" th:selected="${meetInfo.meet_field == '동래구'}">동래구</option>
+                            <option th:value="남구" th:selected="${meetInfo.meet_field == '남구'}">남구</option>
+                            <option th:value="북구" th:selected="${meetInfo.meet_field == '북구'}">북구</option>
+                            <option th:value="해운대구" th:selected="${meetInfo.meet_field == '해운대구'}">해운대구</option>
+                            <option th:value="사하구" th:selected="${meetInfo.meet_field == '사하구'}">사하구</option>
+                            <option th:value="금정구" th:selected="${meetInfo.meet_field == '금정구'}">금정구</option>
+                            <option th:value="강서구" th:selected="${meetInfo.meet_field == '강서구'}">강서구</option>
+                            <option th:value="연제구" th:selected="${meetInfo.meet_field == '연제구'}">연제구</option>
+                            <option th:value="수영구" th:selected="${meetInfo.meet_field == '수영구'}">수영구</option>
+                            <option th:value="사상구" th:selected="${meetInfo.meet_field == '사상구'}">사상구</option>
+                            <option th:value="기장군" th:selected="${meetInfo.meet_field == '기장군'}">기장군</option>
+                        </select>
+                    </div>
+
+                    <div class="category_box">
+                        <select id="category" name="meet_category" required>
+                            <option value="" disabled>게시글 유형</option>
+                            <option value="1" th:selected="${meetInfo.meet_category == 1}">온라인</option>
+                            <option value="2" th:selected="${meetInfo.meet_category == 2}">오프라인</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="title_box">
+                    <input type="text" name="meet_title" class="title_css" th:value="${meetInfo.meet_title}" required>
+                </div>
+
+                <div class="input_box">
+                    <label for="schedule">일시</label>
+                    <input type="date" id="schedule" name="meet_date" th:value="${meetInfo.meet_date}" required><br>
+
+                    <label for="deadline" class="deadline_label">신청 마감일</label>
+                    <input type="date" id="deadline" name="meet_apply_end_date" th:value="${meetInfo.meet_apply_end_date}" required><br>
+
+                    <label for="personnel" class="personnel_label">인원</label>
+                    <select id="personnel" name="meet_max_participants" required>
+                        <option value="" disabled>선택</option>
+                        <option value="2" th:selected="${meetInfo.meet_max_participants == 2}">2</option>
+                        <option value="3" th:selected="${meetInfo.meet_max_participants == 3}">3</option>
+                        <option value="4" th:selected="${meetInfo.meet_max_participants == 4}">4</option>
+                        <option value="5" th:selected="${meetInfo.meet_max_participants == 5}">5</option>
+                        <option value="6" th:selected="${meetInfo.meet_max_participants == 6}">6</option>
+                        <option value="7" th:selected="${meetInfo.meet_max_participants == 7}">7</option>
+                        <option value="8" th:selected="${meetInfo.meet_max_participants == 8}">8</option>
+                        <option value="9" th:selected="${meetInfo.meet_max_participants == 9}">9</option>
+                        <option value="10" th:selected="${meetInfo.meet_max_participants == 10}">10</option>
+                        <option value="11" th:selected="${meetInfo.meet_max_participants == 11}">11</option>
+                        <option value="12" th:selected="${meetInfo.meet_max_participants == 12}">12</option>
+                        <option value="13" th:selected="${meetInfo.meet_max_participants == 13}">13</option>
+                        <option value="14" th:selected="${meetInfo.meet_max_participants == 14}">14</option>
+                        <option value="15" th:selected="${meetInfo.meet_max_participants == 15}">15</option>
+                        <option value="16" th:selected="${meetInfo.meet_max_participants == 16}">16</option>
+                        <option value="17" th:selected="${meetInfo.meet_max_participants == 17}">17</option>
+                        <option value="18" th:selected="${meetInfo.meet_max_participants == 18}">18</option>
+                        <option value="19" th:selected="${meetInfo.meet_max_participants == 19}">19</option>
+                        <option value="20" th:selected="${meetInfo.meet_max_participants == 20}">20</option>
+                    </select>
+                </div>
+            </div>
+            <div class="editor_box">
+                <textarea name="meet_content" id="editorTxt" rows="30" cols="20" th:utext="${meetInfo.meet_content}"></textarea>
+            </div>
+
+            <div class="btn_box">
+                <input type="submit" value="수정" class="registration">
+                <a th:href="@{/meeting/detail/{meetNum}(meetNum=${meetInfo.meetNum})}" class="cancel">취소</a>
+            </div>
+
+        </form>
+    </div>
+
+    <script src="/js/meeting/meetingModify.js"></script>
+</div>
+</html>

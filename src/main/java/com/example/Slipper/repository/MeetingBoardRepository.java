@@ -54,6 +54,16 @@ public interface MeetingBoardRepository extends JpaRepository<MeetingBoard, Inte
 
 
 
+    // 모임 게시판 해당 게시글 사업자 기본키 찾기
+    @Query(value = "SELECT entrepre_num \n" +
+            "FROM meetingBoard \n" +
+            "WHERE meetNum =:meetNum" , nativeQuery = true)
+    Long entreWriterFind(@Param("meetNum") int meetNum);
 
 
+    // 모임 게시판 해당 게시글 일반 유저 기본키 찾기
+    @Query(value = "SELECT user_num \n" +
+            "FROM meetingBoard \n" +
+            "WHERE meetNum =:meetNum" , nativeQuery = true)
+    Long userWriterFind(@Param("meetNum") int meetNum);
 }

@@ -1,8 +1,8 @@
 package com.example.Slipper.dto.MeetingBoard;
 
 import com.example.Slipper.entity.MeetingBoardEntity.MeetingBoard;
-import com.example.Slipper.entity.SswTestEntity.Entrepreneurs;
-import com.example.Slipper.entity.SswTestEntity.Users;
+import com.example.Slipper.entity.userAndEntreEntities.EntreEntity;
+import com.example.Slipper.entity.userAndEntreEntities.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,14 +38,14 @@ public class MeetingWriteForm {
 
 
     //일반 유저 모임 게시판 글작성
-    public MeetingBoard userMeetEntity(Users user_num, String nick_name){
+    public MeetingBoard userMeetEntity(UserEntity user_num, String nick_name){
         return new MeetingBoard(null, user_num, null, meet_category, meet_title,
                 meet_write_date, 0, 1, meet_max_participants,
                 meet_apply_end_date, meet_date, meet_field, meet_content, nick_name);
     }
 
     //사업자 유저 모임 게시판 글작성
-    public MeetingBoard entrepreneurMeetEntity(Entrepreneurs entrepre_num, String nick_name){
+    public MeetingBoard entrepreneurMeetEntity(EntreEntity entrepre_num, String nick_name){
         return new MeetingBoard(null, null, entrepre_num, meet_category, meet_title,
                 meet_write_date, 0, 1, meet_max_participants,
                 meet_apply_end_date, meet_date, meet_field, meet_content, nick_name);

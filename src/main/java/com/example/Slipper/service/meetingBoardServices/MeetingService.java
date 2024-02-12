@@ -1,7 +1,9 @@
 package com.example.Slipper.service.meetingBoardServices;
 
 import com.example.Slipper.entity.MeetingBoardEntity.MeetingBoard;
+import com.example.Slipper.entity.MeetingBoardEntity.MeetingBoardComment;
 import com.example.Slipper.repository.MeetingBoardRepository;
+import com.example.Slipper.repository.MeetingCommentRepository;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -16,6 +18,9 @@ import java.util.List;
 public class MeetingService {
     @Autowired
     private MeetingBoardRepository meetingBoardRepository;
+
+    @Autowired
+    private MeetingCommentRepository meetingCommentRepository;
 
     // 지역 값 반환
     public String mapRegionToName(int region) {
@@ -139,5 +144,12 @@ public class MeetingService {
         return meetingBoardRepository.writerSearch(search, pageable);
     }
 
+    // 댓글 페이징
+    public Page<MeetingBoardComment> commentMeetingBoardList(int meetNum, Pageable pageable){
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); // page는 index 처럼 0부터 시작
+        pageable = PageRequest.of(page, 5, Sort.by(Sort.Direction.DESC, "meetCommentNum"));// <- Sort 추가
+
+        return meetingCommentRepository.commentList(meetNum, pageable);
+    }
 
 }

@@ -1,6 +1,5 @@
 package com.example.Slipper.entity.MeetingBoardEntity;
 
-
 import com.example.Slipper.entity.userAndEntreEntities.EntreEntity;
 import com.example.Slipper.entity.userAndEntreEntities.UserEntity;
 import jakarta.persistence.*;
@@ -11,8 +10,8 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,12 +19,16 @@ import java.time.LocalDateTime;
 @Getter
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "meetingboard")
-public class MeetingBoard {
+@Table(name = "meetingboardcomment")
+public class MeetingBoardComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="meetnum")
-    private Integer meetNum;
+    @Column(name = "meetcommentnum")
+    private Integer meetCommentNum;
+
+    @ManyToOne(targetEntity = MeetingBoard.class)
+    @JoinColumn(name = "meetnum", referencedColumnName = "meetnum")
+    private MeetingBoard meetNum;
 
     @ManyToOne(targetEntity = UserEntity.class)
     @JoinColumn(name = "user_num", referencedColumnName = "user_num")
@@ -35,37 +38,19 @@ public class MeetingBoard {
     @JoinColumn(name = "entrepre_num", referencedColumnName = "entrepre_num")
     private EntreEntity entrepre_num;
 
-    @Column(name ="meet_category")
-    private int meet_category;
+    @Column(name ="nick_name")
+    private String nick_name;
 
-    @Column(name ="meet_title")
-    private String meet_title;
+    @Column(name ="meet_comment_content")
+    private String meet_comment_content;
 
     @CreatedDate
-    @Column(name ="meet_write_date")
-    private LocalDateTime meet_write_date;
+    @Column(name ="meet_comment_date")
+    private LocalDateTime meet_comment_date;
 
-    @Column(name ="meet_views")
-    private int meet_views;
-
-    @Column(name ="meet_now_participants")
-    private int meet_now_participants;
-
-    @Column(name ="meet_max_participants")
-    private int meet_max_participants;
-
-    @Column(name ="meet_apply_end_date")
-    private LocalDate meet_apply_end_date;
-
-    @Column(name ="meet_date")
-    private LocalDate meet_date;
-
-    @Column(name ="meet_field")
-    private String meet_field;
-
-    @Column(name ="meet_content", columnDefinition = "TEXT")
-    private String meet_content;
-
-    @Column(name = "meet_nick_name")
-    private String meet_nick_name;
+    public void setDateTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDateTime = LocalDateTime.now().format(formatter);
+        this.meet_comment_date = LocalDateTime.parse(formattedDateTime, formatter);
+    }
 }

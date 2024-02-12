@@ -2,8 +2,8 @@ package com.example.Slipper.dto.MeetingBoard;
 
 import com.example.Slipper.entity.MeetingBoardEntity.MeetingBoard;
 import com.example.Slipper.entity.MeetingBoardEntity.MeetingBoardApplication;
-import com.example.Slipper.entity.SswTestEntity.Entrepreneurs;
-import com.example.Slipper.entity.SswTestEntity.Users;
+import com.example.Slipper.entity.userAndEntreEntities.EntreEntity;
+import com.example.Slipper.entity.userAndEntreEntities.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,13 +24,13 @@ public class MeetingApplicationForm {
     private LocalDate birthdate;
 
     // 일반 유저 모임 게시판 신청
-    public MeetingBoardApplication userMeetApplication(Users user_num, MeetingBoard meet_num){
+    public MeetingBoardApplication userMeetApplication(UserEntity user_num, MeetingBoard meet_num){
         return new MeetingBoardApplication(null, user_num, null, meet_num,
                 meet_apply_status, null, nick_name, birthdate);
     }
 
     // 사업자 유저 모임 게시판 신청
-    public MeetingBoardApplication entrepreneurMeetApplication(Entrepreneurs entrepre_num, MeetingBoard meet_num){
+    public MeetingBoardApplication entrepreneurMeetApplication(EntreEntity entrepre_num, MeetingBoard meet_num){
         return new MeetingBoardApplication(null, null, entrepre_num, meet_num,
                 meet_apply_status, null, nick_name, birthdate);
     }

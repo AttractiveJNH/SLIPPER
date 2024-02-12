@@ -30,20 +30,9 @@
     display: flex;
 }
 
-.region_box{
-    width: 150px;
-}
 
 .category_box{
     width: 150px;
-}
-
-#region {
-    padding: 5px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 120px;
 }
 
 #category{
@@ -55,7 +44,7 @@
 }
 
 .writing_box{
-     margin-left: 800px;
+     margin-left: 950px;
 }
 
 .writing_btn {
@@ -114,7 +103,7 @@
 }
 
 .title_3{
-    width: 420px;
+    width: 520px;
     text-align: center;
     /* background-color: peru; */
 }
@@ -187,7 +176,7 @@
 }
 
 .content_3{
-    width: 420px;
+    width: 520px;
     text-align: left;
     /* background-color: yellow; */
 }
@@ -210,14 +199,6 @@
     /* background-color: red; */
 }
 
-.content_7{
-    width: 100px;
-    text-align: center;
-    display: flex;
-    align-items: center;    /* 수직 방향 중앙 정렬 */
-    justify-content: center;/* 수평 방향 중앙 정렬 */
-    /* background-color: yellow; */
-}
 
 
 /* 가로선 */

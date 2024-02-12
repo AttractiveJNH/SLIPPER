@@ -71,11 +71,11 @@
             </div>
 
             <div class="content_2">
-                <p th:text="${meetWriteUser.user_nick_name}"></p>
+                <p th:text="${writerNickName}"></p>
             </div>
 
             <div class="content_3">
-                <p th:text="${#temporals.format(meetWriteUser.user_birthdate, 'yyyy')}"></p>
+                <p th:text="${#temporals.format(writerBirthdate, 'yyyy')}"></p>
             </div>
 
             <div class="content_4">
@@ -116,7 +116,9 @@
 
                     <!--취소 버튼-->
                     <div class="content_5">
-                        <form th:action="@{/meetApplyCancel/{meetNum}/{userNum}(meetNum=${meetInfo.meetNum}, userNum=${user.user_num.user_num})}" method="post">
+                        <form th:action="@{/meetApplyCancel/{meetNum}/{entreNum}/{userNum}
+                            (meetNum=${meetInfo.meetNum}, entreNum=${user.entrepre_num != null} ? ${user.entrepre_num.entrepreNum} : '0',
+                            userNum=${user.user_num != null} ? ${user.user_num.userNum} : '0')}" method="post">
                             <button class="cancel_btn">취소</button>
                         </form>
                     </div>
@@ -159,12 +161,16 @@
 
                         <div class="content_5">
                             <!--수락 버튼-->
-                            <form id="accept_form" th:action="@{/meetApplyAccept/{meetNum}/{userNum}(meetNum=${meetInfo.meetNum}, userNum=${user.user_num.user_num})}" method="post">
+                            <form id="accept_form" th:action="@{/meetApplyAccept/{meetNum}/{entreNum}/{userNum}
+                            (meetNum=${meetInfo.meetNum}, entreNum=${user.entrepre_num != null} ? ${user.entrepre_num.entrepreNum} : '0',
+                            userNum=${user.user_num != null} ? ${user.user_num.userNum} : '0')}" method="post">
                                 <button id="accept_btn">수락</button>
                             </form>
 
                             <!--거절 버튼-->
-                            <form th:action="@{/meetApplyRefuse/{meetNum}/{userNum}(meetNum=${meetInfo.meetNum}, userNum=${user.user_num.user_num})}" method="post">
+                            <form th:action="@{/meetApplyRefuse/{meetNum}/{entreNum}/{userNum}
+                            (meetNum=${meetInfo.meetNum}, entreNum=${user.entrepre_num != null} ? ${user.entrepre_num.entrepreNum} : '0',
+                            userNum=${user.user_num != null} ? ${user.user_num.userNum} : '0')}" method="post">
                                 <button id="refuse_btn">거절</button>
                             </form>
                         </div>
@@ -233,7 +239,9 @@
 
                     <div class="content_5">
                         <!--취소 버튼-->
-                        <form th:action="@{/meetApplyRefuseCancel/{meetNum}/{userNum}(meetNum=${meetInfo.meetNum}, userNum=${user.user_num.user_num})}" method="post">
+                        <form th:action="@{/meetApplyRefuseCancel/{meetNum}/{entreNum}/{userNum}
+                            (meetNum=${meetInfo.meetNum}, entreNum=${user.entrepre_num != null} ? ${user.entrepre_num.entrepreNum} : '0',
+                            userNum=${user.user_num != null} ? ${user.user_num.userNum} : '0')}" method="post">
                             <button class="refuse_cancel_btn">취소</button>
                         </form>
                     </div>

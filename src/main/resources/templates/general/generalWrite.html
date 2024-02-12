@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/layout}"
+        lang="en"
+>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/general/generalWrite.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script type="text/javascript" src="/ssw/js/HuskyEZCreator.js" charset="utf-8"></script>
+</head>
+
+
+<div layout:fragment="content">
+    <div class="container">
+        <div class="meeting_text">
+            <p class="text1">일반 게시판 글쓰기</p>
+        </div>
+        <form action="/general/write/save" method="post" onsubmit="return savePost()">
+            <div class="input_container">
+                <div class="container_1">
+                    <div class="category_box">
+                        <select id="category" name="general_category" required>
+                            <option value="" disabled selected>게시글 유형</option>
+                            <option value="1">일반</option>
+                            <option value="2">유머</option>
+                            <option value="3">정보</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="title_box">
+                    <input type="text" name="general_title" class="title_css" placeholder="제목을 입력해 주세요." required>
+                </div>
+
+            </div>
+            <div class="editor_box">
+                <textarea name="general_content" id="editorTxt" rows="30" cols="20" placeholder="내용을 입력해주세요"></textarea>
+            </div>
+
+            <div class="btn_box">
+                <input type="submit" value="등록" class="registration">
+                <a href="/general/main" class="cancel">취소</a>
+            </div>
+
+        </form>
+    </div>
+
+    <script src="/js/general/generalWrite.js"></script>
+</div>
+</html>

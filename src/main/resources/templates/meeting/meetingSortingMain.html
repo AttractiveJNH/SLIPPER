@@ -96,55 +96,56 @@
                 <div class="horizontal-line3"></div>
             </div>
 
+            <div class="meetList_container">
+                <!-- 내용 -->
+                <div class="meetList" th:each="info : ${boardList}">
+                    <div class="content_box">
+                        <!-- 이미지 유무 아이콘 -->
+                        <div class="content_imgCheck" th:with="imgIndex=${imageInfo[__${infoStat.index}__]}">
+                            <img th:src="@{${(imgIndex == 1) ? '/images/imageCheckIcon1.png' : '/images/imageCheckIcon2.png'}}"
+                                 th:alt="${(imgIndex == 1) ? 'Image Icon 1' : 'Image Icon 2'}"
+                                 style="width: 30px; height: 30px;">
+                        </div>
 
-            <!-- 내용 -->
-            <div class="meetList" th:each="info : ${boardList}">
-                <div class="content_box">
-                    <!-- 이미지 유무 아이콘 -->
-                    <div class="content_imgCheck" th:with="imgIndex=${imageInfo[__${infoStat.index}__]}">
-                        <img th:src="@{${(imgIndex == 1) ? '/images/imageCheckIcon1.png' : '/images/imageCheckIcon2.png'}}"
-                             th:alt="${(imgIndex == 1) ? 'Image Icon 1' : 'Image Icon 2'}"
-                             style="width: 30px; height: 30px;">
+                        <!-- 게시글 번호 -->
+                        <div class="content_1">
+                            <p th:text="${info.meetNum}"></p>
+                        </div>
+
+                        <!-- 지역 -->
+                        <div class="content_2">
+                            <p th:text="${info.meet_field}"></p>
+                        </div>
+
+
+
+                        <!-- 제목 -->
+                        <div class="content_3">
+                            <a th:href="@{/meeting/detail/{meetNum}(meetNum=${info.meetNum})}" th:text="'[' + ${info.meet_category == 1 ? '온라인' : (info.meet_category == 2 ? '오프라인' : '')} + ']' + ' ' + ${info.meet_title}"></a>
+                        </div>
+
+                        <!-- 글쓴이 -->
+                        <div class="content_4">
+                            <p th:text="${info.meet_nick_name}"></p>
+                        </div>
+
+                        <!-- 작성일 -->
+                        <div class="content_5">
+                            <p th:text="${#temporals.format(info.meet_write_date, 'yyyy-MM-dd HH:mm:ss')}"></p>
+                        </div>
+
+                        <!-- 조회 -->
+                        <div class="content_6">
+                            <p th:text="${info.meet_views}"></p>
+                        </div>
+
+                        <!-- 인원 -->
+                        <div class="content_7">
+                            <p th:text="${info.meet_now_participants}"></p> <p>&nbsp;/&nbsp;</p> <p th:text="${info.meet_max_participants}"></p>
+                        </div>
                     </div>
-
-                    <!-- 게시글 번호 -->
-                    <div class="content_1">
-                        <p th:text="${info.meetNum}"></p>
-                    </div>
-
-                    <!-- 지역 -->
-                    <div class="content_2">
-                        <p th:text="${info.meet_field}"></p>
-                    </div>
-
-
-
-                    <!-- 제목 -->
-                    <div class="content_3">
-                        <a th:href="@{/meeting/detail/{meetNum}(meetNum=${info.meetNum})}" th:text="'[' + ${info.meet_category == 1 ? '온라인' : (info.meet_category == 2 ? '오프라인' : '')} + ']' + ' ' + ${info.meet_title}"></a>
-                    </div>
-
-                    <!-- 글쓴이 -->
-                    <div class="content_4">
-                        <p th:text="${info.meet_nick_name}"></p>
-                    </div>
-
-                    <!-- 작성일 -->
-                    <div class="content_5">
-                        <p th:text="${#temporals.format(info.meet_write_date, 'yyyy-MM-dd HH:mm:ss')}"></p>
-                    </div>
-
-                    <!-- 조회 -->
-                    <div class="content_6">
-                        <p th:text="${info.meet_views}"></p>
-                    </div>
-
-                    <!-- 인원 -->
-                    <div class="content_7">
-                        <p th:text="${info.meet_now_participants}"></p> <p>&nbsp;/&nbsp;</p> <p th:text="${info.meet_max_participants}"></p>
-                    </div>
+                    <div class="horizontal-line1"></div>
                 </div>
-                <div class="horizontal-line1"></div>
             </div>
 
 
@@ -153,7 +154,8 @@
 
         <div class="margin_bottom"></div>
 
-        <div class="paging_box">
+        <!-- 페이징 처리-->
+        <div class="paging_box" th:if="${boardList.totalElements != 0}">
             <ul class="pagination" th:with="start=${T(java.lang.Math).floor(boardList.number/10)*10 + 1},
                     last=(${start + 9 < boardList.totalPages ? start + 9 : boardList.totalPages})">
                 <li>
