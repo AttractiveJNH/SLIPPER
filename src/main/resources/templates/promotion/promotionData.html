@@ -22,28 +22,28 @@
 
     <div id="result" >
         <div class="cardContainer" style="display: flex; flex-wrap: wrap; justify-content: space-around;">
-            <div th:each="promotion : ${promotions}" class="cardBox" style="flex: 0 0 calc(20% - 5%); margin: 10px;">
-                <!--                <div th:each="promotion, iterStat : ${promotions}" class="cardBox" style="flex: 0 0 calc(20% - 5%); margin: 10px;"-->
+            <div th:each="promotionBoard : ${promotions}" class="cardBox" style="flex: 0 0 calc(25% - 5%); margin: 10px;">
+                <!--                <div th:each="promotionBoard, iterStat : ${promotions}" class="cardBox" style="flex: 0 0 calc(20% - 5%); margin: 10px;"-->
                 <!--                 th:if="${iterStat.index < 20}">-->
-                <div class="card" style="width: 350px; height: 100%; border: 1px solid;">
-                    <a th:href="@{/promotion/{genEvent}/{promoBrdPostId}(genEvent=${promotion.promoBrdCategory == 0} ? 'gendetail' : 'eventdetail', promoBrdPostId=${promotion.promoBrdPostId})}" style="text-decoration:none; color: #000000;">
+                <div class="card" style="width: 250px; height: 100%; border: 1px solid;">
+                    <a th:href="@{/promotionBoard/{genEvent}/{promoBrdPostId}(genEvent=${promotionBoard.promoBrdCategory == 0} ? 'gendetail' : 'eventdetail', promoBrdPostId=${promotionBoard.promoBrdPostId})}" style="text-decoration:none; color: #000000;">
                         <!-- 이미지 표시 -->
-                        <img th:src="${promotion.promoBrdMainImg}" class="card-img-top img-fluid" alt="홍보 이미지"
+                        <img src="/images/imageCheckIcon1.png" class="card-img-top img-fluid" alt="홍보 이미지"
                              style="object-fit: cover; object-position: top; width: 100%; height: 200px; min-height: 200px;">
                         <!-- 카드 내용을 표시하는 부분 -->
                         <div class="card-body">
-                            <h5 class="card-title" th:text="${promotion.promoBrdTitle}"></h5>
+                            <h5 class="card-title" th:text="${promotionBoard.promoBrdTitle}"></h5>
                             <div class="card-text">
-<!--                                <p th:if="${promotion.promoBrdCategory != 0}" class="card-EventEndDate"-->
-<!--                                   th:text="'이벤트 종료일: ' + ${promotion.promoBrdEventEndDate}"></p>-->
-                                <p th:if="${promotion.promoBrdCategory == 1}" class="card-EventEndDate experience-card"
-                                   th:text="'체험일: ' + ${promotion.promoBrdExperienceDate}"></p>
+                                <!--                                <p th:if="${promotionBoard.promoBrdCategory != 0}" class="card-EventEndDate"-->
+                                <!--                                   th:text="'이벤트 종료일: ' + ${promotionBoard.promoBrdEventEndDate}"></p>-->
+                                <p th:if="${promotionBoard.promoBrdCategory == 1}" class="card-EventEndDate experience-card"
+                                   th:text="'체험일: ' + ${promotionBoard.promoBrdExperienceDate}"></p>
 
-                                <p th:if="${promotion.promoBrdCategory == 2}" class="card-EventEndDate event-card"
-                                   th:text="'이벤트 종료일: ' + ${promotion.promoBrdEventEndDate}"></p>
-                                <p class="card-BusinessName" th:text="'상호명: ' + ${promotion.promoBrdBusinessName}"></p>
-                                <p th:if="${promotion.promoBrdCategory == 1}" class="card-Participants"
-                                   th:text="'참여 인원: ' + ${promotion.promoBrdApplyParticipants} + '/' + ${promotion.promoBrdMaxParticipants}"></p>
+                                <p th:if="${promotionBoard.promoBrdCategory == 2}" class="card-EventEndDate event-card"
+                                   th:text="'이벤트 종료일: ' + ${promotionBoard.promoBrdEventEndDate}"></p>
+                                <p class="card-BusinessName" th:text="'상호명: ' + ${promotionBoard.promoBrdBusinessName}"></p>
+                                <p th:if="${promotionBoard.promoBrdCategory == 1}" class="card-Participants"
+                                   th:text="'참여 인원: ' + ${promotionBoard.promoBrdApplyParticipants} + '/' + ${promotionBoard.promoBrdMaxParticipants}"></p>
                             </div>
                         </div>
                     </a>

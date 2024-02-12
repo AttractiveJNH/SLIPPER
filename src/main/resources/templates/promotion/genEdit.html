@@ -110,7 +110,7 @@
     <!--  일반 홍보 게시판 글 작성-->
 
     <h2 style="margin-left:20%; margin-bottom: 40px; margin-top: 30px;">일반 홍보 게시판 글 수정</h2>
-    <form th:action="@{/promotion/genEditSave/{Id}(Id=${genEdit.promoBrdPostId})}" method="post">
+    <form th:action="@{/promotion/genEditSave/{Id}(Id=${genEdit.promoBrdPostId})}" method="post" onsubmit="return savePost()">
         <div class="promo_body"><!--바디 전체--> <!---->
 
             <div class="promo_body_con"><!-- 홍보 작성 영역 -->
@@ -146,22 +146,20 @@
                             <label for="promoBrdCategory"></label>
                             <select name="promoBrdCategory" id="promoBrdCategory">
                                 <option id="categoryOption" th:value="${genEdit.promoBrdCategory}">게시글 유형</option>
-                                <option value="0">일반</option>
-                                <option value="1">체험</option>
-                                <option value="2">이벤트</option>
+                                <option value="1">일반</option>
                                 <script th:inline="javascript">
                                     // 카테고리에 해당하는 숫자를 받으면 화면에 일반, 체험, 이벤트의 문자를 보여주는 스크립트.
                                     var categoryText = "";
                                     var promoBrdCate = /*[[${genEdit.promoBrdCategory}]]*/ 0;
 
                                     switch (promoBrdCate) {
-                                        case 0:
+                                        case 1:
                                             categoryText = "일반";
                                             break;
-                                        case 1:
+                                        case 2:
                                             categoryText = "체험";
                                             break;
-                                        case 2:
+                                        case 3:
                                             categoryText = "이벤트";
                                             break;
                                         default:
@@ -174,7 +172,7 @@
                                     categoryOption.removeAttribute("hidden");
                                 </script>
                             </select>
-                            <div id="result2"></div>
+                            <div id=""></div>
                         </div>
                     </div>
                 </div>
@@ -202,18 +200,10 @@
         <div>
             <div>
                 <div>
-                    <div class="editor_box" style="width:65%; margin-left:20%;">
-                        <textarea th:value="${genEdit.promoBrdContent}" rows="30" cols="20" id="editorTxt" name="promoBrdContent"></textarea>
+                    <div class="editor_box" style="width:63%; margin-left:20%;">
+                        <textarea style="width:50%" th:utext="${genEdit.promoBrdContent}" rows="30" cols="20" id="editorTxt" name="promoBrdContent"></textarea>
                     </div>
-<!--                    <script> 수정 저장 코드-->
-<!--                        document.addEventListener("DOMContentLoaded", function() {-->
-<!--                            // 페이지가 로드되면 실행될 코드-->
 
-<!--                            // genEdit.promoBrdContent 값을 가져와서 textarea에 설정-->
-<!--                            var promoBrdContent = /*[[${genEdit.promoBrdContent}]]*/ ""; // 기본 값 설정-->
-<!--                            document.getElementById("editorTxt").value = promoBrdContent;-->
-<!--                        });-->
-<!--                    </script>-->
                 </div>
                 <div style="display:flex; margin-bottom: 30px;">
                     <div style="margin-left: 65%; width:5%;">

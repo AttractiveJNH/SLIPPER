@@ -117,7 +117,7 @@
         <h2>체험, 이벤트 홍보 게시판 글 작성</h2>
     </div><!-- 제목 영역 끝-->
 
-    <form th:action="@{/promotion/eventEditSave/{Id}(Id=${eventEdit.promoBrdPostId})}" method="post">
+    <form th:action="@{/promotion/eventEditSave/{Id}(Id=${eventEdit.promoBrdPostId})}" method="post" onsubmit="return savePost()">
         <div class="content_box">
             <div style="padding-left:5%;"><!-- 셀렉트박스영역 시작 -->
                 <div style="display: flex;">
@@ -150,36 +150,67 @@
                             <label for="promoBrdCategory"></label>
                             <select name="promoBrdCategory" id="promoBrdCategory" onchange="updateData()">
                                 <option id="categoryOption" th:value="${eventEdit.promoBrdCategory}">게시글 유형</option>
-                                <option value="0">일반</option>
-                                <option value="1">체험</option>
-                                <option value="2">이벤트</option>
+                                <option value="2">체험</option>
+                                <option value="3">이벤트</option>
                                 <script th:inline="javascript">
                                     // 카테고리에 해당하는 숫자를 받으면 화면에 일반, 체험, 이벤트의 문자를 보여주는 스크립트.
                                     var categoryText = "";
                                     var promoBrdCate = /*[[${eventEdit.promoBrdCategory}]]*/ 0;
 
                                     switch (promoBrdCate) {
-                                        case 0:
+                                        case 1:
                                             categoryText = "일반";
                                             break;
-                                        case 1:
+                                        case 2:
                                             categoryText = "체험";
                                             break;
-                                        case 2:
+                                        case 3:
                                             categoryText = "이벤트";
                                             break;
                                         default:
                                             categoryText = "기타";
                                     }
-
                                     var categoryOption = document.getElementById("categoryOption");
                                     categoryOption.innerText = categoryText;
-
                                     categoryOption.removeAttribute("hidden");
+
+                                    // 불러온 카테고리 값에 따라 화면 달라짐
+                                    window.onload = function(){
+                                        updateData();
+                                    };
+
+
+                                    // 카테고리 값 변경하면 화면 바뀌게
+                                    function updateData() {
+                                        var selectedValue = parseInt(document.getElementById("promoBrdCategory").value);
+
+                                        var apply1 = document.getElementById("apply1");
+                                        var apply2 = document.getElementById("apply2");
+                                        var apply3 = document.getElementById("apply3");
+                                        var participants = document.getElementById("participants");
+
+                                        // 선택된 값에 따라 요소들의 표시 여부 조절
+                                        switch (selectedValue) {
+                                            case 2: // 체험
+                                                apply1.style.display = "flex"; // apply1 요소 보이기
+                                                apply2.style.display = "flex"; // apply2 요소 보이기
+                                                apply3.style.display = "none"; // apply3 요소 숨기기
+                                                participants.style.display = "flex"; // participants 요소 보이기
+                                                break;
+                                            case 3: // 이벤트
+                                                apply1.style.display = "none"; // apply1 요소 숨기기
+                                                apply2.style.display = "none"; // apply2 요소 숨기기
+                                                apply3.style.display = "flex"; // apply3 요소 보이기
+                                                participants.style.display = "none"; // participants 요소 숨기기
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    }
                                 </script>
 
                             </select>
-                            <div id="result2"></div>
+                            <div id=""></div>
                         </div>
                     </div>
                 </div>
@@ -193,19 +224,19 @@
                     <div class="title_sec" style="margin-left: 50px;">상호명</div>
                     <div class="contentInput2"><input th:value="${eventEdit.promoBrdBusinessName}" type="text" name="promoBrdBusinessName" class="input"></div>
                 </div><!--제목 줄-->
-                <div class="row" style="display:flex;"><!--상호/체험단 선정일-->
+                <div class="row" style="display:flex;" id="apply1"><!--상호/체험단 선정일-->
                     <div class="title_sec">체험일</div>
                     <div class="contentInput2"><input th:value="${eventEdit.promoBrdExperienceDate}" type="date" name="promoBrdExperienceDate" class="input"></div>
                     <div class="title_sec" style="margin-left: 50px;">체험단 선정일</div>
                     <div class="contentInput2"><input th:value="${eventEdit.promoBrdExpSelect}" type="date" name="promoBrdExpSelect" class="input"></div>
                 </div><!--상호/체험단 선정일-->
-                <div class="row"><!--신청 시작/종료-->
+                <div class="row" id="apply2"><!--신청 시작/종료-->
                     <div class="title_sec">신청 시작일</div>
                     <div class="contentInput2"><input th:value="${eventEdit.promoBrdApplyStartDate}" type="date" name="promoBrdApplyStartDate" class="input"></div>
                     <div class="title_sec" style="margin-left: 50px;">신청 종료일</div>
                     <div class="contentInput2"><input th:value="${eventEdit.promoBrdApplyEndDate}" type="date" name="promoBrdApplyEndDate" class="input"></div>
                 </div><!--신청 시작/종료-->
-                <div class="row"><!--이벤트 시작일/종료일-->
+                <div class="row" id="apply3"><!--이벤트 시작일/종료일-->
                     <div class="title_sec">이벤트 시작일</div>
                     <div class="contentInput2"><input th:value="${eventEdit.promoBrdEventStartDate}" type="date" name="promoBrdEventStartDate" class="input"></div>
                     <div class="title_sec" style="margin-left: 50px;">이벤트 종료일</div>
@@ -227,9 +258,9 @@
             <div>
                 <div class="editor_box" style="width:75%; margin-left:15%;">
                     <textarea th:utext="${eventEdit.promoBrdContent}" name="promoBrdContent" id="editorTxt" rows="30" cols="20"
-                              placeholder="내용을 입력해주세요" required></textarea>
+                              ></textarea>
                 </div>
-                <div class="row"><!--인원/첨부파일-->
+                <div class="row" id="participants"><!--인원/첨부파일-->
                     <div class="title_sec"></div>
                     <div style="font-size:16px;">신청 가능 인원 수:
                         <select name="promoBrdMaxParticipants" style="width:100px; height: 40px; padding:5px;font-size:16px;">

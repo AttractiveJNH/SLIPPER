@@ -2,11 +2,10 @@ package com.example.Slipper.controller.promotion;
 
 import com.example.Slipper.entity.userAndEntreEntities.EntreEntity;
 import com.example.Slipper.entity.userAndEntreEntities.UserEntity;
-import com.example.Slipper.entity.promotionEntity.Promotion;
+import com.example.Slipper.entity.promotionEntity.PromotionBoard;
 import com.example.Slipper.entity.promotionEntity.PromotionBoardComment;
 import com.example.Slipper.repository.promotionRepository.PromotionBoardCommentRepository;
-import com.example.Slipper.repository.promotionRepository.PromotionRepository;
-import com.example.Slipper.repository.userAndEntreRepositories.EntreRepository;
+import com.example.Slipper.repository.promotionRepository.PromotionBoardRepository;
 import com.example.Slipper.service.loginAndJoinServices.EntreService;
 import com.example.Slipper.service.loginAndJoinServices.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +23,7 @@ import java.util.ArrayList;
 public class PromotionGenDetail {
 
     @Autowired
-    PromotionRepository promotionRepository;
+    PromotionBoardRepository promotionBoardRepository;
 
     @Autowired
     PromotionBoardCommentRepository promotionBoardCommentRepository;
@@ -47,12 +46,12 @@ public class PromotionGenDetail {
             model.addAttribute("id", true);
 
             // 홍보 데이터 불러오기.
-            Promotion promotion = promotionRepository.findByPromoBrdPostId(promoBrdPostId);
-            model.addAttribute("promotion", promotion);
+            PromotionBoard promotionBoard = promotionBoardRepository.findByPromoBrdPostId(promoBrdPostId);
+            model.addAttribute("promotionBoard", promotionBoard);
 
             // 조회수
-            promotion.setPromoBrdViewCount(promotion.getPromoBrdViewCount() + 1);
-            promotionRepository.save(promotion);
+            promotionBoard.setPromoBrdViewCount(promotionBoard.getPromoBrdViewCount() + 1);
+            promotionBoardRepository.save(promotionBoard);
 
             // 댓글 데이터 불러오기.
             ArrayList<PromotionBoardComment> proComnt = promotionBoardCommentRepository.findByPromoBrdPostId(promoBrdPostId);

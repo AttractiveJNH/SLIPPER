@@ -1,29 +1,25 @@
 package com.example.Slipper.controller.promotion;
 
 
-import com.example.Slipper.entity.promotionEntity.Promotion;
+import com.example.Slipper.entity.promotionEntity.PromotionBoard;
 import com.example.Slipper.entity.userAndEntreEntities.EntreEntity;
 import com.example.Slipper.entity.userAndEntreEntities.UserEntity;
-import com.example.Slipper.repository.promotionRepository.PromotionRepository;
+import com.example.Slipper.repository.promotionRepository.PromotionBoardRepository;
+import com.example.Slipper.repository.userAndEntreRepositories.EntreRepository;
+import com.example.Slipper.repository.userAndEntreRepositories.UserRepository;
 import com.example.Slipper.service.loginAndJoinServices.EntreService;
 import com.example.Slipper.service.loginAndJoinServices.UserService;
 import com.example.Slipper.service.promotionService.PromotionService;
-import com.example.Slipper.util.ImageUrlParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Locale;
-
-import java.util.ArrayList;
+import java.util.*;
 
 
 @Controller
@@ -31,7 +27,7 @@ import java.util.ArrayList;
 public class PromotionMain { // 홍보 게시판 메인 화면의 컨트롤러
 
     @Autowired
-    PromotionRepository promotionRepository;
+    PromotionBoardRepository promotionBoardRepository;
 
     @Autowired
     PromotionService promotionService;
@@ -42,6 +38,17 @@ public class PromotionMain { // 홍보 게시판 메인 화면의 컨트롤러
     @Autowired
     UserService userService;
 
+    @Autowired
+    EntreRepository entreRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    public PromotionMain(PromotionService promotionService){
+        this.promotionService = promotionService;
+    }
+
 
 
 
@@ -50,137 +57,193 @@ public class PromotionMain { // 홍보 게시판 메인 화면의 컨트롤러
 
     @GetMapping("/promotion")
     public String promotionMain(Model model,
-                                @SessionAttribute(name = "id", required = false) String id) {
+                                @SessionAttribute(name = "id", required = false) String id,
+                                @PageableDefault Pageable pageable) {
 
         EntreEntity loginEntre = entreService.getLoginEntreByLoginId(id);
         UserEntity loginUser = userService.getLoginUserById(id);
+
 
         // 세션값 유무에 따라 헤더변동(true = LogOut / false = 헤더 없음)
         if (loginEntre != null || loginUser != null) {
 
             model.addAttribute("id", true);
 
-            ArrayList<Promotion> promotions = promotionRepository.findAll();
+            boolean isEntre = (loginEntre != null);
+            model.addAttribute("isEntre", isEntre);
 
-            // imageurl부분만 추출해서 리스트 형태로 가져옴
-//            List<String> imageUrls = imageUrlParser.extractImageUrlsFromContents();
+            //프로모션 정보 가져오기
+            Page<PromotionBoard> boardList = promotionService.getPromotionBoardList(pageable);
+            model.addAttribute("boardList", boardList);
 
-            model.addAttribute("promotions", promotions);
-
-            // 추출해온 imageUrl주소를 뷰페이지로 전달함.
-//            model.addAttribute("imageUrls", imageUrls);
-
-
-
+            // 이미지 유무 체크
+            List<PromotionBoard> imgboardList = promotionService.getPromotionBoardImgList(boardList);
+            List<Integer> imageInfo = promotionService.getImageInfo(imgboardList);
+            model.addAttribute("imageInfo", imageInfo);
 
             return "promotion/promotionMain";
         }
 
 
-            return "redirect:/login";
-        }
-
-     //지역이나 카테고리를 선택하면 그에 맞게 비동기적으로 페이지를 수정해주는.
-    @GetMapping("/updatePromotion")
-    public String updatePromotion(@RequestParam(name = "promoBrdRegion", required = false) String promoBrdRegion,
-                                  @RequestParam(name = "promoBrdCategory", required = false) Integer promoBrdCategory,
-                                  Model model, @PageableDefault(page = 0, size = 8, sort = "promoBrdPostId", direction = Sort.Direction.DESC) Pageable pageable) {
-
-
-
-//        model.addAttribute("promotions", promotionService.promotionList(pageable));
-
-        log.info("promoBrdRegion: {}, promoBrdCategory: {}", promoBrdRegion, promoBrdCategory);
-        // Promotion테이블에 있는 데이터를 지역과 카테고리별로 필터링해서 가져왔으면 좋겠다.
-        Page<Promotion> promotions;
-
-        if (promoBrdRegion != null && promoBrdCategory != null) {
-            promotions = promotionRepository.findByPromoBrdRegionAndPromoBrdCategory(promoBrdRegion, promoBrdCategory, pageable);
-
-        } else if (promoBrdRegion != null) {
-            promotions = promotionRepository.findByPromoBrdRegion(promoBrdRegion, pageable);
-        } else if (promoBrdCategory != null) {
-            promotions = promotionRepository.findByPromoBrdCategory(promoBrdCategory, pageable);
-        } else {
-            promotions = promotionRepository.findAll(pageable);
-
-
-
-            model.addAttribute("promotions", promotions);
-
-
-            return "promotion/promotionData";
-        }
-
-
-
-//        int nowPage = promotions.getPageable().getPageNumber() + 1;
-//        int startPage = Math.max(nowPage - 4, 1);
-//        int endPage = Math.min(nowPage + 5, promotions.getTotalPages());
-
-        model.addAttribute("promotions", promotions);
-//        model.addAttribute("nowPage", nowPage);
-//        model.addAttribute("startPage", startPage);
-//        model.addAttribute("endPage", endPage);
-
-        return "promotion/promotionData"; // 업데이트할 부분의 뷰 페이지를 반환
+        return "redirect:/login";
     }
+
+    // 지역 및 게시글 유형 선택 시 메핑
+    @GetMapping("/promotion/sorting")
+    public String promotionMainSortingPage(@RequestParam int region, @RequestParam int category,
+                                         @PageableDefault Pageable pageable, Model model, @SessionAttribute(name = "id", required = false) String id) {
+
+        EntreEntity loginEntre = entreService.getLoginEntreByLoginId(id);
+        UserEntity loginUser = userService.getLoginUserById(id);
+
+        if (loginEntre != null || loginUser != null) {
+
+            model.addAttribute("id", true);
+
+            // 지역 값
+            String regionName = promotionService.mapRegionToName(region);
+
+            // 지역 및 게시글 유형 선택 시
+            if (region == 0 && category == 0) {
+                return "redirect:/promotion";
+
+            } else if (region != 0 && category == 0) {
+                // 설정한 지역에 맞는 게시글 정보
+                Page<PromotionBoard> regionBoardList = promotionService.regionPromotionBoardList(regionName, pageable);
+
+                // 이미지 유무 체크
+                List<PromotionBoard> imgboardList = promotionService.getPromotionBoardImgList(regionBoardList);
+                List<Integer> imageInfo = promotionService.getImageInfo(imgboardList);
+
+                // 이미지 유무 체크 정보
+                model.addAttribute("imageInfo", imageInfo);
+                // 지역에 맞는 게시글 정보
+                model.addAttribute("boardList", regionBoardList);
+                // 카테고리 정보
+                model.addAttribute("category", category);
+                // 지역 정보
+                model.addAttribute("region", region);
+
+                return "promotion/promotionSortingMain";
+            } else if (region == 0 && category != 0) {
+                // 설정한 지역에 맞는 게시글 정보
+                Page<PromotionBoard> categoryBoardList = promotionService.categoryPromotionBoardList(category, pageable);
+
+                // 이미지 유무 체크
+                List<PromotionBoard> imgboardList = promotionService.getPromotionBoardImgList(categoryBoardList);
+                List<Integer> imageInfo = promotionService.getImageInfo(imgboardList);
+
+                // 이미지 유무 체크 정보
+                model.addAttribute("imageInfo", imageInfo);
+                // 지역에 맞는 게시글 정보
+                model.addAttribute("boardList", categoryBoardList);
+                // 카테고리 정보
+                model.addAttribute("category", category);
+                // 지역 정보
+                model.addAttribute("region", region);
+
+                return "promotion/promotionSortingMain";
+            } else {
+                // 설정한 지역에 맞는 게시글 정보
+                Page<PromotionBoard> sortingBoardList = promotionService.sortingPromotionBoardList(regionName, category, pageable);
+
+                // 이미지 유무 체크
+                List<PromotionBoard> imgboardList = promotionService.getPromotionBoardImgList(sortingBoardList);
+                List<Integer> imageInfo = promotionService.getImageInfo(imgboardList);
+
+                // 이미지 유무 체크 정보
+                model.addAttribute("imageInfo", imageInfo);
+                // 지역에 맞는 게시글 정보
+                model.addAttribute("boardList", sortingBoardList);
+                // 카테고리 정보
+                model.addAttribute("category", category);
+                // 지역 정보
+                model.addAttribute("region", region);
+                return "promotion/promotionSortingMain";
+            }
+
+        }
+        return "redirect:/login";
+    }
+
+    // 검색 (카테고리 + 검색은 불가능)
+    @GetMapping("/promotion/search")
+    public String promotionSearch(@RequestParam("search_option") int searchOption,
+                                @RequestParam("search") String search, @PageableDefault Pageable pageable, Model model,
+                                @SessionAttribute(name = "id", required = false) String id){
+
+        EntreEntity loginEntre = entreService.getLoginEntreByLoginId(id);
+        UserEntity loginUser = userService.getLoginUserById(id);
+
+        if (loginEntre != null || loginUser != null) {
+
+            model.addAttribute("id", true);
+
+
+            // searchOption == 1 : 제목만, 2: 제목 + 내용, 3: 글쓴이
+            if (searchOption == 1) {
+                // 검색에 맞는 게시글 정보
+                Page<PromotionBoard> titleSearchBoardList = promotionService.titleSearchPromotionList(search, pageable);
+
+                // 이미지 유무 체크
+                List<PromotionBoard> imgboardList = promotionService.getPromotionBoardImgList(titleSearchBoardList);
+                List<Integer> imageInfo = promotionService.getImageInfo(imgboardList);
+
+                // 이미지 유무 체크 정보
+                model.addAttribute("imageInfo", imageInfo);
+                // 검색에 맞는 게시글 정보
+                model.addAttribute("boardList", titleSearchBoardList);
+                // 검색 조건 내용
+                model.addAttribute("searchOption", searchOption);
+                // 검색 내용
+                model.addAttribute("search", search);
+
+                return "promotion/promotionSearchMain";
+            } else if (searchOption == 2) {
+                // 검색에 맞는 게시글 정보
+                Page<PromotionBoard> contentTitleSearchBoardList = promotionService.contentTitleSearchPromotionList(search, pageable);
+
+                // 이미지 유무 체크
+                List<PromotionBoard> imgboardList = promotionService.getPromotionBoardImgList(contentTitleSearchBoardList);
+                List<Integer> imageInfo = promotionService.getImageInfo(imgboardList);
+
+                // 이미지 유무 체크 정보
+                model.addAttribute("imageInfo", imageInfo);
+                // 검색에 맞는 게시글 정보
+                model.addAttribute("boardList", contentTitleSearchBoardList);
+                // 검색 조건 내용
+                model.addAttribute("searchOption", searchOption);
+                // 검색 내용
+                model.addAttribute("search", search);
+
+                return "promotion/promotionSearchMain";
+
+            } else if (searchOption == 3) {
+                // 검색에 맞는 게시글 정보
+                Page<PromotionBoard> writerSearchBoardList = promotionService.writerSearchPromotionList(search, pageable);
+
+                // 이미지 유무 체크
+                List<PromotionBoard> imgboardList = promotionService.getPromotionBoardImgList(writerSearchBoardList);
+                List<Integer> imageInfo = promotionService.getImageInfo(imgboardList);
+
+                // 이미지 유무 체크 정보
+                model.addAttribute("imageInfo", imageInfo);
+                // 검색에 맞는 게시글 정보
+                model.addAttribute("boardList", writerSearchBoardList);
+                // 검색 조건 내용
+                model.addAttribute("searchOption", searchOption);
+                // 검색 내용
+                model.addAttribute("search", search);
+
+                return "promotion/promotionSearchMain";
+
+
+            } else {
+                //오류
+                return "redirect:/promotion";
+            }
+        }
+        return "redirect:/login";
+    }
+
 }
-//    @GetMapping("/updateTest") 테스트용 컨트롤러
-//    public String updateTest(Model model, @PageableDefault(page = 0, size = 8, sort = "promoBrdPostId", direction = Sort.Direction.DESC) Pageable pageable){
-//
-//        Page<Promotion> promotions = promotionRepository.findAll(pageable);
-//
-//        int nowPage = promotions.getPageable().getPageNumber() + 1;
-//        int startPage = Math.max(nowPage - 4, 1);
-//        int endPage = Math.min(nowPage + 5, promotions.getTotalPages());
-//
-//        model.addAttribute("promotions", promotions);
-//        model.addAttribute("nowPage", nowPage);
-//        model.addAttribute("startPage", startPage);
-//        model.addAttribute("endPage", endPage);
-//
-//        return "/promotion/promotionMain";
-//    }
-
-//    @GetMapping("/updatePromotion")
-//    public String updatePromotion(@RequestParam(name = "promoBrdRegion", required = false) String promoBrdRegion,
-//                                  @RequestParam(name = "promoBrdCategory", required = false) Integer promoBrdCategory,
-//                                  Model model) {
-//
-//        log.info("promoBrdRegion: {}, promoBrdCategory: {}", promoBrdRegion, promoBrdCategory);
-//        // Promotion테이블에 있는 데이터를 지역과 카테고리별로 필터링해서 가져왔으면 좋겠다.
-//        ArrayList<Promotion> promotions;
-//        if (promoBrdRegion != null && promoBrdCategory != null) {
-//            promotions = new ArrayList<>(promotionRepository.findByPromoBrdRegionAndPromoBrdCategory(promoBrdRegion, promoBrdCategory));
-//        } else if (promoBrdRegion != null) {
-//            promotions = new ArrayList<>(promotionRepository.findByPromoBrdRegion(promoBrdRegion));
-//        } else if (promoBrdCategory != null) {
-//            promotions = new ArrayList<>(promotionRepository.findByPromoBrdCategory(promoBrdCategory));
-//        } else {
-//            promotions = new ArrayList<>(promotionRepository.findAll());
-//            model.addAttribute("promotions", promotions);
-//            log.info(promotions.toString());
-//            return "redirect:/promotion/promotionMain";
-//        }
-//        log.info(promotions.toString());
-//
-//        model.addAttribute("promotions", promotions);
-//
-//        log.info(promotions.toString());
-//
-//        return "/promotion/promotionData"; // 업데이트할 부분의 뷰 페이지를 반환
-//    }
-
-    // 글쓰기 버튼 누르면 글쓰기 페이지로 넘어가는 컨트롤러.
-
-
-    // 카드 누르면 홍보게시판 상세 정보 보여주는 페이지로 넘어가는 컨트롤러.
-
-
-    // 제목, 내용, 제목 + 내용 선택하는 드롭다운 박스 컨트롤러.
-
-
-    // 검색상자에 내용 입력하고 검색 누르면 해당 문자열 검색해주는 컨트롤러.
-
-

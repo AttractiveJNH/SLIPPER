@@ -1,22 +1,21 @@
 package com.example.Slipper.controller.promotion;
 
 
-import com.example.Slipper.entity.promotionEntity.Promotion;
+import com.example.Slipper.entity.promotionEntity.PromotionBoard;
 import com.example.Slipper.repository.promotionRepository.PromotionBoardCommentRepository;
-import com.example.Slipper.repository.promotionRepository.PromotionRepository;
+import com.example.Slipper.repository.promotionRepository.PromotionBoardRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @Slf4j
 public class PromoDelete {
 
     @Autowired
-    PromotionRepository promotionRepository; // 홍보글 데이터
+    PromotionBoardRepository promotionBoardRepository; // 홍보글 데이터
 
     @Autowired
     PromotionBoardCommentRepository proComnt; // 댓글 데이터
@@ -24,10 +23,10 @@ public class PromoDelete {
     @GetMapping("/promotion/eventDelete/{Id}")
     public String eventDelete(@PathVariable int Id){
 
-        Promotion delTarget = promotionRepository.findByPromoBrdPostId(Id);
+        PromotionBoard delTarget = promotionBoardRepository.findByPromoBrdPostId(Id);
 
         if(delTarget != null){
-            promotionRepository.delete(delTarget);
+            promotionBoardRepository.delete(delTarget);
         }
 
         return "redirect:/promotion";
@@ -36,10 +35,10 @@ public class PromoDelete {
     @GetMapping("/promotion/genDelete/{Id}")
     public String genDelete(@PathVariable int Id){
 
-        Promotion delTarget = promotionRepository.findByPromoBrdPostId(Id);
+        PromotionBoard delTarget = promotionBoardRepository.findByPromoBrdPostId(Id);
 
         if(delTarget != null){
-            promotionRepository.delete(delTarget);
+            promotionBoardRepository.delete(delTarget);
         }
 
         return "redirect:/promotion";

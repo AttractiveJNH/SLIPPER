@@ -72,6 +72,7 @@
         width: 100%;
         height: 550px;
         margin-left: 0%;
+
         }
 
         .registration{
@@ -146,24 +147,28 @@
                             <label for="promoBrdCategory"></label>
                             <select name="promoBrdCategory" id="promoBrdCategory" required>
                                 <option value="none">게시글 유형</option>
-                                <option value="0">일반</option>
-                                <option value="1">체험</option>
-                                <option value="2">이벤트</option>
+                                <option value="1">일반</option>
+<!--                                <option value="1">체험</option>-->
+<!--                                <option value="2">이벤트</option>-->
                             </select>
-                            <div id="result2"></div>
+                            <div id=""></div>
                         </div>
-                    </div>
-                </div>
-                <div class="section"><!--제목 영역-->
-                    <div class="promo_sec_title">제 목</div>
-                    <div class="promo_input">
-                        <input type="text" name="promoBrdTitle" class="input" required>
                     </div>
                 </div>
                 <div class="section"><!--상호명 영역-->
                     <div class="promo_sec_title">상호명</div>
                     <div class="promo_input">
-                        <input type="text" name="promoBrdBusinessName" style="width:200px;" class="input" required>
+                        <input th:value="${entre.entrepreBusinessName}" name="promoBrdBusinessName" style="width:200px; border: 2px solid #F5F6sF8 ;" class="input" readonly>
+
+                    </div>
+                </div>
+                <div class="section"><!--상호명 영역-->
+
+                </div>
+                <div class="section"><!--제목 영역-->
+                    <div class="promo_sec_title">제 목</div>
+                    <div class="promo_input">
+                        <input type="text" name="promoBrdTitle" class="input" required>
                     </div>
                 </div>
                 <div class="section"><!--장소 영역-->
@@ -172,13 +177,15 @@
                         <input type="text" name="promoBrdArea" class="input" required>
                     </div>
                 </div>
+
+
             </div>
         </div>
         <div>
             <div>
                 <div>
-                    <div class="editor_box" style="width:65%; margin-left:20%;">
-                        <textarea name="promoBrdContent" id="editorTxt" rows="30" cols="20"
+                    <div class="editor_box" style="width:63%; margin-left:20%;">
+                        <textarea style="width:52%; min-width:52%; max-width:52%;" name="promoBrdContent" id="editorTxt" rows="30" cols="20"
                                   placeholder="내용을 입력해주세요"></textarea>
                     </div>
                 </div>

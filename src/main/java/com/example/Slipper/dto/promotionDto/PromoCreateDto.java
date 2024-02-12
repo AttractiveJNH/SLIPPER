@@ -1,11 +1,10 @@
 package com.example.Slipper.dto.promotionDto;
 
-import com.example.Slipper.entity.promotionEntity.Promotion;
+import com.example.Slipper.entity.promotionEntity.PromotionBoard;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import com.example.Slipper.entity.userAndEntreEntities.EntreEntity;
 
 
 import java.time.LocalDate;
@@ -40,8 +39,8 @@ public class PromoCreateDto { // 체험, 이벤트 홍보 게시판 글 작성 D
 
 
     // 홍보 게시글의 경우 사업자 유저만 사용할 수 있기 때문에 id값은 사업자 아이디만 의미함.
-    public Promotion toEntity(String id){
-        return new Promotion(null, id, promoBrdCategory, promoBrdApplyStartDate,
+    public PromotionBoard toEntity(String id){
+        return new PromotionBoard(null, id, promoBrdCategory, promoBrdApplyStartDate,
                 promoBrdApplyEndDate, promoBrdEventStartDate, promoBrdEventEndDate, promoBrdExpSelect,
                 promoBrdMaxParticipants, promoBrdApplyParticipants, promoBrdBusinessName,
                 promoBrdExperienceDate, promoBrdTitle, promoBrdContent, promoBrdMainImg,

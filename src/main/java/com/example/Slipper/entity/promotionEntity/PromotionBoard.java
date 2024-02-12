@@ -1,7 +1,6 @@
 package com.example.Slipper.entity.promotionEntity;
 
 
-import com.example.Slipper.entity.userAndEntreEntities.EntreEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -18,10 +17,10 @@ import java.time.LocalDate;
 @Setter
 @ToString
 @EntityListeners(AuditingEntityListener.class)
-public class Promotion {
+public class PromotionBoard {
 
     @Id
-    @Column(name = "promo_brd_post_id")
+    @Column(name = "promobrdpostid")
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 데이터베이스에 A.I설정 되어있어야 사용됨.
     private Integer promoBrdPostId; // 홍보 게시판 번호
 

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/layout}"
+        lang="en"
+>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <!--    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>-->
+    <!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"-->
+    <!--            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"-->
+    <!--            crossorigin="anonymous"></script>-->
+    <link rel="stylesheet" type="text/css" href="/css/meeting/meetingMain.css">
+
+    <style>
+        @media (max-width: 767px) {
+            .cardBox {
+                flex: 0 0 calc(50% - 20px);
+            }
+        }
+
+        #promoBrdRegion{
+        width: 150px;
+        height: 50px;
+        padding: 5px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        }
+
+        #promoBrdCategory{
+        width: 150px;
+        height: 50px;
+        padding: 5px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        }
+
+        #writeGen{
+        margin-left: 65%;
+        }
+
+        #writeEvent{
+        margin-left: 3%;
+        }
+
+        .proGenCreate{
+        display: inline-block;
+        padding: 10px 20px; /* 내부 여백 조정 */
+        text-decoration: none; /* 기본 밑줄 제거 */
+        color: #ffffff; /* 텍스트 색상 */
+        background-color: #2ECC71; /* 배경색 */
+        border: 1px solid #2ECC71; /* 테두리 스타일과 색상 */
+        border-radius: 5px; /* 테두리 모서리 둥글게 만들기 */
+        font-weight: bold; /* 텍스트 굵게 설정 */
+        width:150px;
+        height:50px;
+        }
+
+        .revCreate{
+        display: inline-block;
+        padding: 10px 20px; /* 내부 여백 조정 */
+        text-decoration: none; /* 기본 밑줄 제거 */
+        color: #ffffff; /* 텍스트 색상 */
+        background-color: #2ECC71; /* 배경색 */
+        border: 1px solid #2ECC71; /* 테두리 스타일과 색상 */
+        border-radius: 5px; /* 테두리 모서리 둥글게 만들기 */
+        font-weight: bold; /* 텍스트 굵게 설정 */
+        width: 150px;
+        height:50px;
+        }
+
+    </style>
+</head>
+<div layout:fragment="content">
+
+    <div>
+        <div>
+            <h3 style="margin-left:5%;">리뷰 게시판</h3>
+        </div>
+
+        <div class="dropdownContainer" style="display: flex; margin-bottom: 50px; margin-left: 5%;">
+            <form id="selectForm">
+                <div style="display:flex;">
+                    <div class="dropdown"><!-- 지역 선택 드롭다운 -->
+                        <label for="region"></label>
+                        <select name="region" id="region" onchange="selectForm()">
+                            <option value="0" th:selected="${region == 0}">지역 선택</option>
+                            <option value="1" th:selected="${region == 1}">중구</option>
+                            <option value="2" th:selected="${region == 2}">서구</option>
+                            <option value="3" th:selected="${region == 3}">동구</option>
+                            <option value="4" th:selected="${region == 4}">영도구</option>
+                            <option value="5" th:selected="${region == 5}">부산진구</option>
+                            <option value="6" th:selected="${region == 6}">동래구</option>
+                            <option value="7" th:selected="${region == 7}">남구</option>
+                            <option value="8" th:selected="${region == 8}">북구</option>
+                            <option value="9" th:selected="${region == 9}">강서구</option>
+                            <option value="10" th:selected="${region == 10}">해운대구</option>
+                            <option value="11" th:selected="${region == 11}">사하구</option>
+                            <option value="12" th:selected="${region == 12}">금정구</option>
+                            <option value="13" th:selected="${region == 13}">연제구</option>
+                            <option value="14" th:selected="${region == 14}">수영구</option>
+                            <option value="15" th:selected="${region == 15}">사상구</option>
+                            <option value="16" th:selected="${region == 16}">기장군</option>
+                        </select>
+
+                        <div id=" "></div>
+
+                    </div>
+                    <!-- 게시글 유형 드롭다운 -->
+                    <div class="dropdown"><!-- 지역 선택 드롭다운 -->
+                        <label for="category"></label>
+                        <select name="category" id="category" onchange="selectForm()">
+                            <option value="0" th:selected="${category == 0}">게시글 유형</option>
+                            <option value="1" th:selected="${category == 1}">일반</option>
+                            <option value="2" th:selected="${category == 2}">체험</option>
+                            <option value="3" th:selected="${category == 3}">이벤트</option>
+
+                        </select>
+                        <div id=""></div>
+                    </div>
+                </div>
+            </form>
+
+
+            <div id="writeGen"><!-- 글쓰기 버튼 -->
+                <a th:href="@{/review/Create}">
+                    <div>
+                        <button class="revCreate">글쓰기</button>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+
+        <div class="cardContainer" style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+            <div th:each="boardList : ${boardList}" class="cardBox"
+                 style="flex: 0 0 calc(20% - 6.25px); margin: 10px;">
+
+                <div class="card" style="width: 350px; height: 100%; border: 1px solid;">
+                    <a th:href="@{/review/revDetail/{revBrdPostId}(revBrdPostId=${boardList.revBrdPostId})}"
+                       style="text-decoration:none; color: #000000;">
+                        <!-- 이미지 표시 -->
+                        <img src="/images/imageCheckIcon1.png" class="card-img-top img-fluid" alt="홍보 이미지"
+                             style="object-fit: cover; object-position: top; width: 70%; height: 200px; min-height: 200px;margin-left:15%;">
+                        <!-- 카드 내용을 표시하는 부분 -->
+                        <div class="card-body" style="display:flex;">
+                            <button th:text="${boardList.revBrdCategory == 1 ? '일반' : (boardList.revBrdCategory == 2 ? '체험' : '이벤트')}" class="btn btn-primary"></button>
+                            <h4 class="card-title" th:text="${boardList.revBrdTitle}" style="margin-top:3px;"></h4>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div style="display:flex; justify-content: center; margin-top: 50px;">
+            <div class="paging_box" style="display:flex; justify-content : center;">
+                <ul class="pagination" th:with="start=${T(java.lang.Math).floor(boardList.number/10)*10 + 1},
+                        last=(${start + 9 < boardList.totalPages ? start + 9 : boardList.totalPages})">
+                    <li><a th:href="@{/review/sorting(page=1)}"><<</a></li>
+                    <li th:class="${boardList.first} ? 'disabled'">
+                        <a th:href="${boardList.first} ? '#' :@{/review/sorting(page=${boardList.number})}"><</a>
+                    </li>
+
+                    <li th:each="page: ${#numbers.sequence(start, last)}"
+                        th:class="${page == boardList.number + 1} ? 'active'">
+                        <a th:text="${page}" th:href="@{/review/sorting(page=${page})}"></a>
+                    </li>
+
+                    <li th:class="${boardList.last} ? 'disabled'">
+                        <a th:href="${boardList.last} ? '#' : @{/review/sorting(page=${boardList.number + 2})}">></a>
+                    </li>
+                    <li><a th:href="@{/review/sorting(page=${boardList.totalPages})}">>></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="search_container">
+            <form action="/review/search" method="GET">
+                <select name="search_option">
+                    <option value="1">제목만</option>
+                    <option value="2">제목+내용</option>
+                    <option value="3">글쓴이</option>
+                </select>
+                <input type="text" placeholder="검색어를 입력하세요" name="search">
+                <button type="submit">검색</button>
+            </form>
+
+        </div>
+
+
+    </div>
+    <script src="/js/review/reviewMain.js"></script>
+</div>
+
+</html>
+
+
+

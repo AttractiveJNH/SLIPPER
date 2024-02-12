@@ -1,10 +1,10 @@
 package com.example.Slipper.controller.promotion;
 
 import com.example.Slipper.dto.promotionDto.PromoCreateDto;
+import com.example.Slipper.entity.promotionEntity.PromotionBoard;
 import com.example.Slipper.entity.userAndEntreEntities.EntreEntity;
-import com.example.Slipper.entity.promotionEntity.Promotion;
 import com.example.Slipper.entity.userAndEntreEntities.UserEntity;
-import com.example.Slipper.repository.promotionRepository.PromotionRepository;
+import com.example.Slipper.repository.promotionRepository.PromotionBoardRepository;
 import com.example.Slipper.repository.userAndEntreRepositories.EntreRepository;
 import com.example.Slipper.service.loginAndJoinServices.EntreService;
 import com.example.Slipper.service.loginAndJoinServices.UserService;
@@ -23,9 +23,9 @@ import java.util.UUID;
 @Controller
 @Slf4j
 public class PromotionGenCreate {
-
+    public String _FilePath = "";
     @Autowired
-    PromotionRepository promotionRepository;
+    PromotionBoardRepository promotionBoardRepository;
 
     @Autowired
     EntreRepository entreRepository;
@@ -41,12 +41,27 @@ public class PromotionGenCreate {
     public String proGen(@SessionAttribute(name = "id", required = false) String id, Model model) {
 
         EntreEntity loginEntre = entreService.getLoginEntreByLoginId(id);
-        UserEntity loginUser = userService.getLoginUserById(id);
+//        UserEntity loginUser = userService.getLoginUserById(id);
 
-        if (loginEntre != null || loginUser != null) {
+        EntreEntity entre = entreRepository.findById(id).orElse(null);
+
+        log.info("확인용 : " + entre.getId().toString());
+
+
+
+        if (loginEntre != null) {
+//            if (loginEntre != null || loginUser != null) {
+
             model.addAttribute("id", true);
+            model.addAttribute("entre", entre);
 
-            return "/promotion/proGenCreate";
+            if(entre.getEntrepreBusinessName() != null) {
+                return "/promotion/proGenCreate";
+
+            }else{
+                return "/promotion/error";
+            }
+
         }
         return "redirect:/login";
     }
@@ -56,26 +71,25 @@ public class PromotionGenCreate {
     public String proGenCreate(PromoCreateDto promotionForm, @SessionAttribute(name = "id", required = false) String id, Model model) {
 
 
-        log.info("Controller On");
+
         EntreEntity loginEntre = entreService.getLoginEntreByLoginId(id);
 
-        log.info("ID : " + id);
+
 
         UserEntity loginUser = userService.getLoginUserById(id);
 
-        log.info("ID : " + id);
+
 
         // id에 해당하는 값이 null인 경우 로그인 화면으로 전환.
         if (loginEntre != null || loginUser != null) {
 
             log.info("If On");
             model.addAttribute("id", true);
-            Promotion promotion = promotionForm.toEntity(id);
+            log.info(_FilePath);
+            PromotionBoard promotionBoard = promotionForm.toEntity(id);
 
-            log.info("If On");
-
-            log.info(promotion.toString());
-            promotionRepository.save(promotion);
+            log.info(promotionBoard.toString());
+            promotionBoardRepository.save(promotionBoard);
 
             return "redirect:/promotion";
         }
@@ -85,6 +99,8 @@ public class PromotionGenCreate {
     @RequestMapping(value = "/promotion/genCreate/save/smarteditorMultiImageUpload")
     public void smarteditorMultiImageUpload(HttpServletRequest request, HttpServletResponse response){
         try {
+
+            log.info("Image Upload");
             //파일정보
             String sFileInfo = "";
             //파일명을 받는다 - 일반 원본파일명
@@ -129,6 +145,9 @@ public class PromotionGenCreate {
                 sRealFileNm = today+ UUID.randomUUID().toString() + sFilename.substring(sFilename.lastIndexOf("."));
                 String rlFileNm = filePath + sRealFileNm;
 
+                log.info(rlFileNm);
+                _FilePath = rlFileNm;
+
                 ///////////////// 서버에 파일쓰기 /////////////////
                 InputStream inputStream = request.getInputStream();
                 OutputStream outputStream=new FileOutputStream(rlFileNm);
@@ -148,7 +167,7 @@ public class PromotionGenCreate {
                 sFileInfo += "&bNewLine=true";
                 // img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
                 sFileInfo += "&sFileName="+ sFilename;
-                sFileInfo += "&sFileURL="+"//192.168.2.3/images/d/"+sRealFileNm;
+                sFileInfo += "&sFileURL="+"//192.168.2.3/images/d/"+sRealFileNm; // (//192.168.2.3/images/d/"+sRealFileNm)까지 이부분의 경로가 DB에 저장되어야함. 내용은 따로.
                 PrintWriter printWriter = response.getWriter();
                 printWriter.print(sFileInfo);
                 printWriter.flush();

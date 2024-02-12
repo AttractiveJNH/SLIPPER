@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>신청자 명단</title>
+
+    <link rel="stylesheet" type="text/css" href="/css/meeting/meetingApply.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="participant_text">
+        <p>참가 신청자</p>
+    </div>
+
+    <div class="write_title">
+        <div class="route_text_box">
+            <p>모임 게시판 -></p>
+            <p th:text="'[' + ${promotionInfo.promotion_brd_category == 1 ? '체험' : (promotionInfo.promotion_brd_category == 2 ? '이벤트' : '일반')} + ']'"></p>
+            <a th:href="@{'/meeting/detail/' + ${promotionInfo.promoBrdPostId}}" target="_blank">
+                <p th:text="${promotionInfo.promo_brd_title}" class="bold"></p>
+            </a>
+        </div>
+
+        <!--        참가자 수 -->
+        <div class="table_container">
+            <table class="table_content">
+                <tr>
+                    <th class="table_box_1">인원</th>
+                    <td th:text="${promotionInfo.promo_brd_apply_participants} + '/' + ${promotionInfo.promo_brd_max_participants}" class="table_box_1"></td>
+                </tr>
+            </table>
+        </div>
+
+
+
+    </div>
+
+    <div class="participant_list_content">
+        <div class="container_1">
+            <div class="title_1">
+                <p>번호</p>
+            </div>
+
+            <div class="title_2">
+                <p>닉네임</p>
+            </div>
+
+            <div class="title_3">
+                <p>년도</p>
+            </div>
+
+            <div class="title_4">
+                <p>신청일</p>
+            </div>
+
+        </div>
+
+        <div class="line">
+            <div class="horizontal-line1"></div>
+        </div>
+        <!-- 글 작성자 -->
+        <div class="container_2">
+            <div class="content_1">
+                <p>주최자</p>
+            </div>
+
+            <div class="content_2">
+                <p th:text="${meetWriteUser.user_nick_name}"></p>
+            </div>
+
+            <div class="content_3">
+                <p th:text="${#temporals.format(meetWriteUser.user_birthdate, 'yyyy')}"></p>
+            </div>
+
+            <div class="content_4">
+                <p th:text="${#temporals.format(meetInfo.meet_write_date, 'yyyy-MM-dd')}"></p>
+            </div>
+        </div>
+
+        <!-- 수락한 신청자가 있을 때 / 없을 때 가로선 -->
+        <div class="line">
+            <div th:class="${#lists.size(applyAcceptUser) != 0} ? 'horizontal-line2_1' : 'horizontal-line1'"></div>
+        </div>
+
+
+
+        <!--수락한 신청자들-->
+        <div th:each="user, iterStat : ${applyAcceptUser}">
+            <div class="container_3">
+                <div class="display_flex">
+                    <!--번호-->
+                    <div class="content_1">
+                        <p>참가자</p>
+                    </div>
+
+                    <!--유저 닉네임-->
+                    <div class="content_2">
+                        <p th:text="${user.nick_name}"></p>
+                    </div>
+
+                    <!--유저 생년-->
+                    <div class="content_3">
+                        <p th:text="${#temporals.format(user.birthdate, 'yyyy')}"></p>
+                    </div>
+
+                    <!--신청일-->
+                    <div class="content_4">
+                        <p th:text="${#temporals.format(user.meet_apply_date, 'yyyy-MM-dd')}"></p>
+                    </div>
+
+                    <!--취소 버튼-->
+                    <div class="content_5">
+                        <form th:action="@{/meetApplyCancel/{meetNum}/{userNum}(meetNum=${meetInfo.meetNum}, userNum=${user.user_num.user_num})}" method="post">
+                            <button class="cancel_btn">취소</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- 가로선-->
+                <div class="line">
+                    <div th:classappend="${iterStat.last} ? 'horizontal-line1' : 'horizontal-line2_1'"></div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <!-- 수락 대기 신청자들 -->
+        <div th:each="user, iterStat : ${applyWaitUser}">
+            <div class="container_3">
+                <div class="display_flex">
+                    <!--번호-->
+                    <div class="content_1">
+                        <p th:text="${iterStat.index + 1}"></p>
+                    </div>
+
+                    <!--유저 닉네임-->
+                    <div class="content_2">
+                        <p th:text="${user.nick_name}"></p>
+                    </div>
+
+                    <!--유저 생년-->
+                    <div class="content_3">
+                        <p th:text="${#temporals.format(user.birthdate, 'yyyy')}"></p>
+                    </div>
+
+                    <!--신청일-->
+                    <div class="content_4">
+                        <p th:text="${#temporals.format(user.meet_apply_date, 'yyyy-MM-dd')}"></p>
+                    </div>
+
+
+                    <div class="content_5">
+                        <!--수락 버튼-->
+                        <form id="accept_form" th:action="@{/meetApplyAccept/{meetNum}/{userNum}(meetNum=${meetInfo.meetNum}, userNum=${user.user_num.user_num})}" method="post">
+                            <button id="accept_btn">수락</button>
+                        </form>
+
+                        <!--거절 버튼-->
+                        <form th:action="@{/meetApplyRefuse/{meetNum}/{userNum}(meetNum=${meetInfo.meetNum}, userNum=${user.user_num.user_num})}" method="post">
+                            <button id="refuse_btn">거절</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="line">
+                    <div class="horizontal-line2_1"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="margin_bottom"></div>
+
+    <!-- 거절 목록 버튼-->
+    <button class="toggle-refuse-list">거절 목록 보기</button>
+
+    <!-- 거절 목록-->
+    <div class="refuse_list_content">
+        <div class="container_1">
+            <div class="title_1">
+                <p>번호</p>
+            </div>
+
+            <div class="title_2">
+                <p>닉네임</p>
+            </div>
+
+            <div class="title_3">
+                <p>년도</p>
+            </div>
+
+            <div class="title_4">
+                <p>신청일</p>
+            </div>
+        </div>
+
+        <div class="line">
+            <div class="horizontal-line1"></div>
+        </div>
+
+        <!-- 거절된 신청자들 -->
+        <div th:each="user, iterStat : ${applyRefuseUser}">
+            <div class="container_3">
+                <div class="display_flex">
+                    <!--번호-->
+                    <div class="content_1">
+                        <p th:text="${iterStat.index + 1}"></p>
+                    </div>
+
+                    <!--유저 닉네임-->
+                    <div class="content_2">
+                        <p th:text="${user.nick_name}"></p>
+                    </div>
+
+                    <!--유저 생년-->
+                    <div class="content_3">
+                        <p th:text="${#temporals.format(user.birthdate, 'yyyy')}"></p>
+                    </div>
+
+                    <!--신청일-->
+                    <div class="content_4">
+                        <p th:text="${#temporals.format(user.meet_apply_date, 'yyyy-MM-dd')}"></p>
+                    </div>
+
+
+                    <div class="content_5">
+                        <!--취소 버튼-->
+                        <form th:action="@{/meetApplyRefuseCancel/{meetNum}/{userNum}(meetNum=${meetInfo.meetNum}, userNum=${user.user_num.user_num})}" method="post">
+                            <button class="refuse_cancel_btn">취소</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="line">
+                    <div class="horizontal-line2_1"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="gap"></div>
+
+</div>
+
+
+<script>
+    var msg = "[[${msg}]]";
+    if (msg) {
+        alert(msg);
+    }
+</script>
+<script src="/js/promotion/promotionApply.js"></script>
+
+</body>
+</html>

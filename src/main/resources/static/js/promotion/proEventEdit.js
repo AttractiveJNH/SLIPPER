@@ -18,6 +18,7 @@ $(document).ready(function() {
 savePost = function() {
     oEditors.getById["editorTxt"].exec("UPDATE_CONTENTS_FIELD", []);
     let Content = document.getElementById("editorTxt").getIR();
+    var url = document.querySelector('form').getAttribute('action');
 
     if(Content.trim() === '') {
         alert("내용을 입력해주세요.");
@@ -25,11 +26,11 @@ savePost = function() {
         return
     } else {
         let promotionBoard = {
-        promoBrdContent: Content
+        promo_brd_content: Content
         };
 
         $.ajax({
-            url: "/promotion/eventEditSave/{Id}(Id=${eventEdit.promoBrdPostId})"
+            url: url
             , type: "POST"
             , data: promotionBoard
             , success: function(data) {

@@ -90,6 +90,7 @@ public class MeetingListController {
         // 지역 및 게시글 유형 선택 시
         if(region == 0 && category == 0){
             return "redirect:/meeting/main";
+
         } else if(region != 0 && category == 0){
             // 설정한 지역에 맞는 게시글 정보
             Page<MeetingBoard> regionBoardList = meetingService.regionMeetingBoardList(regionName, pageable);

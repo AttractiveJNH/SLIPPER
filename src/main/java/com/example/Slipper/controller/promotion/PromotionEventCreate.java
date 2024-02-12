@@ -2,9 +2,9 @@ package com.example.Slipper.controller.promotion;
 
 import com.example.Slipper.dto.promotionDto.PromoCreateDto;
 import com.example.Slipper.entity.userAndEntreEntities.EntreEntity;
-import com.example.Slipper.entity.promotionEntity.Promotion;
+import com.example.Slipper.entity.promotionEntity.PromotionBoard;
 import com.example.Slipper.entity.userAndEntreEntities.UserEntity;
-import com.example.Slipper.repository.promotionRepository.PromotionRepository;
+import com.example.Slipper.repository.promotionRepository.PromotionBoardRepository;
 import com.example.Slipper.repository.userAndEntreRepositories.EntreRepository;
 import com.example.Slipper.service.loginAndJoinServices.EntreService;
 import com.example.Slipper.service.loginAndJoinServices.UserService;
@@ -25,7 +25,7 @@ import java.util.UUID;
 public class PromotionEventCreate {
 
     @Autowired
-    PromotionRepository promotionRepository;
+    PromotionBoardRepository promotionBoardRepository;
 
     @Autowired
     EntreRepository entreRepository;
@@ -42,8 +42,11 @@ public class PromotionEventCreate {
         EntreEntity loginEntre = entreService.getLoginEntreByLoginId(id);
         UserEntity loginUser = userService.getLoginUserById(id);
 
+        EntreEntity entre = entreRepository.findById(id).orElse(null);
+
         if (loginEntre != null || loginUser != null) {
             model.addAttribute("id", true);
+            model.addAttribute("entre", entre);
 
             return "/promotion/proEventCreate";
         }
@@ -68,12 +71,12 @@ public class PromotionEventCreate {
 
             log.info("If On");
             model.addAttribute("id", true);
-            Promotion promotion = promotionForm.toEntity(id);
+            PromotionBoard promotionBoard = promotionForm.toEntity(id);
 
             log.info("If On");
 
-            log.info(promotion.toString());
-            promotionRepository.save(promotion);
+            log.info(promotionBoard.toString());
+            promotionBoardRepository.save(promotionBoard);
 
             return "redirect:/promotion";
         }

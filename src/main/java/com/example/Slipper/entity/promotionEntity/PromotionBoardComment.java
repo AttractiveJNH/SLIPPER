@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 import java.security.Timestamp;
@@ -25,7 +26,7 @@ public class PromotionBoardComment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int promoBrdComntId; // 번호
 
-    @Column(name = "promo_brd_post_id")
+    @Column(name = "promobrdpostid")
     private int promoBrdPostId; // 홍보 게시판 번호
 
 
@@ -34,6 +35,7 @@ public class PromotionBoardComment {
     private String promoBrdComntContent; // 내용
 
     @Column(name = "promo_brd_comnt_date")
+    @DateTimeFormat()
     private LocalDateTime  promoBrdComntDate; // 작성일
     private String userNickName; // 유저닉네임
     private String entrepreNickName;

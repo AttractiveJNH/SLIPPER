@@ -15,6 +15,10 @@
         .deleteButton{
         width: 50px;
         height: 30px;
+        background-color: #DC3545;
+        border: none;
+        border-radius: 5px;
+        color: white;
         }
         .rowHr{
         margin-bottom: 30px;
@@ -29,21 +33,21 @@
     <div>
         <div><!--제목-->
             <h2 style="margin-left:5%;margin-bottom: 30px; margin-top: 10px;"><span id="categorySpan"
-                                                                                    th:text="${promotions.promoBrdCategory}"
+                                                                                    th:text="${promotionInfo.promoBrdCategory}"
                                                                                     hidden></span>
                 <script th:inline="javascript">
                     // 카테고리에 해당하는 숫자를 받으면 화면에 일반, 체험, 이벤트의 문자를 보여주는 스크립트.
                     var categoryText = "";
-                    var promoBrdCategory = /*[[${promotions.promoBrdCategory}]]*/ 0; // 프로모션의 카테고리 값
+                    var promoBrdCategory = /*[[${promotionInfo.promoBrdCategory}]]*/ 0; // 프로모션의 카테고리 값
 
                     switch (promoBrdCategory) {
-                        case 0:
+                        case 1:
                             categoryText = "[일반]";
                             break;
-                        case 1:
+                        case 2:
                             categoryText = "[체험]";
                             break;
-                        case 2:
+                        case 3:
                             categoryText = "[이벤트]";
                             break;
                         default:
@@ -71,20 +75,20 @@
                     <div style="margin-top: -10px;">
                         <button style="width: 80px; height:30px; margin-top:13px;font-size:20px; margin-right:20px;"
                                 type="button">
-                            <span id="categorySpan1" th:text="${promotions.promoBrdCategory}" hidden></span>
+                            <span id="categorySpan1" th:text="${promotionInfo.promoBrdCategory}" hidden></span>
                             <script th:inline="javascript">
                                 // 카테고리에 해당하는 숫자를 받으면 화면에 일반, 체험, 이벤트의 문자를 보여주는 스크립트.
                                 var categoryText = "";
-                                var promoBrdCategory = /*[[${promotions.promoBrdCategory}]]*/ 0;
+                                var promoBrdCategory = /*[[${promotionInfo.promoBrdCategory}]]*/ 0;
 
                                 switch (promoBrdCategory) {
-                                    case 0:
+                                    case 1:
                                         categoryText = "일반";
                                         break;
-                                    case 1:
+                                    case 2:
                                         categoryText = "체험";
                                         break;
-                                    case 2:
+                                    case 3:
                                         categoryText = "이벤트";
                                         break;
                                     default:
@@ -100,16 +104,16 @@
                         </button>
                     </div>
                     <div style="width: 150px;"><!--지역-->
-                        [<span th:text="${promotions.promoBrdRegion}" style="width:100%;"></span>]
+                        [<span th:text="${promotionInfo.promoBrdRegion}" style="width:100%;"></span>]
                     </div>
-                    <div th:text="${promotions.promoBrdTitle}" style="width:51.5%;"><!--제목-->
+                    <div th:text="${promotionInfo.promoBrdTitle}" style="width:51.5%;"><!--제목-->
                         제목
                     </div>
                     <div style="width: 10%; margin-left:10px;"><!--조회-->
                         조회수
                     </div>
                     <div style="width: 10%; margin-left:20px;"><!--조회수-->
-                        <span th:text="${promotions.promoBrdViewCount}"></span>
+                        <span th:text="${promotionInfo.promoBrdViewCount}"></span>
                     </div>
                 </div>
 
@@ -125,104 +129,105 @@
                 <div style="font-size:15pt;">
                     <div class="row2" style="display:flex; width:100%;">
                         <div class="sec_title_box" style="width: 70%;">상호명 : <span
-                                th:text="${promotions.promoBrdBusinessName}"></span></div>
+                                th:text="${promotionInfo.promoBrdBusinessName}"></span></div>
 
-                        <div class="sec_title_box">지역 : <span th:text="${promotions.promoBrdRegion}"></span></div>
+                        <div class="sec_title_box">지역 : <span th:text="${promotionInfo.promoBrdRegion}"></span></div>
                     </div>
                     <hr class="rowHr">
-                    <!-- 만약 promoBrdCategory가 1인 경우 -->
-                    <div th:if="${promotions.promoBrdCategory == 1}" class="row3" style="display:flex; width:100%;">
+                    <!-- 만약 promoBrdCategory가 2인 경우 -->
+                    <div th:if="${promotionInfo.promoBrdCategory == 2}" class="row3" style="display:flex; width:100%;">
                         <div class="sec_title_box" style="width:70%">
-                            신청 시작일 : <span th:text="${promotions.promoBrdApplyStartDate}"></span>
+                            신청 시작일 : <span th:text="${promotionInfo.promoBrdApplyStartDate}"></span>
 
                         </div>
                         <div>
-                            신청 종료일 : <span th:text="${promotions.promoBrdApplyEndDate}"></span>
+                            신청 종료일 : <span th:text="${promotionInfo.promoBrdApplyEndDate}"></span>
                         </div>
 
                     </div>
-                    <hr class="rowHr" th:if="${promotions.promoBrdCategory == 1}">
-                    <div th:if="${promotions.promoBrdCategory == 1}" class="row3" style="display:flex; width:100%;">
+                    <hr class="rowHr" th:if="${promotionInfo.promoBrdCategory == 2}">
+                    <div th:if="${promotionInfo.promoBrdCategory == 2}" class="row3" style="display:flex; width:100%;">
                         <div class="sec_title_box" style="width:70%">
-                            체험단 신청 기간 : <span th:text="${promotions.promoBrdApplyStartDate}"></span>
-                            ~ <span th:text="${promotions.promoBrdApplyEndDate}"></span>
+                            체험단 신청 기간 : <span th:text="${promotionInfo.promoBrdApplyStartDate}"></span>
+                            ~ <span th:text="${promotionInfo.promoBrdApplyEndDate}"></span>
                         </div>
 
                         <div class="sec_title_box">
-                            체험단 선정일 : <span th:text="${promotions.promoBrdExpSelect}"></span>
+                            체험단 선정일 : <span th:text="${promotionInfo.promoBrdExpSelect}"></span>
                         </div>
                     </div>
 
 
-                    <!-- 만약 promoBrdCategory가 2인 경우 -->
-                    <div th:if="${promotions.promoBrdCategory == 2}" style="display:flex;">
+                    <!-- 만약 promoBrdCategory가 3인 경우 -->
+                    <div th:if="${promotionInfo.promoBrdCategory == 3}" style="display:flex;">
                         <div class="sec_title_box" style="width:70%;">
-                            이벤트 시작일 : <span th:text="${promotions.promoBrdEventStartDate}"></span>
+                            이벤트 시작일 : <span th:text="${promotionInfo.promoBrdEventStartDate}"></span>
                         </div>
                         <div class="sec_title_box">
-                            이벤트 종료일 : <span th:text="${promotions.promoBrdEventEndDate}"></span>
+                            이벤트 종료일 : <span th:text="${promotionInfo.promoBrdEventEndDate}"></span>
                         </div>
                     </div>
                     <hr class="rowHr">
                     <div style="display:flex;">
 
                         <div class="sec_title_box" style="width:70%">리뷰 제출 기간 : <span
-                                th:text="${promotions.promoBrdExperienceDate}"></span> ~ <span
-                                th:text="${promotions.promoBrdReviewDeadline}"></span></div>
-                        <div class="sec_title_box" th:if="${promotions.promoBrdCategory == 1}">
-                            체험일 : <span th:text="${promotions.promoBrdExperienceDate}"></span>
+                                th:text="${promotionInfo.promoBrdReviewStart}"></span> ~ <span
+                                th:text="${promotionInfo.promoBrdReviewDeadline}"></span></div>
+                        <div class="sec_title_box" th:if="${promotionInfo.promoBrdCategory == 2}">
+                            체험일 : <span th:text="${promotionInfo.promoBrdExperienceDate}"></span>
                         </div>
 
                     </div>
                     <hr class="rowHr">
-                    <div style="display:flex;" th:if="${promotions.promoBrdCategory == 1}">
-                        <div class="sec_title_box" style="width:70%">인원 : <span th:text="${promotions.promoBrdApplyParticipants}"></span> / <span
-                                th:text="${promotions.promoBrdMaxParticipants}"></span></div>
+                    <div style="display:flex;" th:if="${promotionInfo.promoBrdCategory == 2}">
+                        <div class="sec_title_box" style="width:70%">인원 : <span th:text="${promotionInfo.promoBrdApplyParticipants}"></span> / <span
+                                th:text="${promotionInfo.promoBrdMaxParticipants}"></span></div>
                         <div class="sec_title_box">제공내역 : <span
-                                th:text="${promotions.promoBrdExperienceProvided}"></span></div>
+                                th:text="${promotionInfo.promoBrdExperienceProvided}"></span></div>
 
                     </div>
-                    <hr class="rowHr" th:if="${promotions.promoBrdCategory == 1}">
+                    <hr class="rowHr" th:if="${promotionInfo.promoBrdCategory == 2}">
                     <div style="width: auto; height: 40px; display:block;"><!--공백줄--></div>
                 </div><!--컨텐츠영역-->
                 <hr>
                 <div><!--이미지영역-->
-                    <h3><span th:text="${promotions.promoBrdBusinessName}"></span>리뷰 이벤트 합니다.</h3>
+                    <h3><span th:text="${promotionInfo.promoBrdBusinessName}"></span>리뷰 이벤트 합니다.</h3>
                     <div>
-                        <span th:utext="${promotions.promoBrdContent}"></span>
+                        <span th:utext="${promotionInfo.promoBrdContent}"></span>
                     </div>
 
 
                 </div><!--이미지영역-->
-                <form method="post" action="">
-                    <div th:if="${promotions.promoBrdCategory == 1}" id="expApp" style="text-align:center; margin-left:50%; margin-top: 30px;"><!--참가신청-->
-                        <div>참가신청</div><!--참가신청 하면 -->
-                        <img src="/images/KakaoTalk_20240112_125342265.png" style="width: 80px;">
-                        <script th:inline="javascript">
-                            var expApp = document.getElementById('expApp');
 
-                            // div를 클릭했을 때 실행되는 함수를 정의합니다.
-                            function showNotification() {
-                                alert('신청 완료 하였습니다!');
-                            }
+                <!--참가신청-->
+                <!-- 참가자 보기-->
+<!--                <div class="apply_box" th:if="${Writer == 1}">-->
+<!--                    <img src="/images/ApplyListImg.png" alt="참가자 보기"-->
+<!--                         class="apply_img" th:onclick="'openWindow(\'/promotion/apply/popup/' + ${promoBrdPostId} + '\')'">-->
+<!--                </div>-->
 
-                            // div에 클릭 이벤트 리스너를 추가합니다.
-                            expApp.addEventListener('click', showNotification);
-                        </script>
+<!--                &lt;!&ndash;참가신청하기&ndash;&gt;-->
+<!--                <div class="apply_box" th:if="${Writer == 2}">-->
+<!--                    <form id="promotion_apply" th:action="@{/promotion/application/{promoBrdPostId}(promoBrdPostId=${promotionInfo.promoBrdPostId})}" method="post">-->
+<!--                        <input type="hidden" name="promotion_apply_status" value="0">-->
+<!--                        <input type="hidden" name="nick_name" th:value="${userInfo.user_nick_name}">-->
+<!--                        <input type="hidden" name="birthdate" th:value="${userInfo.user_birthdate}">-->
+<!--                        <img src="/images/ApplyImg.png" alt="신청하기"-->
+<!--                             class="apply_img" onclick="applySubmitForm()">-->
+<!--                    </form>-->
+<!--                </div>-->
 
-                    </div><!--참가신청-->
-                </form>
                 <div style="display:flex;margin-top: 40px; margin-left: 70%;"><!--삭제/수정 버튼 영역-->
                     <div>
-                        <a th:href="@{/promotion/eventDelete/{Id}(Id=${promotions.promoBrdPostId})}">
+                        <a th:href="@{/promotion/eventDelete/{Id}(Id=${promotionInfo.promoBrdPostId})}">
                             <button type="reset"
-                                    style="border:none; width: 80px; height: 40px; border-radius:5px; color: white; margin-left:50px;">
+                                    style="border:none; width: 80px; height: 40px; border-radius:5px; background-color:#ccc; color: white; margin-left:50px;">
                                 삭제
                             </button>
                         </a>
                     </div>
                     <div>
-                        <a th:href="@{/promotion/eventEdit/{Id}(Id=${promotions.promoBrdPostId})}">
+                        <a th:href="@{/promotion/eventEdit/{Id}(Id=${promotionInfo.promoBrdPostId})}">
                             <button type="submit"
                                     style="background-color:#5CD1E5; color: white; width: 80px; height: 40px; border:none; border-radius:5px; margin-left: 70%;">
                                 수정
@@ -263,15 +268,17 @@
                 </tr>
                 <tr th:each="proComnts : ${promoComnts}"> <!-- 댓글 리스트 보여주는 row -->
                     <td>
+                        <div style="display:flex; justify-content:center;">
                         <span th:text="${proComnts.userNickName}"></span>
                         <span th:text="${proComnts.entrepreNickName}"></span>
+                        </div>
                     </td>
                     <td style="width:55%; max-width: 55%;"><textarea style="width:100%; max-width: 100%;" rows="4"
                                                                      cols="100"
                                                                      th:text="${proComnts.promoBrdComntContent}"
                                                                      readonly></textarea></td>
                     <td>
-                        <div>
+                        <div style="display:flex; justify-content:center;">
                             <a th:href="@{/promotion/eventComntDelete/{Id}(Id=${proComnts.promoBrdComntId},promoBrdPostId=${proComnts.promoBrdPostId})}">
                                 <button class="deleteButton" th:if="${(proComnts?.userId != null and proComnts?.userId.equals(sessionId)) ||
                                     (proComnts?.entrepreId != null and proComnts?.entrepreId.equals(sessionId))}">
@@ -280,7 +287,11 @@
                             </a>
                         </div>
                     </td>
-                    <td><span th:text="${proComnts.promoBrdComntDate}"></span></td>
+                    <td>
+                        <div style="display:flex; justify-content:center;">
+                        <span th:text="${proComnts.promoBrdComntDate}"></span>
+                        </div>
+                    </td>
                 </tr>
                 <tr><!--댓글 작성 부분-->
                     <form th:action="@{/promotion/eventComntSave}" method="post"> <!-- 댓글 작성하는 row -->
@@ -289,13 +300,15 @@
                             <input type="hidden" th:value="${entrepreId}" readonly>
                         </td>
 
-                        <input type="hidden" name="promoBrdPostId" th:value="${promotions.promoBrdPostId}">
+                        <input type="hidden" name="promoBrdPostId" th:value="${promotionInfo.promoBrdPostId}">
 
                         <td><textarea class="form-control" rows="4" cols="100" style="width:100%; max-width: 100%;"
                                       name="promoBrdComntContent" placeholder="내용을 입력하세요."></textarea></td>
                         <!--입력하는 공간은 딱 여기까지-->
                         <td>
-                            <button type="submit" style="width:50px; height:30px;">등록</button>
+                            <div style="display:flex; justify-content:center;">
+                            <button type="submit" style="width:50px; background-color: green; height:30px; border-radius: 5px; border:none; color:white;">등록</button>
+                            </div>
                         </td>
                         <td id="currentTime"><input type="hidden" name="promoBrdComntDate"
                                                     th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}"

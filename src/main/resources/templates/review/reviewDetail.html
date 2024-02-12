@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/layout}"
+        lang="en"
+>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        td {
+        border: 1px solid;
+        }
+
+        .deleteButton{
+        width: 50px;
+        height: 30px;
+        background-color: #DC3545;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        }
+    </style>
+</head>
+
+<div layout:fragment="content">
+    <!--여기부터 작성하면 됩니다.--><!---->
+    <div style="font-size: 16px;">
+        <div style="margin-bottom: 40px;"><!--제목-->
+            <h2 style="margin-left:5%;"><span id="categorySpan" th:text="${reviewBoard.revBrdCategory}" hidden></span>
+                <script th:inline="javascript">
+                    // 카테고리에 해당하는 숫자를 받으면 화면에 일반, 체험, 이벤트의 문자를 보여주는 스크립트.
+                    var categoryText = "";
+                    var revBrdCategory = /*[[${reviewBoard.revBrdCategory}]]*/ 0; // 프로모션의 카테고리 값
+
+                    switch (revBrdCategory) {
+                        case 1:
+                            categoryText = "[일반]";
+                            break;
+                        case 2:
+                            categoryText = "[체험]";
+                            break;
+                        case 3:
+                            categoryText = "[이벤트]";
+                            break;
+                        default:
+                            categoryText = "[기타]";
+                    }
+
+                    // Span 요소에 텍스트 설정
+                    var categorySpan = document.getElementById("categorySpan");
+                    categorySpan.innerText = categoryText + "게시판";
+
+                    // Span 요소를 표시
+                    categorySpan.removeAttribute("hidden");
+                </script>
+            </h2>
+        </div>
+    </div>
+    <div style="width:100%; height:auto; display:flex; justify-content:center;">
+        <div class="promo" style="width:90%; height:auto;">
+            <!--홍보 컨텐츠-->
+            <div class="row1"
+                 style="font-size:24px; width:100%; height: 5%;display:flex; align-items:center;">
+                <!--첫줄-->
+
+                <div style="display:flex; width:100%; margin-bottom:40px;"><!--제목-->
+                    <div style="margin-top: -10px;">
+                        <button style="width: 80px; height:30px; margin-top:13px; font-size: 20px; margin-right: 20px;">
+                            <span id="categorySpan1" th:text="${reviewBoard.revBrdCategory}" hidden></span>
+                            <script th:inline="javascript">
+                                // 카테고리에 해당하는 숫자를 받으면 화면에 일반, 체험, 이벤트의 문자를 보여주는 스크립트.
+                                var categoryText = "";
+                                var revBrdCategory = /*[[${reviewBoard.revBrdCategory}]]*/ 0;
+
+                                switch (revBrdCategory) {
+                                    case 1:
+                                        categoryText = "일반";
+                                        break;
+                                    case 2:
+                                        categoryText = "체험";
+                                        break;
+                                    case 3:
+                                        categoryText = "이벤트";
+                                        break;
+                                    default:
+                                        categoryText = "기타";
+                                }
+
+                                var categorySpan = document.getElementById("categorySpan1");
+                                categorySpan.innerText = categoryText;
+
+                                categorySpan.removeAttribute("hidden");
+                            </script>
+                        </button>
+                    </div>
+                    <div style="width:200px;"><!--지역-->
+                        <span th:text="${reviewBoard.revBrdRegion}"></span>
+                    </div>
+                    <div th:text="${reviewBoard.revBrdTitle}" style="width:60%"><!--제목-->
+                        제목
+                    </div>
+                    <div style="width: 10%; margin-left:10px;"><!--조회-->
+                        조회수
+                    </div>
+                    <div style="width: 10%; margin-left:20px;"><!--조회수-->
+                        <span th:text="${reviewBoard.revBrdViews}"></span>
+                    </div>
+                </div>
+            </div><!--첫줄-->
+            <hr>
+            <div id="1">
+                <div style="width: auto; height: 40px; display:block;"><!--공백줄-->
+
+                </div>
+            </div>
+            <div><!--컨텐츠영역-->
+                <div>
+                    <div class="row2" style="display:flex; width:100%; font-size: 20px;">
+                        <div class="sec_title_box">장소 : <span th:text="${reviewBoard.revBrdArea}"></span></div>
+                    </div>
+                    <hr>
+
+                    <div style="width: auto; height: 40px; display:block;"><!--공백줄--></div>
+                </div><!--컨텐츠영역-->
+
+                <div><!--이미지영역-->
+<!--                    <h3><span th:text="${promotionBoard.promoBrdBusinessName}"></span>리뷰 이벤트 합니다.</h3>-->
+                    <div>
+                        <div th:utext="${reviewBoard.revBrdContent}"></div>
+                    </div>
+                </div><!--이미지영역-->
+
+                <div style="display:flex;margin-top: 40px; margin-left: 70%;"><!--삭제/수정 버튼 영역-->
+                    <div>
+                        <a th:href="@{/review/revDelete/{Id}(Id=${reviewBoard.revBrdPostId})}">
+                            <button type="reset" style="border:none; width: 80px; height: 40px; border-radius:5px; background-color: #ccc; color: white; margin-left:50px;">삭제</button>
+                        </a>
+                    </div>
+                    <div>
+                        <a th:href="@{/review/edit/{Id}(Id=${reviewBoard.revBrdPostId})}">
+                            <button type="submit" style="background-color:#5CD1E5; color: white; width: 80px; height: 40px; border:none; border-radius:5px; margin-left: 70%;">수정</button>
+                        </a>
+                    </div>
+                </div><!--삭제/수정 버튼 영역-->
+            </div><!--홍보 컨텐츠-->
+        </div>
+    </div>
+    <div style="width:100%; height:80px; display:flex; justify-content:center;">
+        <div style="width:90%;"><!--전체 글 보기-->
+            <div style="margin-left: 80%;margin-top: 2%;"><a th:href="@{/review/main}">
+                <button type="button" style="width: 200px; height: 40px; font-size: 20px; border-radius: 8px; border:none;">전체 글 보기</button>
+            </a></div>
+        </div><!--전체 글 보기-->
+    </div>
+    <div style="width:100%; height:65px; display:flex; justify-content:center;">
+        <!--댓글-->
+        <div style="width:90%;"><!--댓글 제목-->
+            <div>
+                <h3>댓글</h3>
+            </div>
+            <hr>
+        </div><!--댓글 제목-->
+    </div>
+    <div style="width:100%; height:auto; display:flex; justify-content:center;">
+        <div style="width:90%; height:auto;"><!--댓글 리스트-->
+            <table style="width:100%;">
+                <tr>
+                    <th style="width: 15%; max-width: 15%; border:1px solid; text-align:center;">닉네임</th>
+                    <th style="width: 55%; max-width: 55%; border:1px solid;">댓글 내용</th>
+                    <th style="width: 6%; max-width: 6%; border:1px solid;">등록/삭제</th>
+                    <th style="width: 24%; max-width: 24%; border:1px solid;">입력 날짜</th>
+                </tr>
+                <tr th:each="revComnt : ${revComnt}"> <!-- 댓글 리스트 보여주는 row -->
+                    <td>
+                        <div style="display:flex; justify-content:center;">
+                            <span th:text="${revComnt.userNickName}"></span>
+                            <span th:text="${revComnt.entrepreNickName}"></span>
+                        </div>
+                    </td>
+                    <td style="width:55%; max-width: 55%;"><textarea style="width:100%; max-width: 100%;" rows="4"
+                                                                     cols="100"
+                                                                     th:text="${revComnt.revBrdComntContent}"
+                                                                     readonly></textarea></td>
+                    <td >
+                        <div style="display:flex; justify-content:center;">
+                            <a th:href="@{/review/comntDelete/{Id}(Id=${revComnt.revBrdComntId},revBrdPostId=${revComnt.revBrdPostId})}">
+                                <button class="deleteButton" th:if="${(revComnt?.userId != null and revComnt?.userId.equals(sessionId)) ||
+                                    (revComnt?.entrepreId != null and revComnt?.entrepreId.equals(sessionId))}">
+                                    X
+                                </button>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="display:flex; justify-content:center;">
+                            <span th:text="${revComnt.revBrdComntDate}"></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr><!--댓글 작성 부분-->
+                    <form th:action="@{/review/comment/save}" method="post"> <!-- 댓글 작성하는 row -->
+                        <td>
+                            <input type="hidden" th:value="${userId}" readonly>
+                            <input type="hidden" th:value="${entrepreId}" readonly>
+                        </td>
+
+                        <input type="hidden" name="revBrdPostId" th:value="${reviewBoard.revBrdPostId}">
+
+                        <td><textarea class="form-control" rows="4" cols="100" style="width:100%; max-width: 100%;"
+                                      name="revBrdComntContent" placeholder="내용을 입력하세요."></textarea></td>
+                        <!--입력하는 공간은 딱 여기까지-->
+                        <td>
+                            <div style="display:flex; justify-content:center;">
+                                <button type="submit" style="width:50px; height:30px; border-radius: 5px; border:none; background-color:green; color:white;">등록</button>
+                            </div>
+                        </td>
+                        <td id="currentTime"><input type="hidden" name="revBrdComntDate"
+                                                    th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}"
+                                                    readonly></td><!--입력 시간도 자동으로 들어가야 될 거 같음.-->
+                    </form>
+                    <script>
+                        const localDateTimeString = document.getElementById('currentTime').querySelector('input').value;
+                        const localDateTime = new Date(localDateTimeString.replace('T', ' ').replace(/-/g, '/'));
+                        document.getElementById('currentTime').querySelector('input').valueAsDate = localDateTime;
+                    </script>
+                </tr>
+            </table>
+        </div><!--댓글 리스트-->
+    </div>
+</div><!--댓글-->
+</html>

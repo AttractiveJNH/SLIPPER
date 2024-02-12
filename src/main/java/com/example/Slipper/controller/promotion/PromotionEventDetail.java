@@ -1,12 +1,12 @@
 package com.example.Slipper.controller.promotion;
 
-import com.example.Slipper.dto.promotionDto.PromoComntDto;
+
 import com.example.Slipper.entity.userAndEntreEntities.EntreEntity;
 import com.example.Slipper.entity.userAndEntreEntities.UserEntity;
-import com.example.Slipper.entity.promotionEntity.Promotion;
+import com.example.Slipper.entity.promotionEntity.PromotionBoard;
 import com.example.Slipper.entity.promotionEntity.PromotionBoardComment;
 import com.example.Slipper.repository.promotionRepository.PromotionBoardCommentRepository;
-import com.example.Slipper.repository.promotionRepository.PromotionRepository;
+import com.example.Slipper.repository.promotionRepository.PromotionBoardRepository;
 import com.example.Slipper.service.loginAndJoinServices.EntreService;
 import com.example.Slipper.service.loginAndJoinServices.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class PromotionEventDetail {
 
     @Autowired
-    PromotionRepository promotionRepository;
+    PromotionBoardRepository promotionBoardRepository;
 
 
 
@@ -50,12 +50,30 @@ public class PromotionEventDetail {
             model.addAttribute("id", true);
 
             // 홍보 데이터 불러오기.
-            Promotion promotions = promotionRepository.findByPromoBrdPostId(promoBrdPostId);
-            model.addAttribute("promotions", promotions);
+            PromotionBoard promotionInfo = promotionBoardRepository.findByPromoBrdPostId(promoBrdPostId);
+
+            // 해당 게시글 작성자 정보와 현재 로그인 중인 유저가 같은지 검사 (1: 현재 로그인 중인 유저 = 작성자, 2: 현재 로그인 중인 유저 = 참가 예정자)
+//            EntreEntity entrepreneurWriter = promotionInfo.getClass().getAnnotation(t);
+//            if(entrepreneurWriter != null){
+//                if(entrepreneurWriter == loginEntre){
+//                    model.addAttribute("Writer", 1);
+//                } else {
+//                    model.addAttribute("Writer", 2);
+//                }
+//
+//            } else{
+//                if(userWriter == loginUser){
+//                    model.addAttribute("Writer", 1);
+//                } else {
+//                    model.addAttribute("Writer", 2);
+//                }
+//            }
+
+            model.addAttribute("promotionInfo", promotionInfo);
 
             // 조회수
-            promotions.setPromoBrdViewCount(promotions.getPromoBrdViewCount() + 1);
-            promotionRepository.save(promotions);
+            promotionInfo.setPromoBrdViewCount(promotionInfo.getPromoBrdViewCount() + 1);
+            promotionBoardRepository.save(promotionInfo);
 
             // 댓글 데이터 불러오기.
             ArrayList<PromotionBoardComment> promoComnts = promotionBoardCommentRepository.findByPromoBrdPostId(promoBrdPostId);

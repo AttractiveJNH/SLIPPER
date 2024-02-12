@@ -1,7 +1,11 @@
 package com.example.Slipper.controller.promotion;
 
-import com.example.Slipper.entity.promotionEntity.Promotion;
-import com.example.Slipper.repository.promotionRepository.PromotionRepository;
+import com.example.Slipper.entity.promotionEntity.PromotionBoard;
+import com.example.Slipper.entity.userAndEntreEntities.EntreEntity;
+import com.example.Slipper.entity.userAndEntreEntities.UserEntity;
+import com.example.Slipper.repository.promotionRepository.PromotionBoardRepository;
+import com.example.Slipper.service.loginAndJoinServices.EntreService;
+import com.example.Slipper.service.loginAndJoinServices.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -20,27 +24,44 @@ import java.util.UUID;
 public class PromoGenEdit {
 
     @Autowired
-    PromotionRepository promotionRepository;
+    PromotionBoardRepository promotionBoardRepository;
+
+    @Autowired
+    EntreService entreService;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping("/promotion/genEdit/{Id}")
-    public String genEdit(@PathVariable int Id, Model model) {
-        int promoBrdPostId = Id; // 변수명만 변경
-        Promotion proGenEdit = promotionRepository.findByPromoBrdPostId(promoBrdPostId);
-        model.addAttribute("genEdit", proGenEdit);
+    public String genEdit(@PathVariable int Id, Model model, @SessionAttribute(name = "id", required = false) String id) {
 
-        return "promotion/genEdit";
+        EntreEntity loginEntre = entreService.getLoginEntreByLoginId(id);
+        UserEntity loginUser = userService.getLoginUserById(id);
+
+
+        // 세션값 유무에 따라 헤더변동(true = LogOut / false = 헤더 없음)
+        if (loginEntre != null || loginUser != null) {
+
+            model.addAttribute("id", true);
+            int promoBrdPostId = Id; // 변수명만 변경
+            PromotionBoard proGenEdit = promotionBoardRepository.findByPromoBrdPostId(promoBrdPostId);
+            model.addAttribute("genEdit", proGenEdit);
+
+            return "promotion/genEdit";
+        }
+        return "redirect:/login";
     }
 
     // edit페이지의 필드의 값을 수정해서 target데이터에 교체해주는 컨트롤러.
     @PostMapping("/promotion/genEditSave/{Id}")
-    public String genEditSave(@PathVariable int Id, @ModelAttribute("promotion") Promotion proModi, BindingResult bindingResult, Model model) {
+    public String genEditSave(@PathVariable int Id, @ModelAttribute("promotion") PromotionBoard proModi, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("error", "입력값이 유효하지 않습니다.");
         }
 
         // DB의 데이터 받아와서 뷰 페이지에서 받아온 필드의 값으로 대체.
-        Promotion target = promotionRepository.findByPromoBrdPostId(Id);
+        PromotionBoard target = promotionBoardRepository.findByPromoBrdPostId(Id);
         if (target != null) {
             target.setPromoBrdTitle(proModi.getPromoBrdTitle());
             target.setPromoBrdRegion(proModi.getPromoBrdRegion());
@@ -49,7 +70,7 @@ public class PromoGenEdit {
             target.setPromoBrdArea(proModi.getPromoBrdArea());
             target.setPromoBrdContent(proModi.getPromoBrdContent());
 
-            promotionRepository.save(target);
+            promotionBoardRepository.save(target);
         }
 
         return "redirect:/promotion/gendetail/{Id}";
