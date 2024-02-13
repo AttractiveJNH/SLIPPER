@@ -132,7 +132,7 @@ public class MeetingWriteController {
                 //디렉토리 설정 및 업로드
 
                 //파일경로
-                String filePath = "//desktop-98uu1fs/slipperimg/";
+                String filePath = "//192.168.2.3/images/d/";
 
                 File file = new File(filePath);
 
@@ -165,7 +165,7 @@ public class MeetingWriteController {
                 sFileInfo += "&bNewLine=true";
                 // img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
                 sFileInfo += "&sFileName="+ sFilename;
-                sFileInfo += "&sFileURL="+"//desktop-98uu1fs/slipperimg/"+sRealFileNm;
+                sFileInfo += "&sFileURL="+"//192.168.2.3/images/d/"+sRealFileNm;
                 PrintWriter printWriter = response.getWriter();
                 printWriter.print(sFileInfo);
                 printWriter.flush();
