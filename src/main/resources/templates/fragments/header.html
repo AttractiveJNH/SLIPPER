@@ -54,16 +54,9 @@
                 </label>
             </div>
 
-            <form method="get">
-                <label for="search">
-                    <div class="search">
-                        <input type="text"/>
-                        <button type="submit" value="Search"/>
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </div>
-                </label>
-            </form>
-            <div class="log"><a href="/login" style="color: white">Log In</a></div>
+
+            <div class="log"><a href="/login" style="color: white"><img src="/images/login-icon.png"
+                                                                        style="height: 50px; width: 50px;"></a></div>
         </div>
 
         <div class="header_under">
@@ -105,16 +98,21 @@
                 </label>
             </div>
 
-            <form method="get">
-                <label for="search">
-                    <div class="search">
-                        <input type="text"/>
-                        <button type="submit" value="Search"/>
-                        <i class="fa-solid fa-magnifying-glass"></i>
+
+            <ul style="list-style:none; float:left;">
+                <li style="float:left; font-size: 15px; justify-content: center; text-decoration-line: none;" ><a href="/myPage/main">[[${nickName}]]</a>님</li>
+                <li style="float:left;">
+                    <div class="note"><a style="color: white" href="/myPage/noteList"><img src="/images/note-icon.png"
+                                                                                           style="height: 50px; width: 50px;  margin-right: 10px;"></a>
                     </div>
-                </label>
-            </form>
-            <div class="log"><a href="/logOut" style="color: white">LogOut</a></div>
+                </li>
+                <li style="float:left;">
+                    <div class="log"><a href="/logOut" style="color: white"><img src="/images/logout-icon.png"
+                                                                                 style="height: 50px; width: 50px;"></a>
+                    </div>
+                </li>
+
+            </ul>
         </div>
 
         <div class="header_under">

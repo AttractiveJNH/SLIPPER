@@ -45,68 +45,95 @@ public class MyPageController {
 
 
         // 세션값 유무에 따라 헤더변동(true = LogOut / false = 헤더 없음)
-        if (loginEntre != null || loginUser != null) {
+
+        if (loginEntre != null) {
 
             model.addAttribute("id", true);
+            model.addAttribute("nickName", loginEntre.getEntrepreNickName());
+
+            model.addAttribute("userId", loginEntre.getId());
+            model.addAttribute("nickName", loginEntre.getEntrepreNickName());
+            model.addAttribute("birthDate", loginEntre.getEntrepreBirthDate());
+            model.addAttribute("name", loginEntre.getEntrepreName());
+            model.addAttribute("location", loginEntre.getEntrepreLocation());
+            model.addAttribute("phone", loginEntre.getEntreprePhone());
+
+            return "myPage/myPageMain";
 
 
-            if (loginEntre != null) {
-                model.addAttribute("userId", loginEntre.getId());
-                model.addAttribute("nickName", loginEntre.getEntrepreNickName());
-                model.addAttribute("birthDate", loginEntre.getEntrepreBirthDate());
-                model.addAttribute("name", loginEntre.getEntrepreName());
-                model.addAttribute("location", loginEntre.getEntrepreLocation());
-                model.addAttribute("phone", loginEntre.getEntreprePhone());
-            } else {
-                model.addAttribute("userId", loginUser.getId());
-                model.addAttribute("nickName", loginUser.getUserNickName());
-                model.addAttribute("birthDate", loginUser.getUserBirthDate());
-                model.addAttribute("name", loginUser.getUserName());
-                model.addAttribute("location", loginUser.getUserLocation());
-                model.addAttribute("phone", loginUser.getUserPhone());
+        } else if (loginUser != null) {
 
-            }
+            model.addAttribute("id", true);
+            model.addAttribute("nickName", loginUser.getUserNickName());
+
+            model.addAttribute("userId", loginUser.getId());
+            model.addAttribute("nickName", loginUser.getUserNickName());
+            model.addAttribute("birthDate", loginUser.getUserBirthDate());
+            model.addAttribute("name", loginUser.getUserName());
+            model.addAttribute("location", loginUser.getUserLocation());
+            model.addAttribute("phone", loginUser.getUserPhone());
 
             return "myPage/myPageMain";
 
         } else {
 
-
-            return "redirect:/login";
-
+            model.addAttribute("id", false);
 
         }
 
+        return "redirect:/login";
+
+
     }
 
-    @GetMapping("/myArticleList")
+    @GetMapping("/noteList")
     public String myArticleListP(Model model, @SessionAttribute(name = "id", required = false) String id) {
 
         EntreEntity loginEntre = entreService.getLoginEntreByLoginId(id);
         UserEntity loginUser = userService.getLoginUserById(id);
 
 
+       
         // 세션값 유무에 따라 헤더변동(true = LogOut / false = 헤더 없음)
-        if (loginEntre != null || loginUser != null) {
+
+        if (loginEntre != null) {
 
             model.addAttribute("id", true);
+            model.addAttribute("nickName", loginEntre.getEntrepreNickName());
 
+            model.addAttribute("userId", loginEntre.getId());
+            model.addAttribute("nickName", loginEntre.getEntrepreNickName());
+            model.addAttribute("birthDate", loginEntre.getEntrepreBirthDate());
+            model.addAttribute("name", loginEntre.getEntrepreName());
+            model.addAttribute("location", loginEntre.getEntrepreLocation());
+            model.addAttribute("phone", loginEntre.getEntreprePhone());
+
+            return "myPage/noteList";
+
+
+        } else if (loginUser != null) {
+
+            model.addAttribute("id", true);
+            model.addAttribute("nickName", loginUser.getUserNickName());
+
+            model.addAttribute("userId", loginUser.getId());
+            model.addAttribute("nickName", loginUser.getUserNickName());
+            model.addAttribute("birthDate", loginUser.getUserBirthDate());
+            model.addAttribute("name", loginUser.getUserName());
+            model.addAttribute("location", loginUser.getUserLocation());
+            model.addAttribute("phone", loginUser.getUserPhone());
+
+            return "myPage/noteList";
+
+        } else {
+
+            model.addAttribute("id", false);
 
         }
 
-        return "myPage/myArticleList";
-
-//    } else
-//
-//    {
-//
-//
-//        return "redirect:/login";
-//
-//
-//    }
+        return "redirect:/login";
 
 
     }
-}
 
+}

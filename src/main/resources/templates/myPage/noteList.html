@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/myPageLayout}"
+        lang="en"
+>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/myPage.css" th:href="@{/css/myPage.css}">
+
+</head>
+
+
+<div layout:fragment="content" class="container">
+    <div class="container">
+        <div class="noteWrapper">
+            <h2> 쪽지함 </h2>
+
+            <hr class="hr2" noshade>
+
+            <input type="button" value="받은쪽지" id="receive">
+            <input type="button" value="보낸쪽지" id="send">
+
+
+            <br>
+
+            <table class="noteTable">
+
+                <tr>
+                    <th><input type="checkbox"></th>
+                    <th>보낸사람</th>
+                    <th>내용</th>
+                    <th>날짜</th>
+                </tr>
+
+                <hr class="hr1" noshade>
+
+                <tr>
+                    <th><input type="checkbox"></th>
+                    <td class="center">보낸사람</td>
+                    <td class="left">받은쪽지 제목</td>
+                    <td class="center">2024-02-13</td>
+                </tr>
+
+                <tr>
+                    <th><input type="checkbox"></th>
+                    <td class="center">보낸사람</td>
+                    <td class="left">받은쪽지 제목</td>
+                    <td class="center">2024-02-13</td>
+                </tr>
+
+                <tr>
+                    <th><input type="checkbox"></th>
+                    <td class="center">보낸사람</td>
+                    <td class="left">받은쪽지 제목</td>
+                    <td class="center">2024-02-13</td>
+                </tr>
+            </table>
+            </br>
+
+            <!--            페이징 코드-->
+
+            <!--            <div class="paging_box">-->
+            <!--                <ul class="pagination" th:with="start=${T(java.lang.Math).floor(boardList.number/10)*10 + 1},-->
+            <!--                        last=(${start + 9 < boardList.totalPages ? start + 9 : boardList.totalPages})">-->
+            <!--                    <li><a th:href="@{/meeting/main(page=1)}"><<</a></li>-->
+            <!--                    <li th:class="${boardList.first} ? 'disabled'">-->
+            <!--                        <a th:href="${boardList.first} ? '#' :@{/meeting/main(page=${boardList.number})}"><</a>-->
+            <!--                    </li>-->
+
+            <!--                    <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == boardList.number + 1} ? 'active'">-->
+            <!--                        <a th:text="${page}" th:href="@{/meeting/main(page=${page})}"></a>-->
+            <!--                    </li>-->
+
+            <!--                    <li th:class="${boardList.last} ? 'disabled'">-->
+            <!--                        <a th:href="${boardList.last} ? '#' : @{/meeting/main(page=${boardList.number + 2})}">></a>-->
+            <!--                    </li>-->
+            <!--                    <li><a th:href="@{/meeting/main(page=${boardList.totalPages})}">>></a></li>-->
+            <!--                </ul>-->
+            <!--            </div>-->
+
+            <span class="right">
+
+
+            <input type="button" value="삭제하기" id="delete">
+            </span>
+        </div>
+    </div>
+</div>
+</html>

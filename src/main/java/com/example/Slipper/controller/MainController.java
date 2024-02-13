@@ -36,17 +36,20 @@ public class MainController {
     private final EntreRepository entreRepository;
 
 
-
-
     @GetMapping("/main")
     public String mainPage(Model model, @SessionAttribute(name = "id", required = false) String id) {
 
         EntreEntity loginEntre = entreService.getLoginEntreByLoginId(id);
         UserEntity loginUser = userService.getLoginUserById(id);
 
-        if (loginEntre != null || loginUser != null) {
+        if (loginEntre != null) {
 
             model.addAttribute("id", true);
+            model.addAttribute("nickName", loginEntre.getEntrepreNickName());
+
+        } else if (loginUser != null) {
+            model.addAttribute("id", true);
+            model.addAttribute("nickName", loginUser.getUserNickName());
 
         } else {
 

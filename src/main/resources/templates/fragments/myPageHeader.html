@@ -40,7 +40,7 @@
 
         <div class="wrapper">
             <div class="title">
-                <label for="logo">
+                <label th:for="logo">
                     <a href="/main"
                        style="color: white"
                     ><img
@@ -54,21 +54,25 @@
                 </label>
             </div>
 
-            <form method="get">
-                <label for="search">
-                    <div class="search">
-                        <input type="text"/>
-                        <button type="submit" value="Search"/>
-                        <i class="fa-solid fa-magnifying-glass"></i>
+            <ul style="list-style:none; float:left;">
+                <li style="float:left; font-size: 15px; justify-content: center; text-decoration-line: none;" ><a href="/myPage/main">[[${nickName}]]</a>님</li>
+                <li style="float:left;">
+                    <div class="note"><a style="color: white" href="/myPage/noteList"><img src="/images/note-icon.png"
+                                                                                           style="height: 50px; width: 50px;  margin-right: 10px;"></a>
                     </div>
-                </label>
-            </form>
-            <div class="log"><a href="/logOut" style="color: white">LogOut</a></div>
+                </li>
+                <li style="float:left;">
+                    <div class="log"><a href="/logOut" style="color: white"><img src="/images/logout-icon.png"
+                                                                                 style="height: 50px; width: 50px;"></a>
+                    </div>
+                </li>
+
+            </ul>
         </div>
         <div class="header_under">
             <ul class="lists">
                 <li>
-                    <a href="#">일반</a>
+                    <a href="/general/main">일반</a>
                 </li>
                 <li>
                     <a href="/meeting/main">모임</a>
@@ -77,7 +81,7 @@
                     <a href="/promotion">홍보</a>
                 </li>
                 <li>
-                    <a href="#">리뷰</a>
+                    <a href="/review/main">리뷰</a>
                 </li>
             </ul>
         </div>
@@ -90,7 +94,7 @@
                 <br>
                 <a href="/myPage/main">내 정보</a>
 
-                <ul><span><a href="/myPage/myArticleList">내가 쓴 글</a></span>
+                <ul><span><a href="#">내가 쓴 글</a></span>
                     <li>
                         <a href="#">일반</a>
                     </li>
@@ -106,13 +110,11 @@
                     </li>
                 </ul>
                 <div>
-                    <a href="#">내 쪽지함</a>
+                    <a href="/myPage/noteList">내 쪽지함</a>
                 </div>
             </div>
-        </div>
 
-        <div class="side_footer_f">
-            <label for="exit">
+            <label th:for="exit">
                 <a href="#">회원 탈퇴</a>
             </label>
         </div>

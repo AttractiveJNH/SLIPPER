@@ -21,42 +21,63 @@
 
 
     </script>
+</head>
 
-<body>
 
-<div layout:fragment="content" div class="container">
+<div layout:fragment="content">
+    <div class="container">
 
-    <div>
-        <label for="utId">
-            <h4>아이디</h4>
-            <p>아이디</p>
-            <p th:text="${userId}"></p>
-            
-        </label>
-        <label for="utId">
-            <h4>닉네임</h4>
-            <p th:text="${nickName}"></p>
-        </label>
-        <label for="utId">
-            <h4>생일</h4>
-            <p th:text="${birthDate}"></p>
-        </label>
-        <label for="utId">
-            <h4>이름</h4>
-            <p th:text="${name}"></p>
-        </label>
-        <label for="utId">
-            <h4>지역</h4>
-            <p th:text="${location}"></p>
-        </label>
-        <label for="utId">
-            <h4>연락처</h4>
-            <p th:text="${phone}"></p>
-        </label>
 
-        <button type="submit" value="변경하기">변경하기</button>
-        <button type="button" value="비밀번호 변경하기" id="edit">비밀번호 변경하기</button>
+        <div class="mpWrapper">
+            <h2>마이 페이지</h2>
+            <label for="utId">
+                <h4>아이디</h4>
+                <div class="information">
+                    <p th:text="${userId}"></p>
+                </div>
+            </label>
+
+            <label for="utId">
+                <h4>닉네임</h4>
+                <div class="information">
+                    <p th:text="${nickName}"></p>
+
+<!--                    <input type="text">-->
+                </div>
+            </label>
+
+            <label for="utId">
+                <div class="information">
+                    <h4>생일</h4>
+                    <p th:text="${birthDate}"></p>
+                </div>
+            </label>
+
+            <label for="utId">
+                <h4>이름</h4>
+                <div class="information">
+                    <p th:text="${name}"></p>
+                </div>
+            </label>
+
+            <label for="utId">
+                <h4>지역</h4>
+                <div class="information">
+                    <p th:text="${location}"></p>
+                </div>
+            </label>
+
+            <label for="utId">
+                <h4>연락처</h4>
+                <div class="information">
+                    <p th:text="${phone}"></p>
+<!--                    <input type="text">-->
+                </div>
+            </label>
+
+            <input type="submit" value="변경하기"></input>
+            <input type="button" value="비밀번호 변경하기" id="edit">
+        </div>
     </div>
 </div>
-</body>
 </html>
