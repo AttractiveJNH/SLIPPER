@@ -39,7 +39,7 @@ public class JoinService {
 
 
         user.setId(userDto.getId());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setPassword(userDto.getPassword());
         user.setUserBirthDate(userDto.getUserBirthDate());
         user.setUserName(userDto.getUserName());
         user.setUserLocation(userDto.getUserLocation() != null ? userDto.getUserLocation().replace(",","") : null);
@@ -58,7 +58,7 @@ public class JoinService {
 
         EntreEntity entre = new EntreEntity();
         entre.setId(entreDto.getId());
-        entre.setPassword(passwordEncoder.encode(entreDto.getPassword()));
+        entre.setPassword(entreDto.getPassword());
         entre.setEntrepreName(entreDto.getEntrepreName());
         entre.setEntrepreLocation(entreDto.getEntrepreLocation() != null ? entreDto.getEntrepreLocation().replace(",","") : null);
         entre.setEntreprePhone(entreDto.getEntreprePhone());
